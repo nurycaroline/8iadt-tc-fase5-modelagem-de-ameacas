@@ -1,0 +1,182 @@
+# Threat knowledge base (KB-01..04) — family × STRIDE → vulnerability + countermeasure
+version: 1
+
+fallback:
+  threat: "Ameaça genérica para componente sem mapeamento específico"
+  vulnerability: "Superfície de ataque não catalogada na KB"
+  countermeasure: "Revisar autenticação, autorização, logging e exposição de rede"
+
+entries:
+  - family: database
+    stride: Spoofing
+    threat: "Autenticação fraca ao banco de dados"
+    vulnerability: "Credenciais padrão ou compartilhadas"
+    countermeasure: "IAM/roles, rotação de segredos, MFA onde aplicável"
+  - family: database
+    stride: Tampering
+    threat: "Alteração não autorizada de dados"
+    vulnerability: "Ausência de controles de integridade / auditoria"
+    countermeasure: "Controles de escrita, checksums, audit logs imutáveis"
+  - family: database
+    stride: Repudiation
+    threat: "Ações sem rastreabilidade"
+    vulnerability: "Logs de acesso ausentes ou incompletos"
+    countermeasure: "Auditoria completa de queries e acessos privilegiados"
+  - family: database
+    stride: Information Disclosure
+    threat: "Exposição de dados em repouso ou em trânsito"
+    vulnerability: "Bucket/DB sem criptografia ou ACL pública"
+    countermeasure: "Criptografia at-rest, least privilege, private endpoints"
+  - family: database
+    stride: Denial of Service
+    threat: "Indisponibilidade do banco"
+    vulnerability: "Sem limites de conexão / sem réplicas"
+    countermeasure: "Rate limiting, autoscaling de leituras, backups testados"
+  - family: database
+    stride: Elevation of Privilege
+    threat: "Escalação de privilégios no SGBD"
+    vulnerability: "Usuário da aplicação com permissões excessivas"
+    countermeasure: "Princípio do menor privilégio e roles separadas"
+
+  - family: compute
+    stride: Spoofing
+    threat: "Impersonação de instância ou função"
+    vulnerability: "Metadados de instância expostos / identidade fraca"
+    countermeasure: "IMDSv2, identities de workload, segmentação"
+  - family: compute
+    stride: Tampering
+    threat: "Código ou imagem adulterados"
+    vulnerability: "Imagens sem assinatura / supply chain frágil"
+    countermeasure: "Assinatura de imagens, SBOM, registries privados"
+  - family: compute
+    stride: Information Disclosure
+    threat: "Vazamento de segredos em runtime"
+    vulnerability: "Variáveis de ambiente com secrets em claro"
+    countermeasure: "Secrets manager, volumes criptografados"
+  - family: compute
+    stride: Denial of Service
+    threat: "Esgotamento de CPU/memória"
+    vulnerability: "Sem quotas ou autoscaling"
+    countermeasure: "Quotas, HPA, circuit breakers"
+  - family: compute
+    stride: Elevation of Privilege
+    threat: "Escape de container / host"
+    vulnerability: "Containers privilegiados"
+    countermeasure: "Pod security, non-root, seccomp"
+
+  - family: api
+    stride: Spoofing
+    threat: "Cliente forjado na API"
+    vulnerability: "Ausência de autenticação forte"
+    countermeasure: "OAuth2/OIDC, mTLS, API keys rotacionadas"
+  - family: api
+    stride: Tampering
+    threat: "Manipulação de payloads"
+    vulnerability: "Validação de entrada insuficiente"
+    countermeasure: "Schema validation, WAF, assinatura de requests"
+  - family: api
+    stride: Information Disclosure
+    threat: "Vazamento via respostas de erro"
+    vulnerability: "Stack traces e dados sensíveis em respostas"
+    countermeasure: "Erros genéricos, mascaramento de PII"
+  - family: api
+    stride: Denial of Service
+    threat: "Flood na API"
+    vulnerability: "Sem rate limiting"
+    countermeasure: "Throttling, quotas por cliente, CDN"
+  - family: api
+    stride: Elevation of Privilege
+    threat: "Bypass de autorização"
+    vulnerability: "IDOR / falhas de checagem de escopo"
+    countermeasure: "Autorização por recurso, testes de IDOR"
+
+  - family: storage
+    stride: Information Disclosure
+    threat: "Objetos públicos indevidos"
+    vulnerability: "ACL/policy permissiva em bucket"
+    countermeasure: "Block public access, políticas least-privilege"
+  - family: storage
+    stride: Tampering
+    threat: "Sobrescrita de objetos"
+    vulnerability: "Sem versionamento / MFA delete"
+    countermeasure: "Versioning, Object Lock, MFA delete"
+  - family: storage
+    stride: Denial of Service
+    threat: "Custos/indisponibilidade por listagem abusiva"
+    vulnerability: "Sem quotas de request"
+    countermeasure: "Monitoramento de custo, WAF, private endpoints"
+
+  - family: network
+    stride: Spoofing
+    threat: "Tráfego forjado entre segmentos"
+    vulnerability: "Sem segmentação adequada"
+    countermeasure: "Security groups, NACLs, microsegmentação"
+  - family: network
+    stride: Information Disclosure
+    threat: "Sniffing em trânsito"
+    vulnerability: "Tráfego sem TLS"
+    countermeasure: "TLS em trânsito, VPN/private link"
+  - family: network
+    stride: Denial of Service
+    threat: "Saturação de banda/links"
+    vulnerability: "Sem proteção DDoS"
+    countermeasure: "Shield/WAF, autoscaling de edge"
+
+  - family: security
+    stride: Spoofing
+    threat: "Uso indevido de identidades"
+    vulnerability: "Chaves de longa duração"
+    countermeasure: "Credenciais de curta duração, rotação"
+  - family: security
+    stride: Elevation of Privilege
+    threat: "Políticas IAM excessivas"
+    vulnerability: "Wildcards em actions/resources"
+    countermeasure: "Least privilege, access analyzer"
+  - family: security
+    stride: Information Disclosure
+    threat: "Segredos expostos"
+    vulnerability: "Secrets em repositório ou logs"
+    countermeasure: "Vault/KMS, scanning de secrets"
+
+  - family: messaging
+    stride: Spoofing
+    threat: "Publicação forjada em tópicos"
+    vulnerability: "Filas sem autenticação de publishers"
+    countermeasure: "IAM em filas/tópicos, assinatura de mensagens"
+  - family: messaging
+    stride: Tampering
+    threat: "Mensagens adulteradas"
+    vulnerability: "Sem integridade/criptografia"
+    countermeasure: "Encryption in transit/at rest, checksums"
+  - family: messaging
+    stride: Denial of Service
+    threat: "Enchimento de fila"
+    vulnerability: "Sem DLQ / limites"
+    countermeasure: "DLQ, retenção, backpressure"
+
+  - family: client
+    stride: Spoofing
+    threat: "Usuário forjado no cliente"
+    vulnerability: "Sessões previsíveis / sem MFA"
+    countermeasure: "MFA, cookies seguros, binding de sessão"
+  - family: client
+    stride: Tampering
+    threat: "Manipulação do cliente"
+    vulnerability: "Lógica sensível só no front-end"
+    countermeasure: "Validação server-side, attested clients"
+  - family: client
+    stride: Information Disclosure
+    threat: "Dados sensíveis no dispositivo"
+    vulnerability: "Cache/localStorage com PII"
+    countermeasure: "Minimizar dados locais, criptografia de storage"
+  - family: client
+    stride: Repudiation
+    threat: "Ações do usuário sem prova"
+    vulnerability: "Sem trilha de auditoria no cliente→servidor"
+    countermeasure: "Logs de autenticação e ações críticas"
+
+  - family: unknown
+    stride: Information Disclosure
+    threat: "Componente não classificado com possível exposição"
+    vulnerability: "Superfície desconhecida"
+    countermeasure: "Inventariar o componente e aplicar baseline de segurança"
