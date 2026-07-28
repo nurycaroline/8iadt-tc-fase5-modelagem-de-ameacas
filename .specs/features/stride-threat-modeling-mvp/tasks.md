@@ -339,10 +339,10 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] KB versionada no repo (não hardcode)
-- [ ] Lookup `database` + Information Disclosure retorna vulnerabilidade + contramedida
-- [ ] Fallback funciona para família ausente
-- [ ] Gate: `pytest -q tests/unit`
+- [x] KB versionada no repo (não hardcode)
+- [x] Lookup `database` + Information Disclosure retorna vulnerabilidade + contramedida
+- [x] Fallback funciona para família ausente
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -363,10 +363,10 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Teste com detections mock cobre menção a cada componente
-- [ ] Categorias STRIDE presentes onde KB/regras aplicam
-- [ ] Sem mapeamento → finding explícito
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Teste com detections mock cobre menção a cada componente
+- [x] Categorias STRIDE presentes onde KB/regras aplicam
+- [x] Sem mapeamento → finding explícito
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
