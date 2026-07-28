@@ -410,8 +410,8 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Testes dos dois edges passam
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Testes dos dois edges passam
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
