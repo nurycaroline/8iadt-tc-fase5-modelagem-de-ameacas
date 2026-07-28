@@ -271,9 +271,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Interface `train(data_yaml, epochs, imgsz, project) -> Path`
-- [ ] Teste com mock não executa treino real e verifica path retornado
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Interface `train(data_yaml, epochs, imgsz, project) -> Path`
+- [x] Teste com mock não executa treino real e verifica path retornado
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
