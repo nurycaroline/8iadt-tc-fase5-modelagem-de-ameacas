@@ -317,8 +317,8 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Teste explícito de zero detecções
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Teste explícito de zero detecções
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  

@@ -91,6 +91,18 @@ def test_zero_detections_returns_empty_list(
     assert detector.predict(image) == []
 
 
+def test_zero_detections_when_results_list_empty(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    weights = tmp_path / "best.pt"
+    weights.write_bytes(b"x")
+    model = MagicMock()
+    model.names = {0: "rds"}
+    _install_fake_yolo(monkeypatch, model)
+    detector = ComponentDetector(weights, conf=0.25)
+    assert detector._results_to_detections([]) == []
+
+
 def test_unknown_class_name_still_returns_detection(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
