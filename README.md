@@ -23,6 +23,15 @@ pytest -q tests/unit
 pytest -q
 ```
 
+## Dataset (Kaggle)
+
+Dataset: `carlosrian/software-architecture-dataset` → `data/raw/software-architecture-dataset`.
+
+```bash
+# Requires ~/.kaggle/kaggle.json or KAGGLE_USERNAME + KAGGLE_KEY
+python -c "from stride_mvp.data.download import ensure_dataset; ensure_dataset()"
+```
+
 ## Layout
 
 Ver `.specs/features/stride-threat-modeling-mvp/` para spec, design e tasks.

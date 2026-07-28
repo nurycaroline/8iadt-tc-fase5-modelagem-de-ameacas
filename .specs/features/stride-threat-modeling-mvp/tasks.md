@@ -177,10 +177,10 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Path de destino e nome do dataset documentados
-- [ ] Sem credenciais → erro com mensagem acionável (testado com mock/monkeypatch)
-- [ ] Não requer download real no CI
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Path de destino e nome do dataset documentados
+- [x] Sem credenciais → erro com mensagem acionável (testado com mock/monkeypatch)
+- [x] Não requer download real no CI
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
