@@ -35,9 +35,8 @@ def test_stride_categories_present_for_database() -> None:
         source_image="db.png",
     )
     cats = {f.stride_category for f in report.findings if f.component_class == "rds"}
-    # KB has multiple STRIDE cats for database
-    assert len(cats) >= 3
-    assert cats & set(STRIDE_CATEGORIES)
+    # KB lists all six STRIDE categories for database
+    assert set(STRIDE_CATEGORIES).issubset(cats)
 
 
 def test_unmapped_component_gets_explicit_fallback_finding(tmp_path: Path) -> None:

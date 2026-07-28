@@ -4,6 +4,7 @@ default_family: unknown
 
 families:
   database:
+    - database
     - rds
     - dynamodb
     - sql_database
@@ -15,6 +16,7 @@ families:
     - redis
     - elasticache
   compute:
+    - compute
     - ec2
     - lambda
     - aks_node
@@ -25,6 +27,7 @@ families:
     - virtual_machine
     - container
   api:
+    - api
     - api_gateway
     - rest_api
     - graphql
@@ -33,6 +36,7 @@ families:
     - alb
     - nlb
   storage:
+    - storage
     - s3
     - blob_storage
     - efs
@@ -40,6 +44,7 @@ families:
     - cloud_storage
     - file_storage
   network:
+    - network
     - vpc
     - subnet
     - firewall
@@ -48,6 +53,7 @@ families:
     - cloudfront
     - cdn
   security:
+    - security
     - iam
     - waf
     - key_vault
@@ -55,6 +61,7 @@ families:
     - kms
     - cognito
   messaging:
+    - messaging
     - sqs
     - sns
     - kafka
@@ -62,8 +69,8 @@ families:
     - pubsub
     - message_queue
   client:
-    - user
     - client
+    - user
     - browser
     - mobile_app
     - desktop_app

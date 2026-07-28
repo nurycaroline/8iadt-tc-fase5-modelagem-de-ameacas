@@ -55,6 +55,11 @@ best = train(Path("data/processed/data.yaml"), epochs=50, imgsz=640)
 print(best)  # models/weights/train/weights/best.pt
 ```
 
+**Contratos de edge:**
+
+- **NMS**: feito pelo Ultralytics YOLO na inferência (`ComponentDetector.predict`); o MVP não reimplementa NMS.
+- **Treino interrompido**: não promover `best.pt` parcial — só use o artefato após corrida completa (ou restaure checkpoint documentado). Corridas parciais ≠ modelo pronto para demo.
+
 ## 5. Inferência + STRIDE (CLI)
 
 ```bash
