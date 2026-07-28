@@ -46,7 +46,7 @@ Toda ambiguidade resolvida ou registrada aqui — nada fica silenciosamente inde
 | Persistência de análises | Arquivos em `reports/`; sem banco | Simplifica MVP | y (via Design) |
 | Stack da aplicação | Python 3.11+ / pytest / Typer / Gradio P2 (AD-005) | Greenfield ML | y (via Design) |
 
-**Open questions:** nenhuma pendente sem registro — todas as áreas cinzentas estão como assumptions acima (aguardam confirmação do usuário).
+**Open questions:** nenhuma — assumptions incorporadas via Design (AD-004/AD-005) ou confirmadas pelo usuário.
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Spec**: `.specs/features/stride-threat-modeling-mvp/spec.md`  
 **Context**: `.specs/features/stride-threat-modeling-mvp/context.md`  
-**Status**: Draft (recomendações travadas por AD-001…AD-003 + decisão de stack abaixo)
+**Status**: Draft — Approach A + AD-004/AD-005; awaiting user approval before Execute
 
 ---
 
