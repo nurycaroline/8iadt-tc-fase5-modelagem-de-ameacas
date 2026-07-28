@@ -45,9 +45,9 @@
 ## Handoff
 
 - **Feature**: STRIDE Threat Modeling MVP / `.specs/features/stride-threat-modeling-mvp/`
-- **Phase / Task**: Execute completo (T1–T22) — aguardando Verifier
-- **Completed**: Specify, Design, Tasks; T1–T22 (incl. Docker extra)
+- **Phase / Task**: Execute + Verifier **PASS** (T1–T22)
+- **Completed**: Specify, Design, Tasks; T1–T22; validation.md PASS (58 tests; sensor 3/3)
 - **In-progress**: none
-- **Next step**: Verifier automático (validation.md) + treino real YOLO com dataset Kaggle quando houver GPU/credenciais
-- **Blockers**: none (pesos `.pt` ainda não treinados — demo usa mock/detector injetável nos testes)
+- **Next step**: Treinar YOLO real com Kaggle + pesos em `models/weights/` para demo; opcional PR
+- **Blockers**: none (CI usa ScriptedDetector; pesos reais ainda não versionados)
 - **Branch**: `feat/stride-mvp-execute`
