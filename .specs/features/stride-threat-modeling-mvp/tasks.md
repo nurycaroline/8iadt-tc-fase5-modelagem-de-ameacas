@@ -501,9 +501,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Pelo menos 2 imagens de eval referenciadas (arch1, arch2) com labels ou instrução de anotação Label Studio/YOLO
-- [ ] Doc lista componentes esperados por figura
-- [ ] Gate: build (`compileall` + `pytest -q` sem regressão)
+- [x] Pelo menos 2 imagens de eval referenciadas (arch1, arch2) com labels ou instrução de anotação Label Studio/YOLO
+- [x] Doc lista componentes esperados por figura
+- [x] Gate: build (`compileall` + `pytest -q` sem regressão)
 
 **Tests**: none  
 **Gate**: build  
