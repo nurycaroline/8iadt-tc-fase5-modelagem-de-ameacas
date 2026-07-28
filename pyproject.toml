@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stride-mvp"
+version = "0.1.0"
+description = "MVP de modelagem de ameaças STRIDE a partir de diagramas de arquitetura"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "FIAP IADT" }]
+dependencies = [
+  "pyyaml>=6.0",
+  "pillow>=10.0",
+  "typer>=0.12",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+ml = [
+  "ultralytics>=8.3",
+  "opencv-python-headless>=4.8",
+]
+ui = [
+  "gradio>=4.0",
+]
+kaggle = [
+  "kaggle>=1.6",
+]
+
+[project.scripts]
+stride-mvp = "stride_mvp.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -45,10 +45,9 @@
 ## Handoff
 
 - **Feature**: STRIDE Threat Modeling MVP / `.specs/features/stride-threat-modeling-mvp/`
-- **Phase / Task**: Design + Tasks concluídos (draft); aguardando aprovação para Execute
-- **Completed**: Specify (spec+context), Design (`design.md`), Tasks (`tasks.md` T1–T21)
+- **Phase / Task**: Execute + Verifier **PASS** (T1–T22)
+- **Completed**: Specify, Design, Tasks; T1–T22; validation.md PASS (58 tests; sensor 3/3)
 - **In-progress**: none
-- **Next step**: Usuário aprova design/tasks → Execute Batch A (T1–T7) com skill tlc-spec-driven
-- **Blockers**: Confirmação formal de Design/Tasks (assumptions residuais YOLO/KB/CLI já incorporadas como AD-004/005)
-- **Uncommitted files**: design.md, tasks.md, STATE/spec/context updates
-- **Branch**: `cursor/stride-threat-modeling-spec-bf8d`
+- **Next step**: Treinar YOLO real com Kaggle + pesos em `models/weights/` para demo; opcional PR
+- **Blockers**: none (CI usa ScriptedDetector; pesos reais ainda não versionados)
+- **Branch**: `feat/stride-mvp-execute`

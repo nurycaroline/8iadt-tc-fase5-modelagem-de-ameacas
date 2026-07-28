@@ -83,6 +83,14 @@ T18 → T19
 T20 → T21
 ```
 
+### Phase 8: Packaging / Demo (extra)
+
+```
+T22
+```
+
+> **T22 (Docker)** — pedida pelo usuário (não está no enunciado PDF). Encaixa **depois de T21**: a imagem empacota CLI + UI Gradio já funcionais; avaliadores reproduzem a demo com `docker compose up` sem instalar Python/YOLO localmente. Depende de T17 (CLI) e T21 (UI no compose).
+
 ---
 
 ## Task Breakdown
@@ -100,9 +108,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] `pip install -e ".[dev]"` (ou equivalente documentado) instala o pacote
-- [ ] `.gitignore` exclui `data/raw/`, `models/weights/*.pt`, credenciais Kaggle
-- [ ] Gate: `python -m compileall -q src`
+- [x] `pip install -e ".[dev]"` (ou equivalente documentado) instala o pacote
+- [x] `.gitignore` exclui `data/raw/`, `models/weights/*.pt`, credenciais Kaggle
+- [x] Gate: `python -m compileall -q src`
 
 **Tests**: none  
 **Gate**: build  
@@ -123,10 +131,10 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Modelos exportados e instanciáveis
-- [ ] Config lê defaults + override de path/env
-- [ ] Unit tests cobrem defaults e campos obrigatórios
-- [ ] Gate: `pytest -q tests/unit` passa
+- [x] Modelos exportados e instanciáveis
+- [x] Config lê defaults + override de path/env
+- [x] Unit tests cobrem defaults e campos obrigatórios
+- [x] Gate: `pytest -q tests/unit` passa
 
 **Tests**: unit  
 **Gate**: quick  
@@ -147,8 +155,8 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] `pytest -q` coleta e passa smoke + testes T2
-- [ ] Comandos do Gate Check Commands documentados no README stub ou pyproject
+- [x] `pytest -q` coleta e passa smoke + testes T2
+- [x] Comandos do Gate Check Commands documentados no README stub ou pyproject
 
 **Tests**: unit  
 **Gate**: quick  
@@ -169,10 +177,10 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Path de destino e nome do dataset documentados
-- [ ] Sem credenciais → erro com mensagem acionável (testado com mock/monkeypatch)
-- [ ] Não requer download real no CI
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Path de destino e nome do dataset documentados
+- [x] Sem credenciais → erro com mensagem acionável (testado com mock/monkeypatch)
+- [x] Não requer download real no CI
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -193,10 +201,10 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Mapa cobre famílias usadas pela KB (database, compute, api, storage, network, security, messaging, client/user, unknown)
-- [ ] Classe conhecida → família; desconhecida → `unknown`
-- [ ] Unit tests 1:1 para esses comportamentos
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Mapa cobre famílias usadas pela KB (database, compute, api, storage, network, security, messaging, client/user, unknown)
+- [x] Classe conhecida → família; desconhecida → `unknown`
+- [x] Unit tests 1:1 para esses comportamentos
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -217,9 +225,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Fixture VOC → arquivo `.txt` com `class xc yc w h` em [0,1]
-- [ ] XML inválido / bbox ausente → erro ou skip documentado (testado)
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Fixture VOC → arquivo `.txt` com `class xc yc w h` em [0,1]
+- [x] XML inválido / bbox ausente → erro ou skip documentado (testado)
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -240,9 +248,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] `data.yaml` contém `train`, `val`, `names`
-- [ ] Seed fixa → split reproduzível (teste)
-- [ ] Gate: `pytest -q tests/unit`
+- [x] `data.yaml` contém `train`, `val`, `names`
+- [x] Seed fixa → split reproduzível (teste)
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -263,9 +271,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Interface `train(data_yaml, epochs, imgsz, project) -> Path`
-- [ ] Teste com mock não executa treino real e verifica path retornado
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Interface `train(data_yaml, epochs, imgsz, project) -> Path`
+- [x] Teste com mock não executa treino real e verifica path retornado
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -286,9 +294,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] `predict` retorna classe, confiança, bbox
-- [ ] Detecções &lt; conf excluídas (teste com mock de results)
-- [ ] Gate: `pytest -q tests/unit`
+- [x] `predict` retorna classe, confiança, bbox
+- [x] Detecções &lt; conf excluídas (teste com mock de results)
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -309,8 +317,8 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Teste explícito de zero detecções
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Teste explícito de zero detecções
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -331,10 +339,10 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] KB versionada no repo (não hardcode)
-- [ ] Lookup `database` + Information Disclosure retorna vulnerabilidade + contramedida
-- [ ] Fallback funciona para família ausente
-- [ ] Gate: `pytest -q tests/unit`
+- [x] KB versionada no repo (não hardcode)
+- [x] Lookup `database` + Information Disclosure retorna vulnerabilidade + contramedida
+- [x] Fallback funciona para família ausente
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -355,10 +363,10 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Teste com detections mock cobre menção a cada componente
-- [ ] Categorias STRIDE presentes onde KB/regras aplicam
-- [ ] Sem mapeamento → finding explícito
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Teste com detections mock cobre menção a cada componente
+- [x] Categorias STRIDE presentes onde KB/regras aplicam
+- [x] Sem mapeamento → finding explícito
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -379,9 +387,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Markdown em pt-BR lista componente, categoria, ameaça, vulnerabilidade, contramedida
-- [ ] JSON parseável espelha findings
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Markdown em pt-BR lista componente, categoria, ameaça, vulnerabilidade, contramedida
+- [x] JSON parseável espelha findings
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -402,8 +410,8 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Testes dos dois edges passam
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Testes dos dois edges passam
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -424,9 +432,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Happy path PNG/JPG fixture
-- [ ] Rejeita extensão inválida, vazio, oversized
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Happy path PNG/JPG fixture
+- [x] Rejeita extensão inválida, vazio, oversized
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -447,9 +455,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Com detector fake, gera MD+JSON em `out_dir`
-- [ ] Imagem inválida propaga ValidationError
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Com detector fake, gera MD+JSON em `out_dir`
+- [x] Imagem inválida propaga ValidationError
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -470,9 +478,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] `stride-mvp analyze --help` funciona
-- [ ] Integração: imagem válida → arquivos de relatório; inválida → exit ≠ 0
-- [ ] Gate: `pytest -q`
+- [x] `stride-mvp analyze --help` funciona
+- [x] Integração: imagem válida → arquivos de relatório; inválida → exit ≠ 0
+- [x] Gate: `pytest -q`
 
 **Tests**: integration  
 **Gate**: full  
@@ -493,9 +501,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Pelo menos 2 imagens de eval referenciadas (arch1, arch2) com labels ou instrução de anotação Label Studio/YOLO
-- [ ] Doc lista componentes esperados por figura
-- [ ] Gate: build (`compileall` + `pytest -q` sem regressão)
+- [x] Pelo menos 2 imagens de eval referenciadas (arch1, arch2) com labels ou instrução de anotação Label Studio/YOLO
+- [x] Doc lista componentes esperados por figura
+- [x] Gate: build (`compileall` + `pytest -q` sem regressão)
 
 **Tests**: none  
 **Gate**: build  
@@ -516,9 +524,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Seções obrigatórias do AC presentes
-- [ ] Comandos copy-paste para `prepare-data`, `train`, `analyze` nas eval images
-- [ ] Gate: build
+- [x] Seções obrigatórias do AC presentes
+- [x] Comandos copy-paste para `prepare-data`, `train`, `analyze` nas eval images
+- [x] Gate: build
 
 **Tests**: none  
 **Gate**: build  
@@ -539,10 +547,10 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Interface retorna métrica numérica agregada
-- [ ] Persistência em arquivo versionável (path documentado)
-- [ ] Teste com mock não precisa GPU
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Interface retorna métrica numérica agregada
+- [x] Persistência em arquivo versionável (path documentado)
+- [x] Teste com mock não precisa GPU
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -563,9 +571,9 @@ T20 → T21
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Upload + display cobertos por smoke test com pipeline mock
-- [ ] README documenta `stride-mvp ui` ou `python -m stride_mvp.web.app`
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Upload + display cobertos por smoke test com pipeline mock
+- [x] README documenta `stride-mvp ui` ou `python -m stride_mvp.web.app`
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -573,10 +581,35 @@ T20 → T21
 
 ---
 
+### T22: Docker + Compose para demo reproduzível
+
+**What**: Adicionar `Dockerfile` (+ `.dockerignore`) e `docker-compose.yml` para rodar a demo (CLI `analyze` e/ou UI Gradio) com pesos montados em volume; documentar build/run no README.  
+**Where**: `Dockerfile`, `.dockerignore`, `docker-compose.yml`, trecho em `README.md`  
+**Depends on**: T17, T21  
+**Reuses**: CLI + Gradio app; `models/weights/` via volume (não embutir `.pt` na imagem se grande)  
+**Requirement**: DOC-02 (reprodução); extra usuário (Docker)
+
+**Tools**:
+- MCP: NONE
+- Skill: `tlc-spec-driven`
+
+**Done when**:
+- [x] `docker build` sobe imagem baseada em Python 3.11+ com o pacote instalado
+- [x] `docker compose up` (ou comando documentado) expõe a UI Gradio **ou** permite `docker compose run … analyze IMAGE`
+- [x] `.dockerignore` exclui `data/raw/`, `.git`, venvs, pesos grandes desnecessários ao build
+- [x] README tem seção Docker copy-paste
+- [x] Gate: build (`python -m compileall -q src && pytest -q`) — smoke de sintaxe Compose opcional se `docker` disponível
+
+**Tests**: none  
+**Gate**: build  
+**Commit**: `build(docker): add Dockerfile and compose for demo`
+
+---
+
 ## Phase Execution Map
 
 ```
-Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7
+Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7 → Phase 8
 
 Phase 1:  T1 ──→ T2 ──→ T3
 Phase 2:  T4 ──→ T5 ──→ T6 ──→ T7
@@ -585,12 +618,13 @@ Phase 4:  T11 ──→ T12 ──→ T13 ──→ T14
 Phase 5:  T15 ──→ T16 ──→ T17
 Phase 6:  T18 ──→ T19
 Phase 7:  T20 ──→ T21
+Phase 8:  T22
 ```
 
-**Batch packing (Execute):** ~21 tasks → ~3 workers sugeridos  
+**Batch packing (Execute):** ~22 tasks → ~3 workers sugeridos  
 - Batch A: Phases 1–2 (T1–T7)  
 - Batch B: Phases 3–4 (T8–T14)  
-- Batch C: Phases 5–7 (T15–T21)  
+- Batch C: Phases 5–8 (T15–T22)  
 
 Oferecer sub-agents no Execute (offer-then-confirm).
 
@@ -621,6 +655,7 @@ Oferecer sub-agents no Execute (offer-then-confirm).
 | T19 Docs | docs only | ✅ |
 | T20 Metrics | 1 módulo | ✅ |
 | T21 Gradio UI | 1 app | ✅ |
+| T22 Docker | Dockerfile + compose | ✅ |
 
 ---
 
@@ -649,6 +684,7 @@ Oferecer sub-agents no Execute (offer-then-confirm).
 | T19 | T17, T18 | T18→T19 | ✅ |
 | T20 | T19 | T19→T20 | ✅ |
 | T21 | T20 | T20→T21 | ✅ |
+| T22 | T17, T21 | T21→T22 | ✅ |
 
 ---
 
@@ -677,6 +713,7 @@ Oferecer sub-agents no Execute (offer-then-confirm).
 | T19 | docs | none | none | ✅ |
 | T20 | eval_metrics | unit | unit | ✅ |
 | T21 | web UI | unit | unit | ✅ |
+| T22 | docker packaging | none | none | ✅ |
 
 ---
 
@@ -704,10 +741,10 @@ Oferecer sub-agents no Execute (offer-then-confirm).
 | PIPE-03 | T13, T16, T17 |
 | PIPE-04 | T16, T18 |
 | DOC-01 | T19 |
-| DOC-02 | T19 |
+| DOC-02 | T19, T22 |
 | UI-01 | T21 |
 | UI-02 | T21 |
 | MET-01 | T20 |
 | MET-02 | T20 |
 
-**Coverage:** 25 total, 25 mapped to tasks, 0 unmapped
+**Coverage:** 25 total, 25 mapped to tasks, 0 unmapped (+ T22 extra Docker → DOC-02)

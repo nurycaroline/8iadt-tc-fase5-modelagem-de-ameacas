@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.env
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Dataset / credentials (never commit)
+data/raw/
+**/kaggle.json
+.kaggle/
+kaggle.json
+
+# Model weights
+models/weights/*.pt
+*.pt
+!models/weights/.gitkeep
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Reports generated locally (keep directory if needed)
+reports/*.md
+reports/*.json
+!reports/.gitkeep

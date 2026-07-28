@@ -1,0 +1,77 @@
+# Maps Kaggle Software Architecture Dataset class names → STRIDE families.
+# Extend as needed when new labels appear in the dataset.
+default_family: unknown
+
+families:
+  database:
+    - database
+    - rds
+    - dynamodb
+    - sql_database
+    - mysql
+    - postgresql
+    - mongodb
+    - cosmosdb
+    - aurora
+    - redis
+    - elasticache
+  compute:
+    - compute
+    - ec2
+    - lambda
+    - aks_node
+    - ecs
+    - fargate
+    - compute_instance
+    - app_server
+    - virtual_machine
+    - container
+  api:
+    - api
+    - api_gateway
+    - rest_api
+    - graphql
+    - apigateway
+    - load_balancer
+    - alb
+    - nlb
+  storage:
+    - storage
+    - s3
+    - blob_storage
+    - efs
+    - ebs
+    - cloud_storage
+    - file_storage
+  network:
+    - network
+    - vpc
+    - subnet
+    - firewall
+    - router
+    - vpn
+    - cloudfront
+    - cdn
+  security:
+    - security
+    - iam
+    - waf
+    - key_vault
+    - secrets_manager
+    - kms
+    - cognito
+  messaging:
+    - messaging
+    - sqs
+    - sns
+    - kafka
+    - eventbridge
+    - pubsub
+    - message_queue
+  client:
+    - client
+    - user
+    - browser
+    - mobile_app
+    - desktop_app
+    - end_user

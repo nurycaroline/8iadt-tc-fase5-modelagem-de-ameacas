@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "promote_threshold": 2,
+  "window_days": 45,
+  "quarantine_threshold": 2,
+  "next_id": 5,
+  "lessons": [
+    {
+      "id": "L-001",
+      "key": "ac_gap::eval architecture acs need assertions on expected component sets not only fake detector smoke that invents unrelated classes",
+      "text": "Eval-architecture ACs need assertions on expected component sets, not only fake-detector smoke that invents unrelated classes",
+      "signal": "ac_gap",
+      "scope": "detection,eval",
+      "status": "candidate",
+      "features": [
+        "stride-threat-modeling-mvp"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DET-04 (detection,eval)"
+      ],
+      "created": "2026-07-28T20:59:28Z",
+      "last_seen": "2026-07-28T20:59:28Z"
+    },
+    {
+      "id": "L-002",
+      "key": "ac_gap::ui smoke must assert upload input and report output wiring not merely that the app object is non null",
+      "text": "UI smoke must assert upload input and report output wiring, not merely that the app object is non-null",
+      "signal": "ac_gap",
+      "scope": "web",
+      "status": "candidate",
+      "features": [
+        "stride-threat-modeling-mvp"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "UI-01/UI-02 (web)"
+      ],
+      "created": "2026-07-28T20:59:28Z",
+      "last_seen": "2026-07-28T20:59:28Z"
+    },
+    {
+      "id": "L-003",
+      "key": "spec_precision_gap::when the kb defines a full stride category set for a family assert that full set rather than a loose minimum count",
+      "text": "When the KB defines a full STRIDE category set for a family, assert that full set rather than a loose minimum count",
+      "signal": "spec_precision_gap",
+      "scope": "stride",
+      "status": "candidate",
+      "features": [
+        "stride-threat-modeling-mvp"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "STRIDE-01 (stride)"
+      ],
+      "created": "2026-07-28T20:59:28Z",
+      "last_seen": "2026-07-28T20:59:28Z"
+    },
+    {
+      "id": "L-004",
+      "key": "ac_gap::library delegated behaviors named in the spec e g nms still need a discriminating test or explicit documented contract",
+      "text": "Library-delegated behaviors named in the spec (e.g. NMS) still need a discriminating test or explicit documented contract",
+      "signal": "ac_gap",
+      "scope": "detection",
+      "status": "candidate",
+      "features": [
+        "stride-threat-modeling-mvp"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "edge:NMS (detection)"
+      ],
+      "created": "2026-07-28T20:59:28Z",
+      "last_seen": "2026-07-28T20:59:28Z"
+    }
+  ]
+}
