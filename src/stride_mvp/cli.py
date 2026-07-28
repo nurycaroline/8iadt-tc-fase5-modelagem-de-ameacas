@@ -71,5 +71,37 @@ def analyze(
     )
 
 
+@app.command("eval")
+def eval_cmd(
+    weights: Path = typer.Option(
+        Path("models/weights/best.pt"), "--weights", help="Pesos YOLO"
+    ),
+    data: Path = typer.Option(
+        Path("data/processed/data.yaml"), "--data", help="data.yaml Ultralytics"
+    ),
+    out: Path = typer.Option(
+        Path("models/weights/metrics.json"),
+        "--out",
+        help="Arquivo JSON de métricas",
+    ),
+) -> None:
+    """Roda validação YOLO e grava mAP agregado em metrics.json."""
+    from stride_mvp.detection.eval_metrics import evaluate
+
+    value = evaluate(weights, data, out_path=out)
+    typer.echo(f"mAP={value:.4f} → {out}")
+
+
+@app.command("ui")
+def ui_cmd(
+    host: str = typer.Option("0.0.0.0", "--host"),
+    port: int = typer.Option(7860, "--port"),
+) -> None:
+    """Sobe a UI Gradio mínima para upload de diagrama."""
+    from stride_mvp.web.app import create_app
+
+    create_app().launch(server_name=host, server_port=port)
+
+
 if __name__ == "__main__":
     app()
