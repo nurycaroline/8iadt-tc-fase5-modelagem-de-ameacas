@@ -108,9 +108,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] `pip install -e ".[dev]"` (ou equivalente documentado) instala o pacote
-- [ ] `.gitignore` exclui `data/raw/`, `models/weights/*.pt`, credenciais Kaggle
-- [ ] Gate: `python -m compileall -q src`
+- [x] `pip install -e ".[dev]"` (ou equivalente documentado) instala o pacote
+- [x] `.gitignore` exclui `data/raw/`, `models/weights/*.pt`, credenciais Kaggle
+- [x] Gate: `python -m compileall -q src`
 
 **Tests**: none  
 **Gate**: build  
