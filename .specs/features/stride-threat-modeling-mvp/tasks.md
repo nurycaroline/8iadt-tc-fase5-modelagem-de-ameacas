@@ -225,9 +225,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Fixture VOC → arquivo `.txt` com `class xc yc w h` em [0,1]
-- [ ] XML inválido / bbox ausente → erro ou skip documentado (testado)
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Fixture VOC → arquivo `.txt` com `class xc yc w h` em [0,1]
+- [x] XML inválido / bbox ausente → erro ou skip documentado (testado)
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
