@@ -29,9 +29,11 @@ MVP de viabilidade: a partir de **imagem** de diagrama de arquitetura de softwar
 
 ### Dataset e anotação
 
-- Dataset mínimo viável no repo (ou path documentado): misturar fontes públicas/sintéticas + diagramas no estilo das Figuras 1–2 do enunciado.
-- Anotações em formato compatível com o framework de treino escolhido no Design (ex.: YOLO txt / COCO JSON) — escolha técnica fica para Design.
-- Incluir split train/val documentado.
+- **Confirmado pelo usuário (2026-07-28):** base de treino = [Software Architecture Dataset (Kaggle — carlosrian)](https://www.kaggle.com/datasets/carlosrian/software-architecture-dataset) (~8k PNG aumentados, Pascal VOC, ~87 tipos de serviço cloud AWS/Azure/GCP).
+- Converter VOC → formato do treino (ex.: YOLO) no Design; documentar download (Kaggle CLI/API) e o que versionar no git vs. ignore/LFS.
+- Manter mapa `classe Kaggle → família` para KB STRIDE (database, compute, api, storage, network, security, messaging, client/user, etc.).
+- Complementar com imagens anotadas das Arquiteturas 1–2 do enunciado (avaliação/demo), no mesmo pipeline de labels.
+- Split train/val documentado.
 
 ### Interface e demo
 
@@ -58,7 +60,7 @@ Todas as gray areas abaixo **não foram discutidas com o usuário** (sessão ass
 1. Object detection vs VLM puro → object detection supervisionada
 2. STRIDE por regras+KB vs LLM-only → híbrido regras+KB (+ LLM opcional)
 3. CLI vs web-first → CLI/API P1, UI P2
-4. Dataset próprio vs só público → combinação + estilo das figuras do enunciado
+4. **Dataset → confirmado: Kaggle Software Architecture Dataset (carlosrian)** + anotações das Figuras 1–2 para eval
 5. KB estática vs CVE live → estática versionada
 6. Auth → N/A no MVP
 
@@ -69,6 +71,7 @@ Todas as gray areas abaixo **não foram discutidas com o usuário** (sessão ass
 - Enunciado: *Hackathon — Modelagem de ameaças utilizando IA* (FIAP Software Security / IADT Fase 5)
 - Metodologia: STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege)
 - Avaliação: Arquitetura 1 e Arquitetura 2 (figuras do PDF do enunciado)
+- Dataset (confirmado): [Software Architecture Dataset — Kaggle/carlosrian](https://www.kaggle.com/datasets/carlosrian/software-architecture-dataset)
 - Entregáveis acadêmicos: documentação do fluxo, vídeo ≤15 min, link GitHub
 
 ---

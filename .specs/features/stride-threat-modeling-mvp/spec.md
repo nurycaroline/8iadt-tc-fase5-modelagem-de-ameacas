@@ -37,8 +37,8 @@ Toda ambiguidade resolvida ou registrada aqui — nada fica silenciosamente inde
 | Abordagem de detecção de componentes | Object detection supervisionada (ex.: YOLO/RT-DETR ou equivalente) sobre bounding boxes de componentes no diagrama | Enunciado exige dataset anotado + treino supervisionado para identificar componentes | n |
 | Geração STRIDE após detecção | Pipeline híbrido: (1) mapa componente→categorias STRIDE por regras; (2) enriquecimento com KB de vulnerabilidades/contramedidas; (3) opcional LLM só para redigir o relatório | Evita depender só de LLM (não atende “treino supervisionado”) e entrega relatório legível | n |
 | Interface do MVP | Upload de imagem via API/CLI + relatório Markdown/HTML; UI web mínima opcional (P2) | Suficiente para demo e avaliação nas arquiteturas de teste | n |
-| Dataset | Combinar diagramas sintéticos/públicos + diagramas no estilo das Figuras 1–2 do enunciado; anotar com labels de componentes | Requisitos pedem construir/buscar + anotar | n |
-| Classes de componentes mínimas | `user`, `client`, `web_server`, `api`, `application`, `database`, `cache`, `queue_broker`, `external_service`, `firewall_gateway`, `load_balancer`, `storage` | Cobre arquiteturas típicas e as de avaliação do hackathon | n |
+| Dataset | **Confirmado:** [Software Architecture Dataset (Kaggle — carlosrian)](https://www.kaggle.com/datasets/carlosrian/software-architecture-dataset) como base de treino (~8k imagens aumentadas, Pascal VOC, componentes cloud AWS/Azure/GCP). Complementar com imagens/anotações das Arquiteturas 1–2 do enunciado (e equivalentes) para avaliação/demo | Atende “buscar dataset” + anotações VOC prontas; avaliação do hackathon exige cobertura das figuras do PDF | y |
+| Classes de componentes | Partir das **87 classes de serviços cloud** do dataset Kaggle no treino; manter um **mapa de famílias** (ex.: database, api, compute, storage, network, security, messaging, user/client) para o lookup STRIDE/KB — sem reinventar vocabulário paralelo no treino | Alinha o detector ao dataset escolhido; STRIDE opera em famílias, não em 87 ameaças distintas por serviço | y |
 | Base de vulnerabilidades/contramedidas | KB estática versionada (YAML/JSON) mapeando componente + categoria STRIDE → ameaças, exemplos de vulnerabilidade, contramedidas | Determinístico, auditável, demo estável sem depender de rede | n |
 | Idioma do relatório | Português (pt-BR) | Enunciado e entrega acadêmica em PT | n |
 | Critério de sucesso na avaliação | Rodar nas Arquiteturas 1 e 2 do PDF e produzir relatório STRIDE completo com componentes detectados | Critério explícito de avaliação do hackathon | n |
@@ -59,12 +59,12 @@ Toda ambiguidade resolvida ou registrada aqui — nada fica silenciosamente inde
 
 **Acceptance Criteria**:
 
-1. WHEN o dataset for inspecionado THEN o sistema SHALL disponibilizar imagens de diagramas de arquitetura em formato comum (PNG/JPG) sob um diretório versionável do repositório ou path documentado
-2. WHEN uma imagem anotada for lida THEN cada anotação SHALL conter pelo menos: coordenadas de bounding box (ou formato equivalente suportado pelo treino) e um label de classe de componente pertencente ao vocabulário definido
-3. WHEN o vocabulário de classes for consultado THEN o sistema SHALL documentar a lista canônica de classes usadas na anotação
-4. WHEN o dataset incluir as arquiteturas no estilo das Figuras 1–2 do enunciado (ou equivalentes) THEN essas imagens SHALL estar presentes e anotadas para uso em avaliação/demo
+1. WHEN o dataset for preparado THEN o sistema SHALL usar o **Software Architecture Dataset (Kaggle — carlosrian)** como fonte principal de treino, com download/uso documentado (path local ou script; sem commit obrigatório dos ~8k binários no git se LFS/ignore for usado)
+2. WHEN uma imagem anotada do Kaggle for lida THEN cada anotação SHALL estar em Pascal VOC (XML) ou convertida para o formato de treino escolhido (ex.: YOLO), preservando bounding box e classe de componente
+3. WHEN o vocabulário de classes for consultado THEN o sistema SHALL documentar as classes do Kaggle usadas no treino e o **mapa classe→família** usado pela KB STRIDE
+4. WHEN as Arquiteturas 1–2 do enunciado (ou equivalentes) forem usadas na avaliação/demo THEN essas imagens SHALL existir no repo (ou path documentado), anotadas no mesmo pipeline, mesmo que o volume principal de treino venha do Kaggle
 
-**Independent Test**: Abrir o dataset, listar N imagens, validar que cada uma tem arquivo de anotação válido com ≥1 componente rotulado.
+**Independent Test**: Baixar/apontar o Kaggle, listar N imagens com XML VOC válido; confirmar presença das imagens de avaliação estilo Figuras 1–2.
 
 ---
 

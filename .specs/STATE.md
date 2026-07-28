@@ -18,13 +18,21 @@
 - **Date**: 2026-07-28
 - **Status**: active
 
+### AD-003
+- **Decision**: Dataset de treino do detector = Software Architecture Dataset no Kaggle (`carlosrian/software-architecture-dataset`); eval/demo complementar com Arquiteturas 1–2 do enunciado anotadas no mesmo pipeline.
+- **Reason**: Escolha explícita do usuário; dataset já anotado (Pascal VOC), alinhado a hackathon FIAP e detecção de componentes em diagramas cloud.
+- **Trade-off**: Classes são serviços cloud específicos (~87) — exige mapa classe→família para STRIDE/KB; binários grandes ficam fora do git (download documentado).
+- **Scope**: Feature `stride-threat-modeling-mvp` (DATA-*, DET-*, KB lookup).
+- **Date**: 2026-07-28
+- **Status**: active
+
 ## Handoff
 
 - **Feature**: STRIDE Threat Modeling MVP / `.specs/features/stride-threat-modeling-mvp/`
-- **Phase / Task**: Specify — spec.md + context.md criados; aguardando confirmação do usuário
-- **Completed**: none (implementação ainda não iniciada)
-- **In-progress**: `.specs/features/stride-threat-modeling-mvp/spec.md` — spec draft pronta para review
-- **Next step**: Usuário confirma (ou ajusta) assumptions/P1–P3; em seguida fase Design (`design.md`)
-- **Blockers**: Confirmação das assumptions (detecção YOLO-like, KB estática, CLI P1, UI P2, pt-BR)
-- **Uncommitted files**: `.specs/**` (a commitar nesta sessão)
+- **Phase / Task**: Specify — dataset confirmado (Kaggle); demais assumptions ainda abertas
+- **Completed**: Decisão de dataset (AD-003)
+- **In-progress**: `.specs/features/stride-threat-modeling-mvp/spec.md` — review das assumptions restantes
+- **Next step**: Confirmar demais assumptions (YOLO-like, KB estática, CLI P1 / UI P2) ou seguir para Design
+- **Blockers**: none críticos para Design; confirmação residual das outras assumptions
+- **Uncommitted files**: updates em `.specs/**`
 - **Branch**: `cursor/stride-threat-modeling-spec-bf8d`
