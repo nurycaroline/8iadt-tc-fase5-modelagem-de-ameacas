@@ -387,9 +387,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Markdown em pt-BR lista componente, categoria, ameaça, vulnerabilidade, contramedida
-- [ ] JSON parseável espelha findings
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Markdown em pt-BR lista componente, categoria, ameaça, vulnerabilidade, contramedida
+- [x] JSON parseável espelha findings
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
