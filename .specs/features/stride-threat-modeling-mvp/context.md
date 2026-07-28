@@ -2,7 +2,7 @@
 
 **Gathered:** 2026-07-28
 **Spec:** `.specs/features/stride-threat-modeling-mvp/spec.md`
-**Status:** Draft — assumptions signed by agent (async); awaiting user confirmation before Design
+**Status:** Ready for Execute — Design + Tasks drafts written; awaiting user approval
 
 ---
 
@@ -48,21 +48,21 @@ MVP de viabilidade: a partir de **imagem** de diagrama de arquitetura de softwar
 
 ### Agent's Discretion
 
-- Escolha exata do framework de detecção (Ultralytics YOLO vs Detectron2 vs outro) no Design.
-- Tamanho do dataset (mínimo para demo + métrica básica vs expansão).
-- Estrutura de pastas do monorepo / linguagem (preferência Python para ML + docs).
-- Se e quando usar LLM para redação.
+- Tamanho do subset de treino smoke vs full Kaggle (docs devem cobrir ambos).
+- Se Gradio (T21) for cortado por tempo, CLI+docs bastam para P1; UI permanece P2 no tasks.md.
+- Checkpoint demo pré-treinado vs treinar do zero no ambiente do avaliador.
 
 ### Declined / Undiscussed Gray Areas → Assumptions
 
-Todas as gray areas abaixo **não foram discutidas com o usuário** (sessão assíncrona). Defaults e racionales estão na tabela **Assumptions & Open Questions** de `spec.md`:
+Todas as gray areas abaixo **não foram discutidas com o usuário** (sessão assíncrona), exceto dataset. Defaults e racionales:
 
-1. Object detection vs VLM puro → object detection supervisionada
-2. STRIDE por regras+KB vs LLM-only → híbrido regras+KB (+ LLM opcional)
-3. CLI vs web-first → CLI/API P1, UI P2
+1. Object detection vs VLM puro → object detection supervisionada (**AD-004: Ultralytics YOLO11n**)
+2. STRIDE por regras+KB vs LLM-only → híbrido regras+KB (LLM fora do P1)
+3. CLI vs web-first → CLI/API P1, Gradio UI P2 (T21)
 4. **Dataset → confirmado: Kaggle Software Architecture Dataset (carlosrian)** + anotações das Figuras 1–2 para eval
-5. KB estática vs CVE live → estática versionada
+5. KB estática vs CVE live → estática versionada YAML
 6. Auth → N/A no MVP
+7. Stack app → **AD-005: Python + pytest + Typer**
 
 ---
 

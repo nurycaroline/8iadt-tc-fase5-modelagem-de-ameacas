@@ -26,13 +26,29 @@
 - **Date**: 2026-07-28
 - **Status**: active
 
+### AD-004
+- **Decision**: Stack de detecção = Ultralytics YOLO11n (nano) com conversão Pascal VOC → labels YOLO.
+- **Reason**: Approach A do design; NMS nativo, treino/inferência simples, alinhado ao dataset Kaggle VOC.
+- **Trade-off**: Dependência do ecossistema Ultralytics; domain shift possível vs. diagramas genéricos do PDF (mitigado com `data/eval/` + fine-tune).
+- **Scope**: Treino/inferência do MVP e scripts de métricas.
+- **Date**: 2026-07-28
+- **Status**: active
+
+### AD-005
+- **Decision**: Aplicação em Python 3.11+ (`src/stride_mvp` + `pyproject.toml`); testes com pytest; CLI Typer; UI P2 Gradio.
+- **Reason**: Greenfield ML/CV; strong defaults de teste na ausência de guidelines do repo.
+- **Trade-off**: Sem frontend React; Gradio só no P2.
+- **Scope**: Todo o código do MVP.
+- **Date**: 2026-07-28
+- **Status**: active
+
 ## Handoff
 
 - **Feature**: STRIDE Threat Modeling MVP / `.specs/features/stride-threat-modeling-mvp/`
-- **Phase / Task**: Specify — dataset confirmado (Kaggle); demais assumptions ainda abertas
-- **Completed**: Decisão de dataset (AD-003)
-- **In-progress**: `.specs/features/stride-threat-modeling-mvp/spec.md` — review das assumptions restantes
-- **Next step**: Confirmar demais assumptions (YOLO-like, KB estática, CLI P1 / UI P2) ou seguir para Design
-- **Blockers**: none críticos para Design; confirmação residual das outras assumptions
-- **Uncommitted files**: updates em `.specs/**`
+- **Phase / Task**: Design + Tasks concluídos (draft); aguardando aprovação para Execute
+- **Completed**: Specify (spec+context), Design (`design.md`), Tasks (`tasks.md` T1–T21)
+- **In-progress**: none
+- **Next step**: Usuário aprova design/tasks → Execute Batch A (T1–T7) com skill tlc-spec-driven
+- **Blockers**: Confirmação formal de Design/Tasks (assumptions residuais YOLO/KB/CLI já incorporadas como AD-004/005)
+- **Uncommitted files**: design.md, tasks.md, STATE/spec/context updates
 - **Branch**: `cursor/stride-threat-modeling-spec-bf8d`

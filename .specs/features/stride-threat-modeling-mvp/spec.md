@@ -34,16 +34,17 @@ Toda ambiguidade resolvida ou registrada aqui — nada fica silenciosamente inde
 
 | Assumption / decision | Chosen default | Rationale | Confirmed? |
 | --------------------- | -------------- | --------- | ---------- |
-| Abordagem de detecção de componentes | Object detection supervisionada (ex.: YOLO/RT-DETR ou equivalente) sobre bounding boxes de componentes no diagrama | Enunciado exige dataset anotado + treino supervisionado para identificar componentes | n |
-| Geração STRIDE após detecção | Pipeline híbrido: (1) mapa componente→categorias STRIDE por regras; (2) enriquecimento com KB de vulnerabilidades/contramedidas; (3) opcional LLM só para redigir o relatório | Evita depender só de LLM (não atende “treino supervisionado”) e entrega relatório legível | n |
-| Interface do MVP | Upload de imagem via API/CLI + relatório Markdown/HTML; UI web mínima opcional (P2) | Suficiente para demo e avaliação nas arquiteturas de teste | n |
+| Abordagem de detecção de componentes | Object detection supervisionada com **Ultralytics YOLO11n** (AD-004) | Enunciado exige dataset anotado + treino supervisionado; Design Approach A | y (via Design) |
+| Geração STRIDE após detecção | Pipeline híbrido regras + KB YAML; LLM fora do P1 | AD-001 | y (via Design) |
+| Interface do MVP | CLI Typer P1; Gradio P2 (T21) | Suficiente para demo e vídeo | y (via Design) |
 | Dataset | **Confirmado:** [Software Architecture Dataset (Kaggle — carlosrian)](https://www.kaggle.com/datasets/carlosrian/software-architecture-dataset) como base de treino (~8k imagens aumentadas, Pascal VOC, componentes cloud AWS/Azure/GCP). Complementar com imagens/anotações das Arquiteturas 1–2 do enunciado (e equivalentes) para avaliação/demo | Atende “buscar dataset” + anotações VOC prontas; avaliação do hackathon exige cobertura das figuras do PDF | y |
 | Classes de componentes | Partir das **87 classes de serviços cloud** do dataset Kaggle no treino; manter um **mapa de famílias** (ex.: database, api, compute, storage, network, security, messaging, user/client) para o lookup STRIDE/KB — sem reinventar vocabulário paralelo no treino | Alinha o detector ao dataset escolhido; STRIDE opera em famílias, não em 87 ameaças distintas por serviço | y |
-| Base de vulnerabilidades/contramedidas | KB estática versionada (YAML/JSON) mapeando componente + categoria STRIDE → ameaças, exemplos de vulnerabilidade, contramedidas | Determinístico, auditável, demo estável sem depender de rede | n |
-| Idioma do relatório | Português (pt-BR) | Enunciado e entrega acadêmica em PT | n |
-| Critério de sucesso na avaliação | Rodar nas Arquiteturas 1 e 2 do PDF e produzir relatório STRIDE completo com componentes detectados | Critério explícito de avaliação do hackathon | n |
-| Auth / rate limit | N/A no MVP — ferramenta local/demo sem login | Hackathon de viabilidade | n |
-| Persistência de análises | Opcional: salvar último resultado em arquivo; sem banco obrigatório | Simplifica MVP | n |
+| Base de vulnerabilidades/contramedidas | KB estática versionada YAML (`data/kb/threats.yaml`) | Determinístico, auditável | y (via Design) |
+| Idioma do relatório | Português (pt-BR) | Enunciado e entrega acadêmica em PT | y (via Design) |
+| Critério de sucesso na avaliação | Rodar nas Arquiteturas 1 e 2 do PDF e produzir relatório STRIDE completo com componentes detectados | Critério explícito de avaliação do hackathon | y |
+| Auth / rate limit | N/A no MVP — ferramenta local/demo sem login | Hackathon de viabilidade | y |
+| Persistência de análises | Arquivos em `reports/`; sem banco | Simplifica MVP | y (via Design) |
+| Stack da aplicação | Python 3.11+ / pytest / Typer / Gradio P2 (AD-005) | Greenfield ML | y (via Design) |
 
 **Open questions:** nenhuma pendente sem registro — todas as áreas cinzentas estão como assumptions acima (aguardam confirmação do usuário).
 
@@ -212,37 +213,37 @@ Toda ambiguidade resolvida ou registrada aqui — nada fica silenciosamente inde
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| DATA-01 | P1: Dataset anotado | Design | Pending |
-| DATA-02 | P1: Dataset anotado — vocabulário de classes | Design | Pending |
-| DATA-03 | P1: Dataset — cobertura estilo Figuras 1–2 | Design | Pending |
-| DET-01 | P1: Treinar detector — artefatos de modelo | Design | Pending |
-| DET-02 | P1: Inferência retorna classe/confiança/bbox | Design | Pending |
-| DET-03 | P1: Limiar de confiança | Design | Pending |
-| DET-04 | P1: Inferência nas arquiteturas de avaliação | Design | Pending |
-| STRIDE-01 | P1: Relatório cobre categorias STRIDE | Design | Pending |
-| STRIDE-02 | P1: Ameaça com componente + categoria + descrição | Design | Pending |
-| STRIDE-03 | P1: Formato Markdown/HTML | Design | Pending |
-| STRIDE-04 | P1: Componente sem mapeamento tratado | Design | Pending |
-| KB-01 | P1: Vulnerabilidade por ameaça | Design | Pending |
-| KB-02 | P1: Contramedida por ameaça | Design | Pending |
-| KB-03 | P1: KB versionável no repo | Design | Pending |
-| KB-04 | P1: Lookup por componente + STRIDE | Design | Pending |
-| PIPE-01 | P1: Pipeline ponta a ponta | Design | Pending |
-| PIPE-02 | P1: Erro em imagem inválida | Design | Pending |
-| PIPE-03 | P1: Persistência/stdout do relatório | Design | Pending |
-| PIPE-04 | P1: Demo nas arquiteturas de teste | Design | Pending |
-| DOC-01 | P2: Documentação do fluxo | - | Pending |
-| DOC-02 | P2: Reprodução via docs | - | Pending |
-| UI-01 | P2: Upload na UI | - | Pending |
-| UI-02 | P2: Exibir relatório | - | Pending |
-| MET-01 | P3: Métrica agregada de detecção | - | Pending |
-| MET-02 | P3: Relatório de métricas persistido | - | Pending |
+| DATA-01 | P1: Dataset Kaggle como fonte principal | Tasks | In Tasks |
+| DATA-02 | P1: Anotações VOC (+ conversão) e mapa classe→família | Tasks | In Tasks |
+| DATA-03 | P1: Arquiteturas 1–2 anotadas para eval/demo | Tasks | In Tasks |
+| DET-01 | P1: Treinar detector — artefatos de modelo | Tasks | In Tasks |
+| DET-02 | P1: Inferência retorna classe/confiança/bbox | Tasks | In Tasks |
+| DET-03 | P1: Limiar de confiança | Tasks | In Tasks |
+| DET-04 | P1: Inferência nas arquiteturas de avaliação | Tasks | In Tasks |
+| STRIDE-01 | P1: Relatório cobre categorias STRIDE | Tasks | In Tasks |
+| STRIDE-02 | P1: Ameaça com componente + categoria + descrição | Tasks | In Tasks |
+| STRIDE-03 | P1: Formato Markdown/HTML | Tasks | In Tasks |
+| STRIDE-04 | P1: Componente sem mapeamento tratado | Tasks | In Tasks |
+| KB-01 | P1: Vulnerabilidade por ameaça | Tasks | In Tasks |
+| KB-02 | P1: Contramedida por ameaça | Tasks | In Tasks |
+| KB-03 | P1: KB versionável no repo | Tasks | In Tasks |
+| KB-04 | P1: Lookup por componente + STRIDE | Tasks | In Tasks |
+| PIPE-01 | P1: Pipeline ponta a ponta | Tasks | In Tasks |
+| PIPE-02 | P1: Erro em imagem inválida | Tasks | In Tasks |
+| PIPE-03 | P1: Persistência/stdout do relatório | Tasks | In Tasks |
+| PIPE-04 | P1: Demo nas arquiteturas de teste | Tasks | In Tasks |
+| DOC-01 | P2: Documentação do fluxo | Tasks | In Tasks |
+| DOC-02 | P2: Reprodução via docs | Tasks | In Tasks |
+| UI-01 | P2: Upload na UI | Tasks | In Tasks |
+| UI-02 | P2: Exibir relatório | Tasks | In Tasks |
+| MET-01 | P3: Métrica agregada de detecção | Tasks | In Tasks |
+| MET-02 | P3: Relatório de métricas persistido | Tasks | In Tasks |
 
 **ID format:** `DATA|DET|STRIDE|KB|PIPE|DOC|UI|MET`-NN
 
 **Status values:** Pending → In Design → In Tasks → Implementing → Verified
 
-**Coverage:** 25 total, 0 mapped to tasks, 25 unmapped (esperado — fase Specify; Tasks ainda não iniciada)
+**Coverage:** 25 total, 25 mapped to tasks (ver `tasks.md`), 0 unmapped
 
 ---
 
