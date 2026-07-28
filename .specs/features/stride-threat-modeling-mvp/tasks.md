@@ -294,9 +294,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] `predict` retorna classe, confiança, bbox
-- [ ] Detecções &lt; conf excluídas (teste com mock de results)
-- [ ] Gate: `pytest -q tests/unit`
+- [x] `predict` retorna classe, confiança, bbox
+- [x] Detecções &lt; conf excluídas (teste com mock de results)
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
