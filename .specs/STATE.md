@@ -45,9 +45,9 @@
 ## Handoff
 
 - **Feature**: STRIDE Threat Modeling MVP / `.specs/features/stride-threat-modeling-mvp/`
-- **Phase / Task**: Execute — Batch B completa (T8–T14); próximo Batch C (T15–T22)
-- **Completed**: Specify, Design, Tasks (T1–T22); T1–T14
-- **In-progress**: Batch C starting at T15
-- **Next step**: T15 → T22 (pipeline, CLI, eval, docs, metrics, UI, Docker)
-- **Blockers**: none
+- **Phase / Task**: Execute completo (T1–T22) — aguardando Verifier
+- **Completed**: Specify, Design, Tasks; T1–T22 (incl. Docker extra)
+- **In-progress**: none
+- **Next step**: Verifier automático (validation.md) + treino real YOLO com dataset Kaggle quando houver GPU/credenciais
+- **Blockers**: none (pesos `.pt` ainda não treinados — demo usa mock/detector injetável nos testes)
 - **Branch**: `feat/stride-mvp-execute`
