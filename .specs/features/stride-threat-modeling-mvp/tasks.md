@@ -201,10 +201,10 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Mapa cobre famílias usadas pela KB (database, compute, api, storage, network, security, messaging, client/user, unknown)
-- [ ] Classe conhecida → família; desconhecida → `unknown`
-- [ ] Unit tests 1:1 para esses comportamentos
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Mapa cobre famílias usadas pela KB (database, compute, api, storage, network, security, messaging, client/user, unknown)
+- [x] Classe conhecida → família; desconhecida → `unknown`
+- [x] Unit tests 1:1 para esses comportamentos
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
