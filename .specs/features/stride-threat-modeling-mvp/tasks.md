@@ -524,9 +524,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Seções obrigatórias do AC presentes
-- [ ] Comandos copy-paste para `prepare-data`, `train`, `analyze` nas eval images
-- [ ] Gate: build
+- [x] Seções obrigatórias do AC presentes
+- [x] Comandos copy-paste para `prepare-data`, `train`, `analyze` nas eval images
+- [x] Gate: build
 
 **Tests**: none  
 **Gate**: build  
@@ -547,10 +547,10 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Interface retorna métrica numérica agregada
-- [ ] Persistência em arquivo versionável (path documentado)
-- [ ] Teste com mock não precisa GPU
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Interface retorna métrica numérica agregada
+- [x] Persistência em arquivo versionável (path documentado)
+- [x] Teste com mock não precisa GPU
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -571,9 +571,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Upload + display cobertos por smoke test com pipeline mock
-- [ ] README documenta `stride-mvp ui` ou `python -m stride_mvp.web.app`
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Upload + display cobertos por smoke test com pipeline mock
+- [x] README documenta `stride-mvp ui` ou `python -m stride_mvp.web.app`
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -594,11 +594,11 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] `docker build` sobe imagem baseada em Python 3.11+ com o pacote instalado
-- [ ] `docker compose up` (ou comando documentado) expõe a UI Gradio **ou** permite `docker compose run … analyze IMAGE`
-- [ ] `.dockerignore` exclui `data/raw/`, `.git`, venvs, pesos grandes desnecessários ao build
-- [ ] README tem seção Docker copy-paste
-- [ ] Gate: build (`python -m compileall -q src && pytest -q`) — smoke de sintaxe Compose opcional se `docker` disponível
+- [x] `docker build` sobe imagem baseada em Python 3.11+ com o pacote instalado
+- [x] `docker compose up` (ou comando documentado) expõe a UI Gradio **ou** permite `docker compose run … analyze IMAGE`
+- [x] `.dockerignore` exclui `data/raw/`, `.git`, venvs, pesos grandes desnecessários ao build
+- [x] README tem seção Docker copy-paste
+- [x] Gate: build (`python -m compileall -q src && pytest -q`) — smoke de sintaxe Compose opcional se `docker` disponível
 
 **Tests**: none  
 **Gate**: build  
