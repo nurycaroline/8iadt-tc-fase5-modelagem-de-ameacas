@@ -45,10 +45,9 @@
 ## Handoff
 
 - **Feature**: STRIDE Threat Modeling MVP / `.specs/features/stride-threat-modeling-mvp/`
-- **Phase / Task**: Design + Tasks concluídos (draft); aguardando aprovação para Execute
-- **Completed**: Specify (spec+context), Design (`design.md`), Tasks (`tasks.md` T1–T21)
-- **In-progress**: none
-- **Next step**: Usuário aprova design/tasks → Execute Batch A (T1–T7) com skill tlc-spec-driven
-- **Blockers**: Confirmação formal de Design/Tasks (assumptions residuais YOLO/KB/CLI já incorporadas como AD-004/005)
-- **Uncommitted files**: design.md, tasks.md, STATE/spec/context updates
-- **Branch**: `cursor/stride-threat-modeling-spec-bf8d`
+- **Phase / Task**: Execute — Batch A (T1–T7); T22 Docker adicionada (Phase 8)
+- **Completed**: Specify, Design, Tasks (T1–T22; T22 extra Docker pós-T21)
+- **In-progress**: T1 scaffold
+- **Next step**: Implementar T1→T22 sequencialmente (ou batches via sub-agents se usuário confirmar)
+- **Blockers**: none
+- **Branch**: `feat/stride-mvp-execute`

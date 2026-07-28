@@ -83,6 +83,14 @@ T18 → T19
 T20 → T21
 ```
 
+### Phase 8: Packaging / Demo (extra)
+
+```
+T22
+```
+
+> **T22 (Docker)** — pedida pelo usuário (não está no enunciado PDF). Encaixa **depois de T21**: a imagem empacota CLI + UI Gradio já funcionais; avaliadores reproduzem a demo com `docker compose up` sem instalar Python/YOLO localmente. Depende de T17 (CLI) e T21 (UI no compose).
+
 ---
 
 ## Task Breakdown
@@ -573,10 +581,35 @@ T20 → T21
 
 ---
 
+### T22: Docker + Compose para demo reproduzível
+
+**What**: Adicionar `Dockerfile` (+ `.dockerignore`) e `docker-compose.yml` para rodar a demo (CLI `analyze` e/ou UI Gradio) com pesos montados em volume; documentar build/run no README.  
+**Where**: `Dockerfile`, `.dockerignore`, `docker-compose.yml`, trecho em `README.md`  
+**Depends on**: T17, T21  
+**Reuses**: CLI + Gradio app; `models/weights/` via volume (não embutir `.pt` na imagem se grande)  
+**Requirement**: DOC-02 (reprodução); extra usuário (Docker)
+
+**Tools**:
+- MCP: NONE
+- Skill: `tlc-spec-driven`
+
+**Done when**:
+- [ ] `docker build` sobe imagem baseada em Python 3.11+ com o pacote instalado
+- [ ] `docker compose up` (ou comando documentado) expõe a UI Gradio **ou** permite `docker compose run … analyze IMAGE`
+- [ ] `.dockerignore` exclui `data/raw/`, `.git`, venvs, pesos grandes desnecessários ao build
+- [ ] README tem seção Docker copy-paste
+- [ ] Gate: build (`python -m compileall -q src && pytest -q`) — smoke de sintaxe Compose opcional se `docker` disponível
+
+**Tests**: none  
+**Gate**: build  
+**Commit**: `build(docker): add Dockerfile and compose for demo`
+
+---
+
 ## Phase Execution Map
 
 ```
-Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7
+Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7 → Phase 8
 
 Phase 1:  T1 ──→ T2 ──→ T3
 Phase 2:  T4 ──→ T5 ──→ T6 ──→ T7
@@ -585,12 +618,13 @@ Phase 4:  T11 ──→ T12 ──→ T13 ──→ T14
 Phase 5:  T15 ──→ T16 ──→ T17
 Phase 6:  T18 ──→ T19
 Phase 7:  T20 ──→ T21
+Phase 8:  T22
 ```
 
-**Batch packing (Execute):** ~21 tasks → ~3 workers sugeridos  
+**Batch packing (Execute):** ~22 tasks → ~3 workers sugeridos  
 - Batch A: Phases 1–2 (T1–T7)  
 - Batch B: Phases 3–4 (T8–T14)  
-- Batch C: Phases 5–7 (T15–T21)  
+- Batch C: Phases 5–8 (T15–T22)  
 
 Oferecer sub-agents no Execute (offer-then-confirm).
 
@@ -621,6 +655,7 @@ Oferecer sub-agents no Execute (offer-then-confirm).
 | T19 Docs | docs only | ✅ |
 | T20 Metrics | 1 módulo | ✅ |
 | T21 Gradio UI | 1 app | ✅ |
+| T22 Docker | Dockerfile + compose | ✅ |
 
 ---
 
@@ -649,6 +684,7 @@ Oferecer sub-agents no Execute (offer-then-confirm).
 | T19 | T17, T18 | T18→T19 | ✅ |
 | T20 | T19 | T19→T20 | ✅ |
 | T21 | T20 | T20→T21 | ✅ |
+| T22 | T17, T21 | T21→T22 | ✅ |
 
 ---
 
@@ -677,6 +713,7 @@ Oferecer sub-agents no Execute (offer-then-confirm).
 | T19 | docs | none | none | ✅ |
 | T20 | eval_metrics | unit | unit | ✅ |
 | T21 | web UI | unit | unit | ✅ |
+| T22 | docker packaging | none | none | ✅ |
 
 ---
 
@@ -704,10 +741,10 @@ Oferecer sub-agents no Execute (offer-then-confirm).
 | PIPE-03 | T13, T16, T17 |
 | PIPE-04 | T16, T18 |
 | DOC-01 | T19 |
-| DOC-02 | T19 |
+| DOC-02 | T19, T22 |
 | UI-01 | T21 |
 | UI-02 | T21 |
 | MET-01 | T20 |
 | MET-02 | T20 |
 
-**Coverage:** 25 total, 25 mapped to tasks, 0 unmapped
+**Coverage:** 25 total, 25 mapped to tasks, 0 unmapped (+ T22 extra Docker → DOC-02)
