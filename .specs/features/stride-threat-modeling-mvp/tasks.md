@@ -131,10 +131,10 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Modelos exportados e instanciáveis
-- [ ] Config lê defaults + override de path/env
-- [ ] Unit tests cobrem defaults e campos obrigatórios
-- [ ] Gate: `pytest -q tests/unit` passa
+- [x] Modelos exportados e instanciáveis
+- [x] Config lê defaults + override de path/env
+- [x] Unit tests cobrem defaults e campos obrigatórios
+- [x] Gate: `pytest -q tests/unit` passa
 
 **Tests**: unit  
 **Gate**: quick  
