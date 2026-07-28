@@ -432,9 +432,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Happy path PNG/JPG fixture
-- [ ] Rejeita extensão inválida, vazio, oversized
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Happy path PNG/JPG fixture
+- [x] Rejeita extensão inválida, vazio, oversized
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
