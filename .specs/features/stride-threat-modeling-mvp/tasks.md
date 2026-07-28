@@ -155,8 +155,8 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] `pytest -q` coleta e passa smoke + testes T2
-- [ ] Comandos do Gate Check Commands documentados no README stub ou pyproject
+- [x] `pytest -q` coleta e passa smoke + testes T2
+- [x] Comandos do Gate Check Commands documentados no README stub ou pyproject
 
 **Tests**: unit  
 **Gate**: quick  

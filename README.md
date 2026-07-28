@@ -10,11 +10,17 @@ source .venv/bin/activate
 pip install -e ".[dev]"
 ```
 
-Gate local (build):
+## Testes (gates)
+
+| Gate | Quando | Comando |
+| ---- | ------ | ------- |
+| Quick | unit tests | `pytest -q tests/unit` |
+| Full | + integration | `pytest -q` |
+| Build | fim de fase / config | `python -m compileall -q src && pytest -q` |
 
 ```bash
-python -m compileall -q src
-pytest -q   # após bootstrap de testes (T3+)
+pytest -q tests/unit
+pytest -q
 ```
 
 ## Layout
