@@ -45,9 +45,9 @@
 ## Handoff
 
 - **Feature**: STRIDE Threat Modeling MVP / `.specs/features/stride-threat-modeling-mvp/`
-- **Phase / Task**: Execute Batch A — T2 concluída; próximo T3
-- **Completed**: Specify, Design, Tasks (T1–T22; T22 Docker extra pós-T21); T1 scaffold; T2 models+config
-- **In-progress**: T3 bootstrap pytest
-- **Next step**: T3 → T7 (Batch A), depois Batches B/C (+ T22)
+- **Phase / Task**: Execute — Batch A completa (T1–T7); próximo Batch B (T8–T14)
+- **Completed**: Specify, Design, Tasks (T1–T22); T1–T7
+- **In-progress**: Batch B starting at T8
+- **Next step**: T8 → T14 (detection + STRIDE), depois Batch C (T15–T22 Docker)
 - **Blockers**: none
 - **Branch**: `feat/stride-mvp-execute`

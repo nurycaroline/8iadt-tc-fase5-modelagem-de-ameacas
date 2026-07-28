@@ -248,9 +248,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] `data.yaml` contém `train`, `val`, `names`
-- [ ] Seed fixa → split reproduzível (teste)
-- [ ] Gate: `pytest -q tests/unit`
+- [x] `data.yaml` contém `train`, `val`, `names`
+- [x] Seed fixa → split reproduzível (teste)
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
