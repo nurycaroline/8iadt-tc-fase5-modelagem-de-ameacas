@@ -455,9 +455,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Com detector fake, gera MD+JSON em `out_dir`
-- [ ] Imagem inválida propaga ValidationError
-- [ ] Gate: `pytest -q tests/unit`
+- [x] Com detector fake, gera MD+JSON em `out_dir`
+- [x] Imagem inválida propaga ValidationError
+- [x] Gate: `pytest -q tests/unit`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -478,9 +478,9 @@ T22
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] `stride-mvp analyze --help` funciona
-- [ ] Integração: imagem válida → arquivos de relatório; inválida → exit ≠ 0
-- [ ] Gate: `pytest -q`
+- [x] `stride-mvp analyze --help` funciona
+- [x] Integração: imagem válida → arquivos de relatório; inválida → exit ≠ 0
+- [x] Gate: `pytest -q`
 
 **Tests**: integration  
 **Gate**: full  
