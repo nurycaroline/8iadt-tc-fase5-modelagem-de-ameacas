@@ -5,8 +5,9 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Callable
 
-from stride_mvp.config import load_config
+from stride_mvp.config import MissingWeightsError, load_config
 from stride_mvp.pipeline.run import run_pipeline
+from stride_mvp.pipeline.validate import ValidationError
 from stride_mvp.stride.report import ReportRenderer
 
 
@@ -36,5 +37,13 @@ def analyze_upload(
         image.save(tmp)
         image_path = tmp
 
-    report = run(image_path, destination)
+    try:
+        report = run(image_path, destination)
+    except MissingWeightsError as exc:
+        return f"**Erro:** {exc}"
+    except ValidationError as exc:
+        return f"**Erro de validação:** {exc}"
+    except FileNotFoundError as exc:
+        return f"**Erro:** arquivo não encontrado — {exc}"
+
     return renderer.to_markdown(report)
