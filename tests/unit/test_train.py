@@ -29,7 +29,10 @@ def test_train_returns_best_pt_path(tmp_path: Path, monkeypatch: pytest.MonkeyPa
     monkeypatch.setitem(sys.modules, "ultralytics", ultra)
 
     result = train(data_yaml, epochs=1, imgsz=320, project=project)
-    assert result == best
+    promoted = project / "best.pt"
+    assert result == promoted
+    assert promoted.is_file()
+    assert promoted.read_bytes() == best.read_bytes()
     fake_yolo_cls.assert_called_once_with("yolo11n.pt")
     kwargs = fake_model.train.call_args.kwargs
     assert kwargs["data"] == str(data_yaml)
