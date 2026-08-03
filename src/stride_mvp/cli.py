@@ -101,9 +101,9 @@ def ui_cmd(
     port: int = typer.Option(7860, "--port"),
 ) -> None:
     """Sobe a UI Gradio mínima para upload de diagrama."""
-    from stride_mvp.web.app import create_app
+    from stride_mvp.web.app import launch_app
 
-    create_app().launch(server_name=host, server_port=port)
+    launch_app(server_name=host, server_port=port)
 
 
 if __name__ == "__main__":
