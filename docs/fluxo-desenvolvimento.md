@@ -52,18 +52,19 @@ from pathlib import Path
 from stride_mvp.detection.train import train
 
 best = train(Path("data/processed/data.yaml"), epochs=50, imgsz=640)
-print(best)  # models/weights/train/weights/best.pt
+print(best)  # models/weights/best.pt (promovido a partir de train/weights/best.pt)
 ```
 
 **Contratos de edge:**
 
 - **NMS**: feito pelo Ultralytics YOLO na inferência (`ComponentDetector.predict`); o MVP não reimplementa NMS.
 - **Treino interrompido**: não promover `best.pt` parcial — só use o artefato após corrida completa (ou restaure checkpoint documentado). Corridas parciais ≠ modelo pronto para demo.
+- **Caminho Docker/UI**: após treino completo, `best.pt` é copiado para `models/weights/best.pt` (`STRIDE_MODEL_PATH=/weights/best.pt` no compose). O resolver também aceita o layout Ultralytics `…/train/weights/best.pt`.
 
 ## 5. Inferência + STRIDE (CLI)
 
 ```bash
-export STRIDE_MODEL_PATH=models/weights/train/weights/best.pt
+export STRIDE_MODEL_PATH=models/weights/best.pt
 stride-mvp analyze data/eval/arch1/arch1.png --out reports
 stride-mvp analyze data/eval/arch2/arch2.png --out reports
 ```
