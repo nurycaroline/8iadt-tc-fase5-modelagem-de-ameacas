@@ -21,6 +21,7 @@ Extras sob demanda (mais rápido quando não precisa de tudo):
 bash scripts/install_deps.sh dev          # só testes
 bash scripts/install_deps.sh 'ml,ui'      # demo / inferência
 bash scripts/install_deps.sh 'dev,ml,ui,kaggle'  # setup completo + Kaggle
+# GPU (opcional): STRIDE_TORCH_INDEX=https://download.pytorch.org/whl/cu124 bash scripts/install_deps.sh
 ```
 
 Alternativa com pip (mais lenta):
