@@ -59,3 +59,27 @@ def test_invalid_image_raises_validation_error(tmp_path: Path) -> None:
             AppConfig(max_image_bytes=1_000_000),
             detector=FakeDetector(),
         )
+
+
+def test_missing_weights_raises_clear_error(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from stride_mvp.config import MissingWeightsError
+
+    image = tmp_path / "arch1.png"
+    _png(image)
+    missing = tmp_path / "no-such-weights" / "best.pt"
+    monkeypatch.setattr(
+        "stride_mvp.config.DEFAULT_MODEL_PATH", tmp_path / "default-missing.pt"
+    )
+    monkeypatch.setattr(
+        "stride_mvp.config.TRAIN_OUTPUT_MODEL_PATH",
+        tmp_path / "train-missing.pt",
+    )
+    with pytest.raises(MissingWeightsError, match="Pesos YOLO não encontrados"):
+        run_pipeline(
+            image,
+            tmp_path / "out",
+            AppConfig(model_path=missing, max_image_bytes=1_000_000),
+            detector=None,
+        )
