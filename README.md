@@ -7,9 +7,28 @@ Arquiteturas de avaliação: [`docs/eval-architectures.md`](docs/eval-architectu
 
 ## Setup rápido
 
+Instalação otimizada com [`uv`](https://github.com/astral-sh/uv) + PyTorch CPU
+(evita baixar wheels CUDA de vários GB):
+
 ```bash
-python3 -m venv .venv
+bash scripts/install_deps.sh              # default: dev,ml,ui
 source .venv/bin/activate
+```
+
+Extras sob demanda (mais rápido quando não precisa de tudo):
+
+```bash
+bash scripts/install_deps.sh dev          # só testes
+bash scripts/install_deps.sh 'ml,ui'      # demo / inferência
+bash scripts/install_deps.sh 'dev,ml,ui,kaggle'  # setup completo + Kaggle
+# GPU (opcional): STRIDE_TORCH_INDEX=https://download.pytorch.org/whl/cu124 bash scripts/install_deps.sh
+```
+
+Alternativa com pip (mais lenta):
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 pip install -e ".[dev,ml,ui,kaggle]"
 ```
 

@@ -15,10 +15,12 @@ Documento do fluxo usado para construir o MVP (DOC-01, DOC-02).
 
 ## 1. Setup
 
+Preferir o script rápido (`uv` + PyTorch CPU):
+
 ```bash
-python3 -m venv .venv
+bash scripts/install_deps.sh              # default: dev,ml,ui
 source .venv/bin/activate
-pip install -e ".[dev,ml,ui,kaggle]"
+# Completo com Kaggle: bash scripts/install_deps.sh 'dev,ml,ui,kaggle'
 ```
 
 ## 2. Dataset Kaggle
@@ -76,7 +78,7 @@ Edite `data/kb/threats.yaml` para adicionar ameaças por família × categoria S
 ## 7. UI Gradio (P2)
 
 ```bash
-pip install -e ".[ui]"
+bash scripts/install_deps.sh ui   # se ainda não instalou a extra ui
 stride-mvp ui
 # ou: python -m stride_mvp.web.app
 ```
