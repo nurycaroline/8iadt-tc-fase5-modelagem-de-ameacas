@@ -33,9 +33,11 @@ def run_pipeline(
     validate_image(image, max_bytes=config.max_image_bytes)
 
     if detector is None:
+        from stride_mvp.config import resolve_model_path
         from stride_mvp.detection.detector import ComponentDetector
 
-        detector = ComponentDetector(config.model_path, conf=config.confidence)
+        weights = resolve_model_path(config.model_path)
+        detector = ComponentDetector(weights, conf=config.confidence)
 
     mapper = mapper or load_class_map()
     kb = kb or ThreatKB.load()

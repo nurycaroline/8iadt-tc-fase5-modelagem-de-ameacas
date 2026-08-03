@@ -45,9 +45,9 @@
 ## Handoff
 
 - **Feature**: STRIDE Threat Modeling MVP / `.specs/features/stride-threat-modeling-mvp/`
-- **Phase / Task**: Execute + Verifier **PASS** (T1–T22)
-- **Completed**: Specify, Design, Tasks; T1–T22; validation.md PASS (58 tests; sensor 3/3)
+- **Phase / Task**: Bugfix — missing `/weights/best.pt` on analyze click
+- **Completed**: Specify, Design, Tasks; T1–T22; validation.md PASS; weights path resolve + UI error + train promote
 - **In-progress**: none
-- **Next step**: Treinar YOLO real com Kaggle + pesos em `models/weights/` para demo; opcional PR
+- **Next step**: Treinar YOLO real com Kaggle para popular `models/weights/best.pt` na demo Docker
 - **Blockers**: none (CI usa ScriptedDetector; pesos reais ainda não versionados)
-- **Branch**: `feat/stride-mvp-execute`
+- **Branch**: `cursor/fix-missing-weights-path-7c0d`

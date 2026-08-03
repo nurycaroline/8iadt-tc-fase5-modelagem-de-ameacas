@@ -61,3 +61,33 @@ def test_analyze_upload_returns_markdown_report(tmp_path: Path) -> None:
 
 def test_analyze_upload_prompts_when_missing_image() -> None:
     assert "Envie uma imagem" in analyze_upload(None)
+
+
+def test_analyze_upload_reports_missing_weights(tmp_path: Path) -> None:
+    from stride_mvp.config import MissingWeightsError
+
+    image = tmp_path / "upload.png"
+    Image.new("RGB", (8, 8), color=(1, 1, 1)).save(image, format="PNG")
+
+    def boom(*_args):
+        raise MissingWeightsError(
+            "Pesos YOLO não encontrados. Treine o modelo ou monte `best.pt`."
+        )
+
+    md = analyze_upload(str(image), out_dir=tmp_path / "out", pipeline_fn=boom)
+    assert md.startswith("**Erro:**")
+    assert "Pesos YOLO não encontrados" in md
+
+
+def test_analyze_upload_reports_validation_error(tmp_path: Path) -> None:
+    from stride_mvp.pipeline.validate import ValidationError
+
+    image = tmp_path / "upload.png"
+    Image.new("RGB", (8, 8), color=(1, 1, 1)).save(image, format="PNG")
+
+    def boom(*_args):
+        raise ValidationError("formato inválido")
+
+    md = analyze_upload(str(image), out_dir=tmp_path / "out", pipeline_fn=boom)
+    assert md.startswith("**Erro de validação:**")
+    assert "formato inválido" in md

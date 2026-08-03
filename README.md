@@ -22,8 +22,8 @@ python -c "from stride_mvp.data.download import ensure_dataset; print(ensure_dat
 # Treino (após VOC→YOLO + data.yaml)
 python -c "from pathlib import Path; from stride_mvp.detection.train import train; print(train(Path('data/processed/data.yaml'), epochs=50))"
 
-# Análise nas imagens de eval
-export STRIDE_MODEL_PATH=models/weights/train/weights/best.pt
+# Análise nas imagens de eval (após treino → models/weights/best.pt)
+export STRIDE_MODEL_PATH=models/weights/best.pt
 stride-mvp analyze data/eval/arch1/arch1.png --out reports
 stride-mvp analyze data/eval/arch2/arch2.png --out reports
 
@@ -55,6 +55,11 @@ python -c "from stride_mvp.data.download import ensure_dataset; ensure_dataset()
 
 ## Docker
 
+Antes do `compose up`, treine (ou copie) os pesos para que exista
+`models/weights/best.pt`. O treino promove automaticamente
+`models/weights/train/weights/best.pt` → `models/weights/best.pt`
+(volume montado em `/weights/best.pt` no container).
+
 ```bash
 docker compose build
 docker compose up
@@ -63,6 +68,7 @@ docker compose up
 ```
 
 Monte pesos em `./models/weights` (volume). Não embute `.pt` grandes na imagem.
+Sem `best.pt`, a UI mostra erro claro em vez de traceback.
 
 ## Layout
 
