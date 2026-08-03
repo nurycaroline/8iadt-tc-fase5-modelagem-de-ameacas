@@ -42,12 +42,20 @@
 - **Date**: 2026-07-28
 - **Status**: active
 
+### AD-006
+- **Decision**: Instalação de deps via `uv` + pré-instalação de PyTorch do índice CPU (`scripts/install_deps.sh`); Docker e Cloud Agents seguem o mesmo caminho.
+- **Reason**: `pip install -e ".[ml,…]"` puxava wheels CUDA multi-GB e resolvia lento; CPU basta para demo/inferência neste MVP.
+- **Trade-off**: GPU local precisa de `STRIDE_TORCH_INDEX` apontando para índice CUDA.
+- **Scope**: Setup local, Dockerfile, `.cursor/environment.json`.
+- **Date**: 2026-08-03
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: STRIDE Threat Modeling MVP / `.specs/features/stride-threat-modeling-mvp/`
-- **Phase / Task**: Bugfix — missing `/weights/best.pt` on analyze click
-- **Completed**: Specify, Design, Tasks; T1–T22; validation.md PASS; weights path resolve + UI error + train promote
+- **Feature**: Otimização instalação de dependências
+- **Phase / Task**: scripts/install_deps.sh + Dockerfile + environment.json
+- **Completed**: Install ~8s com torch CPU; docs atualizados
 - **In-progress**: none
 - **Next step**: Treinar YOLO real com Kaggle para popular `models/weights/best.pt` na demo Docker
 - **Blockers**: none (CI usa ScriptedDetector; pesos reais ainda não versionados)
-- **Branch**: `cursor/fix-missing-weights-path-7c0d`
+- **Branch**: `cursor/optimize-deps-install-305e`

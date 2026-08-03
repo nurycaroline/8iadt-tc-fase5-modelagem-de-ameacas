@@ -15,6 +15,9 @@ cd "$ROOT"
 
 EXTRAS="${1:-dev,ml,ui}"
 PYTHON_VERSION="${STRIDE_PYTHON:-3.11}"
+# Override with CUDA index when needed, e.g.:
+#   STRIDE_TORCH_INDEX=https://download.pytorch.org/whl/cu124 bash scripts/install_deps.sh
+TORCH_INDEX="${STRIDE_TORCH_INDEX:-https://download.pytorch.org/whl/cpu}"
 
 export PATH="${HOME}/.local/bin:/usr/local/bin:${PATH}"
 
@@ -32,10 +35,10 @@ fi
 # shellcheck disable=SC1091
 source .venv/bin/activate
 
-echo "==> Pre-installing CPU PyTorch (avoids multi-GB CUDA wheels)"
+echo "==> Pre-installing PyTorch from ${TORCH_INDEX}"
 uv pip install --python .venv/bin/python \
   torch torchvision \
-  --index-url https://download.pytorch.org/whl/cpu
+  --index-url "${TORCH_INDEX}"
 
 echo "==> Installing stride-mvp[${EXTRAS}]"
 uv pip install --python .venv/bin/python -e ".[${EXTRAS}]"
