@@ -22,10 +22,12 @@ dev = [
 ]
 ml = [
   "ultralytics>=8.3",
-  "opencv-python-headless>=4.8",
+  # OpenCV 4.12+ requires numpy>=2; keep below 5.x for Ultralytics stability
+  "opencv-python-headless>=4.8,<5",
 ]
 ui = [
-  "gradio>=4.0",
+  # Gradio <4.44 pins numpy~=1.0 and conflicts with OpenCV/Ultralytics (numpy 2)
+  "gradio>=4.44.0",
 ]
 kaggle = [
   "kaggle>=1.6",

@@ -28,9 +28,14 @@ Alternativa com pip (mais lenta):
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
+pip install --upgrade pip
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 pip install -e ".[dev,ml,ui,kaggle]"
 ```
+
+> Gradio precisa ser **≥4.44** (já pinado no `pyproject.toml`) para conviver com
+> OpenCV/Ultralytics em numpy 2. Pip antigo (<24) pode falhar na resolução —
+> use o script `uv` acima ou atualize o pip.
 
 ## Comandos principais
 
