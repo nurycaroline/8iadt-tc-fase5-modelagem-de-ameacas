@@ -85,3 +85,29 @@ def test_load_config_env_overrides(monkeypatch: pytest.MonkeyPatch, tmp_path: Pa
     cfg = load_config(path)
     assert cfg.confidence == pytest.approx(0.55)
     assert cfg.model_path == Path("/weights/best.pt")
+
+
+def test_resolve_model_path_uses_configured_when_present(tmp_path: Path) -> None:
+    from stride_mvp.config import resolve_model_path
+
+    weights = tmp_path / "best.pt"
+    weights.write_bytes(b"x")
+    assert resolve_model_path(weights) == weights
+
+
+def test_resolve_model_path_falls_back_to_train_output(tmp_path: Path) -> None:
+    from stride_mvp.config import resolve_model_path
+
+    configured = tmp_path / "best.pt"
+    train_best = tmp_path / "train" / "weights" / "best.pt"
+    train_best.parent.mkdir(parents=True)
+    train_best.write_bytes(b"trained")
+    assert resolve_model_path(configured) == train_best
+
+
+def test_resolve_model_path_raises_clear_error_when_missing(tmp_path: Path) -> None:
+    from stride_mvp.config import MissingWeightsError, resolve_model_path
+
+    missing = tmp_path / "missing" / "best.pt"
+    with pytest.raises(MissingWeightsError, match="Pesos YOLO não encontrados"):
+        resolve_model_path(missing)
