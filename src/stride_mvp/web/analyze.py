@@ -76,14 +76,6 @@ def analyze_upload(
     )
     renderer = ReportRenderer()
 
-    report = run(image_path, destination)
-
-    image_path = Path(image) if not hasattr(image, "save") else None
-    if image_path is None:
-        tmp = destination / "_upload.png"
-        image.save(tmp)
-        image_path = tmp
-
     try:
         report = run(image_path, destination)
     except MissingWeightsError as exc:
