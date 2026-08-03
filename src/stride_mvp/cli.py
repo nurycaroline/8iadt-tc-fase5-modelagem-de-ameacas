@@ -7,7 +7,7 @@ from typing import Optional
 
 import typer
 
-from stride_mvp.config import load_config
+from stride_mvp.config import MissingWeightsError, load_config
 from stride_mvp.pipeline.run import run_pipeline
 from stride_mvp.pipeline.validate import ValidationError
 
@@ -59,6 +59,9 @@ def analyze(
         )
     except ValidationError as exc:
         typer.secho(f"Erro de validação: {exc}", fg=typer.colors.RED, err=True)
+        raise typer.Exit(code=1) from exc
+    except MissingWeightsError as exc:
+        typer.secho(f"Erro: {exc}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1) from exc
     except Exception as exc:  # noqa: BLE001
         typer.secho(f"Falha na análise: {exc}", fg=typer.colors.RED, err=True)

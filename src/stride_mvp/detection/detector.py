@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from stride_mvp.config import resolve_model_path
 from stride_mvp.models import Detection
 
 
@@ -18,7 +19,7 @@ class ComponentDetector:
     def __init__(self, weights: Path, conf: float = 0.25) -> None:
         from ultralytics import YOLO
 
-        self.weights = Path(weights)
+        self.weights = resolve_model_path(Path(weights))
         self.conf = conf
         self._model = YOLO(str(self.weights))
 
