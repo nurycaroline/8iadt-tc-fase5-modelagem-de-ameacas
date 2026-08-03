@@ -29,6 +29,8 @@ stride-mvp analyze data/eval/arch2/arch2.png --out reports
 
 # UI Gradio
 stride-mvp ui
+# Abra http://localhost:7860 — Upload, arrastar, ou Ctrl+V/Cmd+V para colar o diagrama.
+# O botão "Paste from Clipboard" do Gradio só funciona em https:// ou http://localhost.
 ```
 
 ## Testes (gates)
