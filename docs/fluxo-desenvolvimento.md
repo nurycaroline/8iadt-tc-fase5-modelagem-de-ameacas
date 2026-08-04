@@ -55,6 +55,68 @@ best = train(Path("data/processed/data.yaml"), epochs=50, imgsz=640)
 print(best)  # models/weights/train/weights/best.pt
 ```
 
+Após treino completo, promova o peso para o path padrão da app/Docker:
+
+```bash
+cp models/weights/train/weights/best.pt models/weights/best.pt
+```
+
+### 4.1 Treino no Mac (Apple Silicon — MPS)
+
+No MacBook com chip Apple (M1/M2/M3/M4), use **Metal Performance Shaders (`mps`)**. Com `device=None` (default), `train()` escolhe automaticamente CUDA → MPS → CPU.
+
+```bash
+# Confirme MPS
+python -c "import torch; print(torch.backends.mps.is_available())"  # True
+```
+
+**Smoke rápido** (valida pipeline antes do treino longo):
+
+```python
+from pathlib import Path
+from stride_mvp.detection.train import train
+
+train(
+    Path("data/processed/data.yaml"),
+    epochs=3,
+    imgsz=512,
+    device="mps",
+    batch=32,       # fixo — NÃO use batch=-1 no Mac (AutoBatch é orientado a CUDA)
+    workers=4,
+    amp=True,
+    fraction=0.1,   # 10% do dataset
+)
+```
+
+**Treino de demo** (M4 Pro + 48 GB de exemplo):
+
+```python
+from pathlib import Path
+from stride_mvp.detection.train import train
+
+best = train(
+    Path("data/processed/data.yaml"),
+    epochs=50,
+    imgsz=640,
+    device="mps",
+    batch=32,       # se não houver swap, teste 48–64
+    workers=4,
+    amp=True,
+    cache=False,    # com muita RAM unificada, cache="ram" pode acelerar
+)
+print(best)
+```
+
+| Ajuste | Sugestão no Mac |
+| ------ | --------------- |
+| `device` | `"mps"` (ou auto-detect) |
+| `batch` | Inteiro fixo (`16`→`32`→`64`); sem `batch=-1` |
+| Modelo | Manter `yolo11n.pt` (já é o default) |
+| `workers` | `4`–`8`; se travar o dataloader, use `0` |
+| Instabilidade MPS | Tente `amp=False` e/ou `workers=0` |
+
+Expectativa: MPS é bem mais rápido que CPU no Mac, mas ainda costuma ficar atrás de uma GPU NVIDIA (CUDA).
+
 **Contratos de edge:**
 
 - **NMS**: feito pelo Ultralytics YOLO na inferência (`ComponentDetector.predict`); o MVP não reimplementa NMS.

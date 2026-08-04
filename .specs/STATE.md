@@ -48,6 +48,6 @@
 - **Phase / Task**: Execute + Verifier **PASS** (T1–T22)
 - **Completed**: Specify, Design, Tasks; T1–T22; validation.md PASS (58 tests; sensor 3/3)
 - **In-progress**: none
-- **Next step**: Treinar YOLO real com Kaggle + pesos em `models/weights/` para demo; opcional PR
+- **Next step**: Treinar YOLO no Mac com MPS (`device="mps"`, batch fixo) — ver `docs/fluxo-desenvolvimento.md` §4.1; pesos em `models/weights/` para demo
 - **Blockers**: none (CI usa ScriptedDetector; pesos reais ainda não versionados)
-- **Branch**: `feat/stride-mvp-execute`
+- **Branch**: `cursor/mac-mps-train-062c`
