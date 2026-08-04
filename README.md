@@ -48,7 +48,9 @@ python -c "from stride_mvp.data.download import ensure_dataset; print(ensure_dat
 python scripts/prepare_yolo_dataset.py
 
 # Treino (após VOC→YOLO + data.yaml)
-python -c "from pathlib import Path; from stride_mvp.detection.train import train; print(train(Path('data/processed/data.yaml'), epochs=50))"
+# device auto: CUDA → MPS (Mac) → CPU; no Apple Silicon use device="mps" e batch fixo
+python -c "from pathlib import Path; from stride_mvp.detection.train import train; print(train(Path('data/processed/data.yaml'), epochs=50, device='mps', batch=32))"
+# depois: cp models/weights/train/weights/best.pt models/weights/best.pt
 
 # Análise nas imagens de eval (após treino → models/weights/best.pt)
 export STRIDE_MODEL_PATH=models/weights/best.pt

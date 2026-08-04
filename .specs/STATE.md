@@ -56,6 +56,8 @@
 - **Phase / Task**: scripts/install_deps.sh + Dockerfile + environment.json
 - **Completed**: Install ~8s com torch CPU; docs atualizados
 - **In-progress**: none
-- **Next step**: Treinar YOLO real com Kaggle para popular `models/weights/best.pt` na demo Docker
+
+- **Next step**: Treinar YOLO no Mac com MPS (`device="mps"`, batch fixo) — ver `docs/fluxo-desenvolvimento.md` §4.1; pesos em `models/weights/` para demo
 - **Blockers**: none (CI usa ScriptedDetector; pesos reais ainda não versionados)
-- **Branch**: `cursor/optimize-deps-install-305e`
+- **Branch**: `cursor/mac-mps-train-062c`
+
