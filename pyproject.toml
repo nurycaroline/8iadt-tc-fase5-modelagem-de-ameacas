@@ -18,17 +18,24 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-  "pytest>=8.0",
+  # Cap major to stop pip backtracking across every pytest 8.x when resolving
+  # the large ml/ui tree (see pip "stricter constraints" warning).
+  "pytest>=8.0,<10",
 ]
 ml = [
-  "ultralytics>=8.3",
-  "opencv-python-headless>=4.8",
+  "ultralytics>=8.3,<9",
+  # OpenCV 4.12+ requires numpy>=2; keep below 5.x for Ultralytics stability.
+  # Ultralytics depends on opencv-python (non-headless) — pin both to the same
+  # major so the resolver does not thrash across OpenCV 4/5 + numpy majors.
+  "opencv-python-headless>=4.8,<5",
+  "opencv-python>=4.8,<5",
 ]
 ui = [
-  "gradio>=4.0",
+  # Gradio <4.44 pins numpy~=1.0 and conflicts with OpenCV/Ultralytics (numpy 2)
+  "gradio>=4.44.0,<7",
 ]
 kaggle = [
-  "kaggle>=1.6",
+  "kaggle>=1.6,<3",
 ]
 
 [project.scripts]

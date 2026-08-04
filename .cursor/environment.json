@@ -1,0 +1,5 @@
+{
+  "name": "stride-mvp",
+  "install": "bash scripts/install_deps.sh 'dev,ml,ui'",
+  "ports": [{ "name": "gradio", "port": 7860 }]
+}

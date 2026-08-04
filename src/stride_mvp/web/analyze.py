@@ -3,11 +3,52 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Callable
+from typing import Any, Callable
 
-from stride_mvp.config import load_config
+from PIL import Image
+from stride_mvp.config import MissingWeightsError, load_config
 from stride_mvp.pipeline.run import run_pipeline
+from stride_mvp.pipeline.validate import ValidationError
 from stride_mvp.stride.report import ReportRenderer
+
+
+def _coerce_image_path(image: Any, destination: Path) -> Path:
+    """Normalize Gradio upload/paste payloads to a local image path."""
+    if image is None:
+        raise ValueError("missing image")
+
+    if isinstance(image, (str, Path)):
+        path = Path(image)
+        if not path.is_file():
+            raise FileNotFoundError(f"Imagem não encontrada: {path}")
+        return path
+
+    # Gradio FileData-like dict (some versions / raw payloads)
+    if isinstance(image, dict):
+        for key in ("path", "name", "orig_name"):
+            raw = image.get(key)
+            if raw and Path(raw).is_file():
+                return Path(raw)
+        raise ValueError("payload de imagem inválido")
+
+    destination.mkdir(parents=True, exist_ok=True)
+    tmp = destination / "_upload.png"
+
+    if hasattr(image, "save"):
+        image.save(tmp)
+        return tmp
+
+    # numpy / array-like from Gradio type=numpy
+    try:
+        import numpy as np
+
+        if isinstance(image, np.ndarray):
+            Image.fromarray(image.astype("uint8")).save(tmp)
+            return tmp
+    except ImportError:
+        pass
+
+    raise TypeError(f"tipo de imagem não suportado: {type(image)!r}")
 
 
 def analyze_upload(
@@ -23,6 +64,11 @@ def analyze_upload(
     destination = Path(out_dir) if out_dir is not None else Path("reports")
     destination.mkdir(parents=True, exist_ok=True)
 
+    try:
+        image_path = _coerce_image_path(image, destination)
+    except (OSError, TypeError, ValueError) as exc:
+        return f"Não foi possível ler a imagem colada/enviada: {exc}"
+
     run = pipeline_fn or (
         lambda image_path, out: run_pipeline(
             Path(image_path), Path(out), load_config()
@@ -30,11 +76,12 @@ def analyze_upload(
     )
     renderer = ReportRenderer()
 
-    image_path = Path(image) if not hasattr(image, "save") else None
-    if image_path is None:
-        tmp = destination / "_upload.png"
-        image.save(tmp)
-        image_path = tmp
-
-    report = run(image_path, destination)
+    try:
+        report = run(image_path, destination)
+    except MissingWeightsError as exc:
+        return f"**Erro:** {exc}"
+    except ValidationError as exc:
+        return f"**Erro de validação:** {exc}"
+    except FileNotFoundError as exc:
+        return f"**Erro:** arquivo não encontrado — {exc}"
     return renderer.to_markdown(report)

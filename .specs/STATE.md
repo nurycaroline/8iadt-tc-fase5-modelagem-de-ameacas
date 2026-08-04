@@ -42,12 +42,22 @@
 - **Date**: 2026-07-28
 - **Status**: active
 
+### AD-006
+- **Decision**: Instalação de deps via `uv` + pré-instalação de PyTorch do índice CPU (`scripts/install_deps.sh`); Docker e Cloud Agents seguem o mesmo caminho.
+- **Reason**: `pip install -e ".[ml,…]"` puxava wheels CUDA multi-GB e resolvia lento; CPU basta para demo/inferência neste MVP.
+- **Trade-off**: GPU local precisa de `STRIDE_TORCH_INDEX` apontando para índice CUDA.
+- **Scope**: Setup local, Dockerfile, `.cursor/environment.json`.
+- **Date**: 2026-08-03
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: STRIDE Threat Modeling MVP / `.specs/features/stride-threat-modeling-mvp/`
-- **Phase / Task**: Execute + Verifier **PASS** (T1–T22)
-- **Completed**: Specify, Design, Tasks; T1–T22; validation.md PASS (58 tests; sensor 3/3)
+- **Feature**: Otimização instalação de dependências
+- **Phase / Task**: scripts/install_deps.sh + Dockerfile + environment.json
+- **Completed**: Install ~8s com torch CPU; docs atualizados
 - **In-progress**: none
+
 - **Next step**: Treinar YOLO no Mac com MPS (`device="mps"`, batch fixo) — ver `docs/fluxo-desenvolvimento.md` §4.1; pesos em `models/weights/` para demo
 - **Blockers**: none (CI usa ScriptedDetector; pesos reais ainda não versionados)
 - **Branch**: `cursor/mac-mps-train-062c`
+

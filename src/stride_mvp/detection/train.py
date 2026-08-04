@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import shutil
 from pathlib import Path
 from typing import Literal
 
@@ -36,13 +37,18 @@ def train(
     cache: bool | Literal["ram", "disk"] = False,
     fraction: float = 1.0,
 ) -> Path:
-    """Train Ultralytics YOLO and return path to ``best.pt``.
+    """Train Ultralytics YOLO and return path to promoted ``best.pt``.
 
     Persists weights under ``project`` (default ``models/weights``).
 
     On Apple Silicon, pass ``device="mps"`` (or leave ``device=None`` to
     auto-select MPS when available). Use a fixed ``batch`` on MPS — do not
     rely on Ultralytics AutoBatch (``batch=-1``), which is CUDA-oriented.
+
+    Persists Ultralytics run under ``project/train/`` and copies the final
+    ``best.pt`` to ``project/best.pt`` for Docker/UI defaults
+    (``STRIDE_MODEL_PATH=/weights/best.pt``).
+
     """
     from ultralytics import YOLO
 
@@ -73,6 +79,12 @@ def train(
         # Fallback common layout
         alt = out_project / "train" / "weights" / "best.pt"
         if alt.is_file():
-            return alt
-        raise FileNotFoundError(f"training finished but best.pt not found under {save_dir}")
-    return best
+            best = alt
+        else:
+            raise FileNotFoundError(
+                f"training finished but best.pt not found under {save_dir}"
+            )
+
+    promoted = out_project / "best.pt"
+    shutil.copy2(best, promoted)
+    return promoted
