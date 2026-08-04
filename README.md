@@ -44,6 +44,9 @@ pip install -e ".[dev,ml,ui,kaggle]"
 # Dataset (prepare-data / download)
 python -c "from stride_mvp.data.download import ensure_dataset; print(ensure_dataset())"
 
+# VOC → YOLO + split (gera data/processed/data.yaml)
+python scripts/prepare_yolo_dataset.py
+
 # Treino (após VOC→YOLO + data.yaml)
 python -c "from pathlib import Path; from stride_mvp.detection.train import train; print(train(Path('data/processed/data.yaml'), epochs=50))"
 
