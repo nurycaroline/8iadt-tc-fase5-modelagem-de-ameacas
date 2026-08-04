@@ -34,8 +34,9 @@ pip install -e ".[dev,ml,ui,kaggle]"
 ```
 
 > Gradio precisa ser **≥4.44** (já pinado no `pyproject.toml`) para conviver com
-> OpenCV/Ultralytics em numpy 2. Pip antigo (<24) pode falhar na resolução —
-> use o script `uv` acima ou atualize o pip.
+> OpenCV/Ultralytics em numpy 2. `pytest` está limitado a `<10` e OpenCV a `<5`
+> para evitar backtracking longo do resolver. Pip antigo (<24) pode falhar na
+> resolução — use o script `uv` acima ou atualize o pip.
 
 ## Comandos principais
 
