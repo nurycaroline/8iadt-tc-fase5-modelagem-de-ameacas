@@ -35,17 +35,20 @@ python -c "from stride_mvp.data.download import ensure_dataset; print(ensure_dat
 
 ## 3. Conversão e split
 
-```python
-from pathlib import Path
-from stride_mvp.data.voc_to_yolo import convert_voc_dir
-from stride_mvp.data.split import write_split
+O dataset Kaggle usa layout **flat** (`*.png` + `*.xml` na mesma pasta, tipicamente `dataset_augmented/`), não `Annotations/` + `JPEGImages/`.
 
-voc = Path("data/raw/software-architecture-dataset")
-out = Path("data/processed")
-# class_names = lista lida do dataset
-# convert_voc_dir(voc, out, class_names)
-# write_split(out, val_ratio=0.2, seed=42, class_names=class_names)
+```bash
+# A partir da raiz do repo, com o venv ativo
+python scripts/prepare_yolo_dataset.py
+# ou com opções:
+python scripts/prepare_yolo_dataset.py \
+  --raw data/raw/software-architecture-dataset \
+  --out data/processed \
+  --val-ratio 0.2 \
+  --seed 42
 ```
+
+Gera `data/processed/labels/`, copia imagens para `data/processed/images/`, faz split train/val e escreve `data/processed/data.yaml`.
 
 ## 4. Treino
 
