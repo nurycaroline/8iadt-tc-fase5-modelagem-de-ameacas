@@ -48,6 +48,27 @@ def test_json_mirrors_findings() -> None:
     assert len(data["findings"]) == 1
     assert data["findings"][0]["component_class"] == "rds"
     assert data["findings"][0]["countermeasure"] == "Criptografia at-rest"
+    # Legacy fields preserved
+    expected_keys = {
+        "component_class", "family", "stride_category",
+        "threat_description", "vulnerability_example",
+        "countermeasure", "mapped",
+    }
+    assert expected_keys.issubset(data["findings"][0].keys())
+
+
+def test_json_v2_includes_role_instance_count_and_coverage() -> None:
+    data = json.loads(ReportRenderer().to_json(_full_report()))
+    assert "coverage" in data
+    assert data["coverage"] == 0.75
+    for finding in data["findings"]:
+        assert "role" in finding
+        assert "instance_count" in finding
+    ec2 = next(f for f in data["findings"] if f["component_class"] == "ec2")
+    assert ec2["role"] == "workload"
+    assert ec2["instance_count"] == 1
+    waf = next(f for f in data["findings"] if f["component_class"] == "waf")
+    assert waf["role"] == "control"
 
 
 def test_write_creates_md_and_json(tmp_path: Path) -> None:
