@@ -57,6 +57,11 @@ export STRIDE_MODEL_PATH=models/weights/best.pt
 stride-mvp analyze data/eval/arch1/arch1.png --out reports
 stride-mvp analyze data/eval/arch2/arch2.png --out reports
 
+# Auditar cobertura do vocabulário do detector contra o class_map
+stride-mvp check-map --classes data/processed/classes.txt
+# ou: stride-mvp check-map --weights models/weights/best.pt
+# exit ≠ 0 lista classes sem mapeamento (fallback unknown); 0 = cobertura 100%
+
 # UI Gradio
 stride-mvp ui
 # Abra http://localhost:7860 — Upload, arrastar, ou Ctrl+V/Cmd+V para colar o diagrama.
@@ -104,4 +109,16 @@ Sem `best.pt`, a UI mostra erro claro em vez de traceback.
 
 ## Layout
 
-Ver `.specs/features/stride-threat-modeling-mvp/` para spec, design e tasks.
+Ver `.specs/features/stride-threat-modeling-mvp/` (MVP) e
+`.specs/features/stride-report-quality/` (qualidade do relatório:
+famílias/roles, fallback de inventário, dedupe, coverage) para
+spec, design e tasks.
+
+## Qualidade do relatório
+
+O relatório agrupa detecções repetidas por classe (`instance_count`),
+organiza findings por **papel** (workload / controle / zona) e separa
+componentes não classificados em **"Inventário não classificado"**
+(categoria `Não classificado`, nunca "Information Disclosure" inventado).
+A métrica `coverage` (mapeadas/total) aparece no MD e JSON; abaixo de
+`STRIDE_MIN_COVERAGE` (default 0.8) o CLI emite warning em stderr.

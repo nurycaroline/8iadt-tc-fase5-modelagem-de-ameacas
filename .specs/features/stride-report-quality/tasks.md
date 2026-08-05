@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/stride-report-quality/design.md`  
-**Status**: Draft
+**Status**: Done (T1–T12 implemented; Verifier pending)
 
 ---
 
