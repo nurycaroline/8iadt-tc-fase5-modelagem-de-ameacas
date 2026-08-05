@@ -77,6 +77,10 @@ def test_check_map_unmapped_class_exits_nonzero(tmp_path: Path) -> None:
 def test_check_map_missing_source_exits_nonzero(tmp_path: Path) -> None:
     result = runner.invoke(app, ["check-map", "--classes", str(tmp_path / "nope.txt")])
     assert result.exit_code != 0
+    # EC1: actionable message, not a traceback
+    err = (result.stderr or "") + result.stdout
+    assert "não encontrado" in err.lower() or "nope.txt" in err
+    assert "Traceback" not in err
 
 
 def test_check_map_no_source_exits_nonzero() -> None:

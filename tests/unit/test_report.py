@@ -158,6 +158,49 @@ def test_markdown_omits_inventory_when_no_unknown() -> None:
     assert "Inventário não classificado" not in md
 
 
+def test_markdown_omits_role_sections_when_absent() -> None:
+    # Only a workload finding → control/zone/inventory sections must be absent.
+    report = ThreatReport(
+        source_image="w.png",
+        detections=[Detection("ec2", 0.9, (0, 0, 1, 1), family="compute")],
+        findings=[
+            ThreatFinding(
+                component_class="ec2", family="compute",
+                stride_category="Denial of Service",
+                threat_description="t", vulnerability_example="v",
+                countermeasure="c", mapped=True, role="workload", instance_count=1,
+            )
+        ],
+        notes=[],
+        coverage=1.0,
+    )
+    md = ReportRenderer().to_markdown(report)
+    assert "## Ameaças por componente" in md
+    assert "Controles detectados" not in md
+    assert "Zonas de rede" not in md
+    assert "Inventário não classificado" not in md
+
+
+def test_markdown_omits_workload_section_when_only_controls() -> None:
+    report = ThreatReport(
+        source_image="c.png",
+        detections=[Detection("waf", 0.9, (0, 0, 1, 1), family="edge")],
+        findings=[
+            ThreatFinding(
+                component_class="waf", family="edge",
+                stride_category="Spoofing",
+                threat_description="t", vulnerability_example="v",
+                countermeasure="c", mapped=True, role="control", instance_count=1,
+            )
+        ],
+        notes=[],
+        coverage=1.0,
+    )
+    md = ReportRenderer().to_markdown(report)
+    assert "Controles detectados" in md
+    assert "## Ameaças por componente" not in md
+
+
 def test_markdown_summary_table_lists_components() -> None:
     md = ReportRenderer().to_markdown(_full_report())
     assert "## Sumário" in md

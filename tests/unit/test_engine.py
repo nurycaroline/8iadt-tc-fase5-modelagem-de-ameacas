@@ -94,6 +94,20 @@ def test_duplicate_detections_grouped_with_instance_count() -> None:
     assert len(report.detections) == 6
 
 
+def test_grouping_preserves_highest_confidence_detection() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [
+            Detection("ec2", 0.6, (0, 0, 1, 1)),
+            Detection("ec2", 0.95, (1, 1, 2, 2)),  # highest
+            Detection("ec2", 0.7, (2, 2, 3, 3)),
+        ]
+    )
+    confs = [d.confidence for d in report.detections if d.class_name == "ec2"]
+    assert max(confs) == 0.95
+    assert 0.95 in confs
+
+
 def test_zone_grouped_single_verification_with_count() -> None:
     engine = StrideEngine(ThreatKB.load(), load_class_map())
     report = engine.analyze(
@@ -135,6 +149,21 @@ def test_coverage_mixed_mapped_and_unknown() -> None:
     assert report.coverage == 0.75
 
 
+def test_coverage_unmapped_before_mapped_orders_correctly() -> None:
+    # Unmapped group processed FIRST must not inflate coverage.
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [
+            Detection("totally_unknown_xyz", 0.5, (0, 0, 1, 1)),
+            Detection("rds", 0.9, (1, 1, 2, 2)),
+            Detection("ec2", 0.8, (2, 2, 3, 3)),
+            Detection("ec2", 0.7, (3, 3, 4, 4)),
+        ]
+    )
+    # 3 mapped / 4 total → 0.75 (a buggy "mapped = total" mutant would yield 1.0)
+    assert report.coverage == 0.75
+
+
 def test_coverage_all_unknown_is_zero() -> None:
     engine = StrideEngine(ThreatKB.load(), load_class_map())
     report = engine.analyze(
@@ -147,3 +176,23 @@ def test_coverage_none_when_zero_detections() -> None:
     engine = StrideEngine(ThreatKB.load(), load_class_map())
     report = engine.analyze([])
     assert report.coverage is None
+
+
+def test_all_unmapped_report_has_only_summary_and_inventory() -> None:
+    from stride_mvp.stride.report import ReportRenderer
+
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [
+            Detection("totally_unknown_xyz", 0.5, (0, 0, 1, 1)),
+            Detection("also_unknown_abc", 0.4, (1, 1, 2, 2)),
+        ]
+    )
+    assert report.coverage == 0.0
+    md = ReportRenderer().to_markdown(report)
+    assert "## Sumário" in md
+    assert "## Inventário não classificado" in md
+    # No threat/control/zone sections when everything is unmapped
+    assert "## Ameaças por componente" not in md
+    assert "Controles detectados" not in md
+    assert "Zonas de rede" not in md
