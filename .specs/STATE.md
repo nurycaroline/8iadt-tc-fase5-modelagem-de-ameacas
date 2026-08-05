@@ -52,12 +52,11 @@
 
 ## Handoff
 
-- **Feature**: Otimização instalação de dependências
-- **Phase / Task**: scripts/install_deps.sh + Dockerfile + environment.json
-- **Completed**: Install ~8s com torch CPU; docs atualizados
+- **Feature**: STRIDE Report Quality / `.specs/features/stride-report-quality/`
+- **Phase / Task**: Specify + Design + Tasks concluídos (spec/design/tasks.md draft) — aguardando Execute
+- **Completed**: Spec/design/tasks da correção do relatório, motivada por review externo do diagrama AWS real (30/34 findings em fallback genérico; controles WAF/Shield/KMS/CloudTrail tratados como superfícies; sem dedupe)
 - **In-progress**: none
-
-- **Next step**: Treinar YOLO no Mac com MPS (`device="mps"`, batch fixo) — ver `docs/fluxo-desenvolvimento.md` §4.1; pesos em `models/weights/` para demo
-- **Blockers**: none (CI usa ScriptedDetector; pesos reais ainda não versionados)
-- **Branch**: `cursor/mac-mps-train-062c`
+- **Next step**: Execute T1–T12 de `stride-report-quality` (2 batches sugeridos: T1–T5, T6–T12) + Verifier automático; após treino real, rodar `stride-mvp check-map` contra `classes.txt`/pesos para fechar MAP-02
+- **Blockers**: none para Execute (testável com detector fake); validação canônica do vocabulário exige artefatos do treino real
+- **Branch**: `cursor/stride-report-quality-spec-062c`
 
