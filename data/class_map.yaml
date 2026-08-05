@@ -17,6 +17,19 @@ families:
     - elasticache
     - aurora_db
     - db_instance
+    - aws_amazon_dynamodb
+    - aws_amazon_elasticache
+    - aws_amazon_rds
+    - aws_amazon_redshift
+    - aws_aurora_amazon_rds_instance
+    - aws_dynamodb_table
+    - azure_cosmos_db
+    - azure_sql
+    - azure_sql_managed_instance
+    - azure_sql_server
+    - azure_synapse_analytics
+    - gcp_bigquery
+    - gcp_cloud_sql
   compute:
     - compute
     - ec2
@@ -36,6 +49,42 @@ families:
     - app
     - application
     - server
+    - aws_amazon_ec2
+    - aws_amazon_ec2_auto_scaling
+    - aws_amazon_elastic_container_service
+    - aws_amazon_elastic_kubernetes_service
+    - aws_autoscaling
+    - aws_cloud
+    - aws_cloudformation
+    - aws_cloudformation_template
+    - aws_ec2_instance
+    - aws_ec2_instances
+    - aws_elastic_container_service_container_2
+    - aws_elastic_container_service_service
+    - aws_lambda_lambda_function
+    - azure_app_services
+    - azure_container_instances
+    - azure_data_factories
+    - azure_databricks
+    - azure_devops
+    - azure_function_apps
+    - azure_kubernetes_services
+    - azure_logic_apps
+    - azure_machine_learning
+    - azure_machine_learning_studio_workspaces
+    - azure_openai
+    - azure_resource_groups
+    - azure_services
+    - azure_vm_scale_sets
+    - gcp_cloud_functions
+    - gcp_cloud_run
+    - gcp_compute_engine
+    - gcp_google_kubernetes_engine
+    - gcp_vertex_ai
+    - logic_apps
+    - resource_group
+    - sass_services
+    - "sei/sip"
   api:
     - api
     - api_gateway
@@ -48,6 +97,14 @@ families:
     - application_load_balancer
     - gateway
     - endpoint
+    - aws_amazon_api_gateway
+    - aws_elastic_load_balancing
+    - aws_elastic_load_balancing_application_load_balancer
+    - aws_elastic_load_balancing_network_load_balancer
+    - azure_api_management_services
+    - azure_load_balancers
+    - gcp_cloud_load_balancing
+    - developer_portal
   storage:
     - storage
     - s3
@@ -59,6 +116,15 @@ families:
     - backup
     - aws_backup
     - object_storage
+    - aws_amazon_elastic_block_store
+    - aws_amazon_simple_storage_service
+    - aws_elastic_block_store_volume
+    - aws_simple_storage_service_bucket
+    - aws_simple_storage_service_bucket_with_objects
+    - aws_simple_storage_service_object
+    - aws_simple_storage_service_s3_standard
+    - azure_storage_accounts
+    - "aws_elactic_file_system(nfs)_multi-az"
   network:
     - network
     - router
@@ -72,6 +138,8 @@ families:
     - vpc_endpoint
     - direct_connect
     - peering
+    - aws_amazon_route_53
+    - aws_route_53_hosted_zone
   edge:
     - cloudfront
     - cdn
@@ -81,6 +149,8 @@ families:
     - edge_location
     - distribution
     - firewall
+    - aws_amazon_cloudfront
+    - azure_firewalls
   observability:
     - cloudtrail
     - cloudwatch
@@ -93,6 +163,10 @@ families:
     - monitoring
     - logging
     - log_group
+    - aws_amazon_cloudwatch
+    - aws_cloud_trail
+    - azure_application_insights
+    - azure_monitor
   zone:
     - vpc
     - subnet
@@ -103,6 +177,13 @@ families:
     - security_group
     - nacl
     - network_acl
+    - aws_amazon_virtual_private_cloud
+    - aws_region
+    - aws_virtual_private_cloud
+    - aws_vpc_virtual_private_cloud_vpc
+    - azure_network_security_groups
+    - azure_virtual_networks
+    - gcp_virtual_private_cloud
   security:
     - security
     - iam
@@ -115,6 +196,12 @@ families:
     - acm
     - guardduty
     - inspector
+    - aws_identity_access_management_role
+    - aws_identity_and_access_management
+    - aws_key_management_service
+    - azure_key_vaults
+    - gcp_identity_and_access_management
+    - microsoft_entra
   messaging:
     - messaging
     - sqs
@@ -125,6 +212,12 @@ families:
     - message_queue
     - kinesis
     - msk
+    - aws_amazon_simple_notification_service
+    - aws_amazon_simple_queue_service
+    - aws_simple_email_service
+    - aws_simple_notification_service_topic
+    - aws_simple_queue_service_queue
+    - azure_event_hubs
   client:
     - client
     - user
