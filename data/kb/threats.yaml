@@ -216,9 +216,3 @@ entries:
     threat: "Ações do usuário sem prova"
     vulnerability: "Sem trilha de auditoria no cliente→servidor"
     countermeasure: "Logs de autenticação e ações críticas"
-
-  - family: unknown
-    stride: Information Disclosure
-    threat: "Componente não classificado com possível exposição"
-    vulnerability: "Superfície desconhecida"
-    countermeasure: "Inventariar o componente e aplicar baseline de segurança"

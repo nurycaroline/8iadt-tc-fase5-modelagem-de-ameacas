@@ -51,6 +51,25 @@ class StrideEngine:
             family = det.family or self.mapper.to_family(det.class_name)
             enriched.append(replace(det, family=family))
 
+            if family == self.mapper.default_family:
+                fb = self.kb.fallback_entry(family)
+                findings.append(
+                    ThreatFinding(
+                        component_class=det.class_name,
+                        family=family,
+                        stride_category="Não classificado",
+                        threat_description=fb.threat,
+                        vulnerability_example=fb.vulnerability,
+                        countermeasure=fb.countermeasure,
+                        mapped=False,
+                    )
+                )
+                notes.append(
+                    f"Sem mapeamento KB específico para '{det.class_name}' "
+                    f"(família={family}); componente registrado no inventário."
+                )
+                continue
+
             mapped_any = False
             for category in STRIDE_CATEGORIES:
                 hits = self.kb.lookup(family, category)
@@ -74,7 +93,7 @@ class StrideEngine:
                     ThreatFinding(
                         component_class=det.class_name,
                         family=family,
-                        stride_category="Information Disclosure",
+                        stride_category="Não classificado",
                         threat_description=fb.threat,
                         vulnerability_example=fb.vulnerability,
                         countermeasure=fb.countermeasure,
@@ -83,7 +102,7 @@ class StrideEngine:
                 )
                 notes.append(
                     f"Sem mapeamento KB específico para '{det.class_name}' "
-                    f"(família={family}); aplicado fallback."
+                    f"(família={family}); componente registrado no inventário."
                 )
 
         return ThreatReport(

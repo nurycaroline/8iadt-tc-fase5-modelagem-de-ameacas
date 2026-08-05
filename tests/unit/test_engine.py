@@ -60,7 +60,25 @@ def test_unmapped_component_gets_explicit_fallback_finding(tmp_path: Path) -> No
     assert len(report.findings) == 1
     assert report.findings[0].mapped is False
     assert "Fallback" in report.findings[0].threat_description
-    assert any("fallback" in n.lower() or "mapeamento" in n.lower() for n in report.notes)
+    # ENG-01: unmapped components must NOT get an invented STRIDE category
+    assert report.findings[0].stride_category == "Não classificado"
+    assert report.findings[0].stride_category != "Information Disclosure"
+    assert any("fallback" in n.lower() or "inventário" in n.lower() for n in report.notes)
+
+
+def test_unmapped_never_uses_information_disclosure() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [
+            Detection("totally_unknown_xyz", 0.6, (0, 0, 1, 1)),
+            Detection("also_unknown_abc", 0.5, (2, 2, 3, 3)),
+        ]
+    )
+    fallback_cats = {
+        f.stride_category for f in report.findings if not f.mapped
+    }
+    assert fallback_cats == {"Não classificado"}
+    assert "Information Disclosure" not in fallback_cats
 
 
 def test_zero_detections_no_invented_threats() -> None:
