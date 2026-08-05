@@ -114,3 +114,12 @@ def test_reclassifications_match_v2() -> None:
     assert mapper.to_family("public_subnet") == "zone"
     assert mapper.to_family("cloudtrail") == "observability"
     assert mapper.to_family("waf") == "edge"
+
+
+def test_kaggle_vocabulary_full_coverage() -> None:
+    # MAP-02 canonical closure: every real Kaggle class resolves to a family.
+    fixture = Path(__file__).resolve().parents[1] / "fixtures" / "kaggle_classes.txt"
+    names = [n for n in fixture.read_text(encoding="utf-8").splitlines() if n.strip()]
+    mapper = load_class_map()
+    unmapped = [n for n in names if mapper.to_family(n) == "unknown"]
+    assert unmapped == [], f"{len(unmapped)} unmapped: {unmapped}"
