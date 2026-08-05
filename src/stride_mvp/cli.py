@@ -181,7 +181,7 @@ def check_map(
             err=True,
         )
         for name in missing:
-            typer.echo(f"  - {name}")
+            typer.echo(f"  - {name}", err=True)
         raise typer.Exit(code=1)
 
     typer.secho(
