@@ -71,3 +71,84 @@ def test_empty_findings_markdown_has_note() -> None:
     assert "Nenhuma ameaça listada" in md
     data = json.loads(ReportRenderer().to_json(report))
     assert data["findings"] == []
+
+
+def _full_report() -> ThreatReport:
+    return ThreatReport(
+        source_image="aws.png",
+        detections=[
+            Detection("ec2", 0.9, (0, 0, 1, 1), family="compute"),
+            Detection("waf", 0.8, (1, 1, 2, 2), family="edge"),
+            Detection("public_subnet", 0.7, (2, 2, 3, 3), family="zone"),
+            Detection("weird_thing", 0.5, (3, 3, 4, 4), family="unknown"),
+        ],
+        findings=[
+            ThreatFinding(
+                component_class="ec2", family="compute",
+                stride_category="Denial of Service",
+                threat_description="t", vulnerability_example="v",
+                countermeasure="c", mapped=True, role="workload", instance_count=1,
+            ),
+            ThreatFinding(
+                component_class="waf", family="edge",
+                stride_category="Spoofing",
+                threat_description="Bypass de origem",
+                vulnerability_example="v", countermeasure="c",
+                mapped=True, role="control", instance_count=1,
+            ),
+            ThreatFinding(
+                component_class="public_subnet", family="zone",
+                stride_category="Tampering",
+                threat_description="t", vulnerability_example="v",
+                countermeasure="c", mapped=True, role="zone", instance_count=1,
+            ),
+            ThreatFinding(
+                component_class="weird_thing", family="unknown",
+                stride_category="Não classificado",
+                threat_description="t", vulnerability_example="v",
+                countermeasure="c", mapped=False, role="workload", instance_count=1,
+            ),
+        ],
+        notes=[],
+        coverage=0.75,
+    )
+
+
+def test_markdown_sections_in_role_order() -> None:
+    md = ReportRenderer().to_markdown(_full_report())
+    idx_summary = md.index("## Sumário")
+    idx_workload = md.index("## Ameaças por componente")
+    idx_control = md.index("## Controles detectados — verificações")
+    idx_zone = md.index("## Zonas de rede — verificações estruturais")
+    idx_inventory = md.index("## Inventário não classificado")
+    assert idx_summary < idx_workload < idx_control < idx_zone < idx_inventory
+
+
+def test_markdown_omits_inventory_when_no_unknown() -> None:
+    report = _full_report()
+    report = ThreatReport(
+        source_image=report.source_image,
+        detections=report.detections[:3],
+        findings=report.findings[:3],
+        notes=[],
+        coverage=1.0,
+    )
+    md = ReportRenderer().to_markdown(report)
+    assert "Inventário não classificado" not in md
+
+
+def test_markdown_summary_table_lists_components() -> None:
+    md = ReportRenderer().to_markdown(_full_report())
+    assert "## Sumário" in md
+    assert "ec2" in md
+    assert "waf" in md
+    assert "public_subnet" in md
+    assert "weird_thing" in md
+    assert "Papel" in md
+    assert "Instâncias" in md
+
+
+def test_markdown_coverage_shown() -> None:
+    md = ReportRenderer().to_markdown(_full_report())
+    assert "Cobertura de mapeamento" in md
+    assert "75%" in md
