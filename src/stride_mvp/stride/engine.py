@@ -58,10 +58,14 @@ class StrideEngine:
         for det in enriched:
             groups[_normalize(det.class_name)].append(det)
 
+        total_instances = 0
+        mapped_instances = 0
+
         for class_key, group_dets in groups.items():
             rep = group_dets[0]
             family = rep.family or self.mapper.default_family
             count = len(group_dets)
+            total_instances += count
 
             if family == self.mapper.default_family:
                 self._add_inventory_finding(
@@ -88,16 +92,21 @@ class StrideEngine:
                         )
                     )
 
-            if not mapped_any:
+            if mapped_any:
+                mapped_instances += count
+            else:
                 self._add_inventory_finding(
                     findings, notes, rep.class_name, family, count
                 )
+
+        coverage = mapped_instances / total_instances if total_instances else None
 
         return ThreatReport(
             source_image=source_image,
             detections=enriched,
             findings=findings,
             notes=notes,
+            coverage=coverage,
         )
 
     def _add_inventory_finding(

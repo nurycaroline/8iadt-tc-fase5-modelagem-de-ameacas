@@ -82,3 +82,25 @@ def test_check_map_missing_source_exits_nonzero(tmp_path: Path) -> None:
 def test_check_map_no_source_exits_nonzero() -> None:
     result = runner.invoke(app, ["check-map"])
     assert result.exit_code != 0
+
+
+def test_analyze_low_coverage_warns_but_exits_zero(tmp_path: Path) -> None:
+    image = tmp_path / "arch.png"
+    Image.new("RGB", (12, 12), color=(1, 2, 3)).save(image, format="PNG")
+    out = tmp_path / "reports"
+
+    class MixedDetector:
+        def predict(self, image_path: Path) -> list[Detection]:
+            _ = image_path
+            return [
+                Detection("rds", 0.9, (0.0, 0.0, 5.0, 5.0)),
+                Detection("totally_unknown_xyz", 0.5, (1.0, 1.0, 2.0, 2.0)),
+            ]
+
+    set_detector_override(MixedDetector())
+    try:
+        result = runner.invoke(app, ["analyze", str(image), "--out", str(out)])
+    finally:
+        set_detector_override(None)
+    assert result.exit_code == 0, result.stdout + result.stderr
+    assert "cobertura" in (result.stderr or "").lower() or "cobertura" in result.stdout.lower()

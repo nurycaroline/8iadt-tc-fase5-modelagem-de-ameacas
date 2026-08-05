@@ -38,3 +38,4 @@ class ThreatReport:
     detections: list[Detection]
     findings: list[ThreatFinding]
     notes: list[str] = field(default_factory=list)
+    coverage: float | None = None

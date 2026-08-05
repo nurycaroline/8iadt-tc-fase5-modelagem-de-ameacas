@@ -72,6 +72,14 @@ def analyze(
         f"({len(report.findings)} findings)",
         fg=typer.colors.GREEN,
     )
+    if report.coverage is not None and report.coverage < cfg.min_coverage:
+        typer.secho(
+            f"Aviso: cobertura de mapeamento {report.coverage:.0%} "
+            f"abaixo do limiar {cfg.min_coverage:.0%} (STRIDE_MIN_COVERAGE). "
+            "Componentes não classificados estão no inventário; rode `stride-mvp check-map`.",
+            fg=typer.colors.YELLOW,
+            err=True,
+        )
 
 
 @app.command("eval")

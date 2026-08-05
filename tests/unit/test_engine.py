@@ -119,3 +119,31 @@ def test_zero_detections_no_invented_threats() -> None:
     assert report.findings == []
     assert report.detections == []
     assert any("detecção" in n.lower() or "deteccao" in n.lower() for n in report.notes)
+
+
+def test_coverage_mixed_mapped_and_unknown() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [
+            Detection("rds", 0.9, (0, 0, 1, 1)),
+            Detection("ec2", 0.8, (1, 1, 2, 2)),
+            Detection("ec2", 0.7, (2, 2, 3, 3)),
+            Detection("totally_unknown_xyz", 0.5, (3, 3, 4, 4)),
+        ]
+    )
+    # 3 mapped instances (rds + 2 ec2) / 4 total → 0.75
+    assert report.coverage == 0.75
+
+
+def test_coverage_all_unknown_is_zero() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [Detection("totally_unknown_xyz", 0.5, (0, 0, 1, 1))]
+    )
+    assert report.coverage == 0.0
+
+
+def test_coverage_none_when_zero_detections() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze([])
+    assert report.coverage is None
