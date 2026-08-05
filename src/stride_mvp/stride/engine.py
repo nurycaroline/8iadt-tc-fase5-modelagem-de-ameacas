@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections import defaultdict
 from dataclasses import replace
 
-from stride_mvp.data.class_map import ClassFamilyMapper, _normalize
+from stride_mvp.data.class_map import ClassFamilyMapper, _normalize, _strip_vendor
 from stride_mvp.models import Detection, ThreatFinding, ThreatReport
 from stride_mvp.stride.kb import ThreatKB
 
@@ -53,10 +53,11 @@ class StrideEngine:
             for d in detections
         ]
 
-        # Group detections by normalized class name → one finding set per class.
+        # Group detections by normalized class name (vendor-stripped so that
+        # ``aws-waf`` and ``waf`` collapse into one group) → one finding set per class.
         groups: dict[str, list[Detection]] = defaultdict(list)
         for det in enriched:
-            groups[_normalize(det.class_name)].append(det)
+            groups[_strip_vendor(_normalize(det.class_name))].append(det)
 
         total_instances = 0
         mapped_instances = 0

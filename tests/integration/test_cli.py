@@ -71,7 +71,11 @@ def test_check_map_unmapped_class_exits_nonzero(tmp_path: Path) -> None:
     classes.write_text("rds\ntotally_unknown_xyz\n", encoding="utf-8")
     result = runner.invoke(app, ["check-map", "--classes", str(classes)])
     assert result.exit_code != 0
-    assert "totally_unknown_xyz" in (result.stderr or "") or "totally_unknown_xyz" in result.stdout
+    err = result.stderr or ""
+    # Both the header and the missing-class list must go to stderr (not stdout)
+    assert "totally_unknown_xyz" in err
+    assert "sem mapeamento" in err
+    assert "totally_unknown_xyz" not in result.stdout
 
 
 def test_check_map_missing_source_exits_nonzero(tmp_path: Path) -> None:

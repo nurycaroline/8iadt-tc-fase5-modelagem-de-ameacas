@@ -108,6 +108,22 @@ def test_grouping_preserves_highest_confidence_detection() -> None:
     assert 0.95 in confs
 
 
+def test_vendor_prefixed_and_base_collapse_into_one_group() -> None:
+    # ``aws-waf`` and ``waf`` are the same service → one group, instance_count=2.
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [
+            Detection("aws-waf", 0.9, (0, 0, 1, 1)),
+            Detection("waf", 0.8, (1, 1, 2, 2)),
+        ]
+    )
+    edge_findings = [f for f in report.findings if f.family == "edge"]
+    assert len({f.component_class for f in edge_findings}) == 1, (
+        "aws-waf and waf must collapse into one group"
+    )
+    assert all(f.instance_count == 2 for f in edge_findings)
+
+
 def test_zone_grouped_single_verification_with_count() -> None:
     engine = StrideEngine(ThreatKB.load(), load_class_map())
     report = engine.analyze(

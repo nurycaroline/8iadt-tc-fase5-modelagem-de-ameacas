@@ -7,13 +7,14 @@ from pathlib import Path
 
 from stride_mvp.models import ThreatFinding, ThreatReport
 
-ROLE_ORDER = ("workload", "external", "control", "zone")
 ROLE_TITLES = {
     "workload": "Ameaças por componente",
-    "external": "Ameaças por componente",
+    "external": "Ameaças por componente",  # rendered together with workload
     "control": "Controles detectados — verificações",
     "zone": "Zonas de rede — verificações estruturais",
 }
+# Roles that share the "Ameaças por componente" section (rendered together).
+THREAT_SECTION_ROLES = ("workload", "external")
 
 
 class ReportRenderer:
@@ -57,7 +58,18 @@ class ReportRenderer:
             else:
                 by_role.setdefault(f.role, []).append(f)
 
-        for role in ROLE_ORDER:
+        # Render workload + external together in one "Ameaças por componente" section.
+        threat_findings = []
+        for role in THREAT_SECTION_ROLES:
+            threat_findings.extend(by_role.get(role, []))
+        if threat_findings:
+            lines.append(f"## {ROLE_TITLES['workload']}")
+            lines.append("")
+            for i, finding in enumerate(threat_findings, start=1):
+                lines.extend(self._finding_md(i, finding))
+            lines.pop()  # trailing blank line
+
+        for role in ("control", "zone"):
             group = by_role.get(role)
             if not group:
                 continue
@@ -89,8 +101,19 @@ class ReportRenderer:
             "| # | Componente | Família | Papel | Instâncias | Categorias STRIDE |",
             "|---|------------|---------|-------|-----------|------------------|",
         ]
-        for i, f in enumerate(findings, start=1):
-            cats = f.stride_category
+        # Aggregate one row per component (categories collapsed) — not one per finding.
+        per_component: dict[str, ThreatFinding] = {}
+        order: list[str] = []
+        cats_by_component: dict[str, list[str]] = {}
+        for f in findings:
+            if f.component_class not in per_component:
+                per_component[f.component_class] = f
+                order.append(f.component_class)
+                cats_by_component[f.component_class] = []
+            cats_by_component[f.component_class].append(f.stride_category)
+        for i, cls in enumerate(order, start=1):
+            f = per_component[cls]
+            cats = ", ".join(cats_by_component[cls])
             lines.append(
                 f"| {i} | {f.component_class} | {f.family} | {f.role} "
                 f"| {f.instance_count} | {cats} |"

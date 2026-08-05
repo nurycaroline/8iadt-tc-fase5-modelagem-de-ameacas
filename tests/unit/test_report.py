@@ -201,6 +201,63 @@ def test_markdown_omits_workload_section_when_only_controls() -> None:
     assert "## Ameaças por componente" not in md
 
 
+def test_markdown_single_threat_section_for_workload_and_external() -> None:
+    # workload + external must share ONE "Ameaças por componente" section (no duplicate headers).
+    report = ThreatReport(
+        source_image="we.png",
+        detections=[
+            Detection("ec2", 0.9, (0, 0, 1, 1), family="compute"),
+            Detection("user", 0.8, (1, 1, 2, 2), family="client"),
+        ],
+        findings=[
+            ThreatFinding(
+                component_class="ec2", family="compute",
+                stride_category="Denial of Service",
+                threat_description="t", vulnerability_example="v",
+                countermeasure="c", mapped=True, role="workload", instance_count=1,
+            ),
+            ThreatFinding(
+                component_class="user", family="client",
+                stride_category="Spoofing",
+                threat_description="t", vulnerability_example="v",
+                countermeasure="c", mapped=True, role="external", instance_count=1,
+            ),
+        ],
+        notes=[],
+        coverage=1.0,
+    )
+    md = ReportRenderer().to_markdown(report)
+    assert md.count("## Ameaças por componente") == 1
+
+
+def test_summary_table_one_row_per_component_with_aggregated_categories() -> None:
+    # A component with multiple STRIDE categories must appear once in the summary.
+    report = ThreatReport(
+        source_image="db.png",
+        detections=[Detection("rds", 0.9, (0, 0, 1, 1), family="database")],
+        findings=[
+            ThreatFinding(
+                component_class="rds", family="database",
+                stride_category=cat,
+                threat_description="t", vulnerability_example="v",
+                countermeasure="c", mapped=True, role="workload", instance_count=1,
+            )
+            for cat in ("Spoofing", "Tampering", "Information Disclosure",
+                        "Denial of Service", "Elevation of Privilege", "Repudiation")
+        ],
+        notes=[],
+        coverage=1.0,
+    )
+    md = ReportRenderer().to_markdown(report)
+    # Summary header + table: count rows mentioning rds (excluding the header row)
+    summary = md.split("## Ameaças por componente")[0]
+    rds_rows = [ln for ln in summary.splitlines()
+                if ln.startswith("| ") and "rds" in ln]
+    assert len(rds_rows) == 1, "rds must appear once in the summary"
+    # All six categories aggregated in that single row
+    assert "Spoofing" in rds_rows[0] and "Repudiation" in rds_rows[0]
+
+
 def test_markdown_summary_table_lists_components() -> None:
     md = ReportRenderer().to_markdown(_full_report())
     assert "## Sumário" in md
