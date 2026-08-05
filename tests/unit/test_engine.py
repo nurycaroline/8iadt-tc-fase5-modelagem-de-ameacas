@@ -81,6 +81,38 @@ def test_unmapped_never_uses_information_disclosure() -> None:
     assert "Information Disclosure" not in fallback_cats
 
 
+def test_duplicate_detections_grouped_with_instance_count() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [Detection("ec2", 0.8, (float(i), float(i), float(i + 1), float(i + 1)))
+         for i in range(6)]
+    )
+    ec2_findings = [f for f in report.findings if f.component_class == "ec2"]
+    assert ec2_findings, "ec2 findings missing"
+    assert all(f.instance_count == 6 for f in ec2_findings)
+    # All detections still listed individually in the report
+    assert len(report.detections) == 6
+
+
+def test_zone_grouped_single_verification_with_count() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [Detection("public_subnet", 0.9, (0, 0, 1, 1)),
+         Detection("public_subnet", 0.7, (1, 1, 2, 2))]
+    )
+    zone_findings = [f for f in report.findings if f.family == "zone"]
+    assert len(zone_findings) == 1
+    assert zone_findings[0].instance_count == 2
+
+
+def test_finding_role_propagated_from_kb() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze([Detection("waf", 0.9, (0, 0, 1, 1))])
+    edge_findings = [f for f in report.findings if f.family == "edge"]
+    assert edge_findings
+    assert all(f.role == "control" for f in edge_findings)
+
+
 def test_zero_detections_no_invented_threats() -> None:
     engine = StrideEngine(ThreatKB.load(), load_class_map())
     report = engine.analyze([], source_image="empty.png")

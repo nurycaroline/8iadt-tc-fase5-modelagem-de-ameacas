@@ -26,6 +26,8 @@ class ThreatFinding:
     vulnerability_example: str
     countermeasure: str
     mapped: bool
+    role: str = "workload"
+    instance_count: int = 1
 
 
 @dataclass
