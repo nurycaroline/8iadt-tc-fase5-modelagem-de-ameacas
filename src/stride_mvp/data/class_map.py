@@ -69,3 +69,21 @@ def load_class_map(path: Path | None = None) -> ClassFamilyMapper:
         default_family=default_family,
         _families=family_names | {default_family},
     )
+
+
+def unmapped_classes(class_names: list[str], mapper: ClassFamilyMapper) -> list[str]:
+    """Return class names that resolve to the ``default_family`` (unknown)."""
+    return [name for name in class_names if mapper.to_family(name) == mapper.default_family]
+
+
+def read_class_names_from_weights(weights: Path) -> list[str]:
+    """Read the ``names`` list from a YOLO weights file via Ultralytics."""
+    from ultralytics import YOLO
+
+    model = YOLO(str(weights))
+    names = getattr(model, "names", None)
+    if not names:
+        return []
+    if isinstance(names, dict):
+        return [str(v) for v in names.values()]
+    return [str(n) for n in names]
