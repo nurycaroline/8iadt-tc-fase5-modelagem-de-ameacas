@@ -74,3 +74,43 @@ def test_empty_class_falls_back() -> None:
     mapper = load_class_map()
     assert mapper.to_family("") == "unknown"
     assert mapper.to_family("   ") == "unknown"
+
+
+# Classes observed in the real AWS diagram review (must not fall back to unknown).
+AWS_REVIEW_CLASSES = {
+    "cloudfront": "edge",
+    "waf": "edge",
+    "shield": "edge",
+    "alb": "api",
+    "ec2": "compute",
+    "solr": "compute",
+    "auto_scaling": "compute",
+    "rds": "database",
+    "elasticache": "database",
+    "efs": "storage",
+    "backup": "storage",
+    "kms": "security",
+    "cloudtrail": "observability",
+    "cloudwatch": "observability",
+    "public_subnet": "zone",
+    "private_subnet": "zone",
+    "vpc": "zone",
+    "internet_gateway": "network",
+    "nat_gateway": "network",
+    "route53": "network",
+}
+
+
+def test_aws_review_vocabulary_resolves_without_fallback() -> None:
+    mapper = load_class_map()
+    missing = {c: mapper.to_family(c) for c in AWS_REVIEW_CLASSES
+              if mapper.to_family(c) == "unknown"}
+    assert missing == {}, f"classes fell back to unknown: {missing}"
+
+
+def test_reclassifications_match_v2() -> None:
+    mapper = load_class_map()
+    assert mapper.to_family("cloudfront") == "edge"
+    assert mapper.to_family("public_subnet") == "zone"
+    assert mapper.to_family("cloudtrail") == "observability"
+    assert mapper.to_family("waf") == "edge"
