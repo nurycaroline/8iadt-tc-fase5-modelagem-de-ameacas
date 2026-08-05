@@ -1,10 +1,19 @@
 # Threat knowledge base (KB-01..04) — family × STRIDE → vulnerability + countermeasure
-version: 1
+version: 2
+
+# Role per family: control (security/observability/edge), zone (network zones),
+# external (client). Unlisted families default to ``workload``.
+roles:
+  security: control
+  observability: control
+  edge: control
+  zone: zone
+  client: external
 
 fallback:
-  threat: "Ameaça genérica para componente sem mapeamento específico"
-  vulnerability: "Superfície de ataque não catalogada na KB"
-  countermeasure: "Revisar autenticação, autorização, logging e exposição de rede"
+  threat: "Componente não classificado — inventariar antes de assumir risco"
+  vulnerability: "Família/componente ausente do class_map ou da KB"
+  countermeasure: "Inventariar o componente, identificar o serviço real e mapeá-lo a uma família STRIDE"
 
 entries:
   - family: database
@@ -122,6 +131,39 @@ entries:
     vulnerability: "Sem proteção DDoS"
     countermeasure: "Shield/WAF, autoscaling de edge"
 
+  - family: edge
+    stride: Spoofing
+    threat: "Bypass de origem — requisições chegam ao ALB sem passar pelo CloudFront"
+    vulnerability: "ALB/origem aceita tráfego de qualquer origem; ausência de cabeçalho customizado ou restrição por VPC/SG"
+    countermeasure: "Restringir a origem: SG do ALB liberando só os prefixos do CloudFront, cabeçalho customizado de origem ou Origin Access Control"
+  - family: edge
+    stride: Tampering
+    threat: "Manipulação de regras do WAF/Shield"
+    vulnerability: "Regras WAF versionadas sem aprovação; permissões amplas de edição"
+    countermeasure: "WAF em IaC/terraform, revisão obrigatória, change management e alertas de alteração"
+  - family: edge
+    stride: Denial of Service
+    threat: "Ataques volumétricos/l7 não mitigados na borda"
+    vulnerability: "WAF/Shield desabilitados ou com regras em modo de contagem; rate limit ausente"
+    countermeasure: "Habilitar AWS Shield Advanced/WAF em modo de bloqueio, rate limiting por IP/URI e monitoramento de eficácia"
+
+  - family: observability
+    stride: Repudiation
+    threat: "Trilha de auditoria desativada ou com retenção insuficiente"
+    vulnerability: "CloudTrail em região única, sem eventos de dados, ou retenção curta; logs sem proteção"
+    countermeasure: "CloudTrail multi-região com eventos de dados, log file integrity validation, retenção ≥ 1 ano e alertas de desativação"
+  - family: observability
+    stride: Tampering
+    threat: "Logs/métricas adulteráveis"
+    vulnerability: "Log group sem proteção contra exclusão/alteração; sem alertas de mute"
+    countermeasure: "Lock de exclusão de log groups, alarmes do CloudWatch para 'mute' e alterações de retenção, exportação imutável"
+
+  - family: zone
+    stride: Tampering
+    threat: "Configuração de zona expõe workloads indevidamente"
+    vulnerability: "Security Groups/NACLs permissivos; rotas públicas para recursos privados; ausência de isolamento"
+    countermeasure: "Revisar SG/NACLs (least privilege), rotas, e garantir que workloads não-edge fiquem em subnets privadas"
+
   - family: security
     stride: Spoofing
     threat: "Uso indevido de identidades"
@@ -174,9 +216,3 @@ entries:
     threat: "Ações do usuário sem prova"
     vulnerability: "Sem trilha de auditoria no cliente→servidor"
     countermeasure: "Logs de autenticação e ações críticas"
-
-  - family: unknown
-    stride: Information Disclosure
-    threat: "Componente não classificado com possível exposição"
-    vulnerability: "Superfície desconhecida"
-    countermeasure: "Inventariar o componente e aplicar baseline de segurança"

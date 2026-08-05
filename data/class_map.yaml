@@ -1,5 +1,5 @@
-# Maps Kaggle Software Architecture Dataset class names → STRIDE families.
-# Extend as needed when new labels appear in the dataset.
+# Maps detector class names → STRIDE component families.
+# Extend as needed when new labels appear in the dataset (verify with `stride-mvp check-map`).
 default_family: unknown
 
 families:
@@ -15,6 +15,8 @@ families:
     - aurora
     - redis
     - elasticache
+    - aurora_db
+    - db_instance
   compute:
     - compute
     - ec2
@@ -26,6 +28,14 @@ families:
     - app_server
     - virtual_machine
     - container
+    - auto_scaling
+    - auto_scaling_group
+    - solr
+    - sei
+    - sip
+    - app
+    - application
+    - server
   api:
     - api
     - api_gateway
@@ -35,6 +45,9 @@ families:
     - load_balancer
     - alb
     - nlb
+    - application_load_balancer
+    - gateway
+    - endpoint
   storage:
     - storage
     - s3
@@ -43,23 +56,65 @@ families:
     - ebs
     - cloud_storage
     - file_storage
+    - backup
+    - aws_backup
+    - object_storage
   network:
     - network
-    - vpc
-    - subnet
-    - firewall
     - router
     - vpn
+    - internet_gateway
+    - nat_gateway
+    - transit_gateway
+    - route53
+    - dns
+    - route_table
+    - vpc_endpoint
+    - direct_connect
+    - peering
+  edge:
     - cloudfront
     - cdn
+    - waf
+    - shield
+    - aws_shield
+    - edge_location
+    - distribution
+    - firewall
+  observability:
+    - cloudtrail
+    - cloudwatch
+    - x_ray
+    - xray
+    - config
+    - aws_config
+    - cloudwatch_alarms
+    - audit
+    - monitoring
+    - logging
+    - log_group
+  zone:
+    - vpc
+    - subnet
+    - public_subnet
+    - private_subnet
+    - availability_zone
+    - az
+    - security_group
+    - nacl
+    - network_acl
   security:
     - security
     - iam
-    - waf
     - key_vault
     - secrets_manager
     - kms
     - cognito
+    - secrets
+    - certificate_manager
+    - acm
+    - guardduty
+    - inspector
   messaging:
     - messaging
     - sqs
@@ -68,6 +123,8 @@ families:
     - eventbridge
     - pubsub
     - message_queue
+    - kinesis
+    - msk
   client:
     - client
     - user
@@ -75,3 +132,6 @@ families:
     - mobile_app
     - desktop_app
     - end_user
+    - customer
+    - internet
+    - users

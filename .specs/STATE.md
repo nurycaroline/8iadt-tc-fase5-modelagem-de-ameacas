@@ -50,14 +50,21 @@
 - **Date**: 2026-08-03
 - **Status**: active
 
+### AD-007
+- **Decision**: Componentes-controle (WAF, Shield, KMS, CloudTrail, CloudWatch, edge) geram **verificações de eficácia/configuração** (role `control`), não ameaças genéricas de exposição; componentes sem mapeamento viram **inventário** (categoria `Não classificado`), nunca "Information Disclosure" inventado. Detecções repetidas são agrupadas por classe (`instance_count`). Relatório expõe `coverage` com warning abaixo de `STRIDE_MIN_COVERAGE`.
+- **Reason**: Review externo do relatório AWS real mostrou 30/34 findings em fallback genérico e controles tratados como superfícies vulneráveis — perda de credibilidade técnica.
+- **Trade-off**: Menos findings totais (dedupe); componentes não classificados não recebem ameaça (mas ficam visíveis no inventário para curadoria).
+- **Scope**: Feature `stride-report-quality` (class_map, KB v2 com `roles`, engine, report, CLI `check-map`).
+- **Date**: 2026-08-05
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: Otimização instalação de dependências
-- **Phase / Task**: scripts/install_deps.sh + Dockerfile + environment.json
-- **Completed**: Install ~8s com torch CPU; docs atualizados
-- **In-progress**: none
-
-- **Next step**: Treinar YOLO no Mac com MPS (`device="mps"`, batch fixo) — ver `docs/fluxo-desenvolvimento.md` §4.1; pesos em `models/weights/` para demo
-- **Blockers**: none (CI usa ScriptedDetector; pesos reais ainda não versionados)
-- **Branch**: `cursor/mac-mps-train-062c`
+- **Feature**: STRIDE Report Quality / `.specs/features/stride-report-quality/`
+- **Phase / Task**: Execute T1–T12 concluído (12 commits) — Verifier pendente
+- **Completed**: T1 aliases/vendor strip; T2 class_map v2 (edge/observability/zone + vocabulário AWS); T3 CLI check-map; T4 KB v2 roles; T5 entradas edge/observability/zone + consistência map↔KB; T6 fallback de inventário; T7 dedupe + role; T8 coverage + warning; T9 Markdown por role; T10 JSON v2; T11 e2e cenário AWS; T12 docs + AD-007. Gate full: 109 passed.
+- **In-progress**: Verifier automático (feature-level validation)
+- **Next step**: Verifier sub-agent (spec-anchored + discrimination sensor) → validation.md; após treino real, rodar `stride-mvp check-map` contra `classes.txt`/pesos para fechar MAP-02 canônico
+- **Blockers**: none (CI usa ScriptedDetector; validação canônica do vocabulário exige artefatos do treino real)
+- **Branch**: `cursor/stride-report-quality-spec-062c`
 

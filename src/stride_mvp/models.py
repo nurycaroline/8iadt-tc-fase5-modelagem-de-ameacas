@@ -26,6 +26,8 @@ class ThreatFinding:
     vulnerability_example: str
     countermeasure: str
     mapped: bool
+    role: str = "workload"
+    instance_count: int = 1
 
 
 @dataclass
@@ -36,3 +38,4 @@ class ThreatReport:
     detections: list[Detection]
     findings: list[ThreatFinding]
     notes: list[str] = field(default_factory=list)
+    coverage: float | None = None

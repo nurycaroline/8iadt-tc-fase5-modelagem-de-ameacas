@@ -79,3 +79,74 @@ def test_eval_arch2_expected_components(tmp_path: Path) -> None:
     components = {f.component_class for f in report.findings}
     assert ARCH2_EXPECTED.issubset(components)
     assert (out / "arch2.md").is_file()
+
+
+# Cenário AWS do review externo: serviços reais que antes caíam em fallback genérico.
+AWS_REVIEW_COMPONENTS = {
+    "cloudfront", "waf", "shield", "alb",
+    "ec2", "solr", "auto_scaling",
+    "rds", "elasticache", "efs", "backup",
+    "kms", "cloudtrail", "cloudwatch",
+    "public_subnet", "private_subnet",
+}
+
+
+def test_aws_review_scenario_no_generic_fallback_for_controls(tmp_path: Path) -> None:
+    image = EVAL / "arch2" / "arch2.png"
+    out = tmp_path / "reports"
+    report = run_pipeline(
+        image,
+        out,
+        AppConfig(max_image_bytes=2_000_000),
+        detector=ScriptedDetector(AWS_REVIEW_COMPONENTS),
+    )
+    # Controles de proteção não devem cair no fallback genérico de inventário
+    for control in ("waf", "shield", "kms", "cloudtrail", "cloudwatch"):
+        control_findings = [f for f in report.findings if f.component_class == control]
+        assert control_findings, f"{control} missing from findings"
+        assert all(f.mapped for f in control_findings), (
+            f"{control} fell back to inventory (not mapped)"
+        )
+        assert all(f.role == "control" for f in control_findings)
+        # Nenhum controle deve usar o texto genérico de fallback ("superfície desconhecida")
+        for f in control_findings:
+            assert "superfície desconhecida" not in f.vulnerability_example.lower()
+            assert "não classificado" not in f.stride_category.lower()
+    # Cobertura alta: praticamente tudo mapeado
+    assert report.coverage is not None
+    assert report.coverage >= 0.9, f"coverage too low: {report.coverage}"
+    # Nenhum finding em fallback deve usar categoria STRIDE inventada
+    fallback_cats = {f.stride_category for f in report.findings if not f.mapped}
+    assert fallback_cats.issubset({"Não classificado"})
+
+
+def test_aws_review_scenario_dedupes_repeated_instances(tmp_path: Path) -> None:
+    image = EVAL / "arch2" / "arch2.png"
+    out = tmp_path / "reports"
+    # 4 instâncias EC2 + 2 Solr → devem ser agrupadas
+    dets = (
+        [Detection("ec2", 0.9, (float(i), float(i), float(i + 1), float(i + 1)))
+         for i in range(4)]
+        + [Detection("solr", 0.8, (0.0, 0.0, 1.0, 1.0)),
+            Detection("solr", 0.7, (1.0, 1.0, 2.0, 2.0))]
+        + [Detection("rds", 0.9, (2.0, 2.0, 3.0, 3.0))]
+    )
+
+    class FixedDetector:
+        def predict(self, image_path: Path) -> list[Detection]:
+            _ = image_path
+            return list(dets)
+
+    report = run_pipeline(
+        image,
+        out,
+        AppConfig(max_image_bytes=2_000_000),
+        detector=FixedDetector(),
+    )
+    ec2 = [f for f in report.findings if f.component_class == "ec2"]
+    solr = [f for f in report.findings if f.component_class == "solr"]
+    assert all(f.instance_count == 4 for f in ec2)
+    assert all(f.instance_count == 2 for f in solr)
+    # 6 detecções EC2/Solr → 1 grupo cada (dedupe), não 6 blocos duplicados
+    assert len({f.stride_category for f in ec2}) == len(ec2)
+    assert (out / "arch2.md").is_file()

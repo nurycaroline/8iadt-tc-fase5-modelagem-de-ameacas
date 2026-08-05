@@ -12,6 +12,7 @@ DEFAULT_CONFIDENCE = 0.25
 DEFAULT_MAX_IMAGE_BYTES = 10 * 1024 * 1024
 DEFAULT_MODEL_PATH = Path("models/weights/best.pt")
 TRAIN_OUTPUT_MODEL_PATH = Path("models/weights/train/weights/best.pt")
+DEFAULT_MIN_COVERAGE = 0.8
 
 
 class MissingWeightsError(FileNotFoundError):
@@ -25,6 +26,7 @@ class AppConfig:
     confidence: float = DEFAULT_CONFIDENCE
     max_image_bytes: int = DEFAULT_MAX_IMAGE_BYTES
     model_path: Path = DEFAULT_MODEL_PATH
+    min_coverage: float = DEFAULT_MIN_COVERAGE
 
 
 def model_path_candidates(configured: Path) -> list[Path]:
@@ -93,6 +95,7 @@ def load_config(path: Path | None = None) -> AppConfig:
     confidence = float(data.get("confidence", DEFAULT_CONFIDENCE))
     max_image_bytes = int(data.get("max_image_bytes", DEFAULT_MAX_IMAGE_BYTES))
     model_path = Path(data.get("model_path", DEFAULT_MODEL_PATH))
+    min_coverage = float(data.get("min_coverage", DEFAULT_MIN_COVERAGE))
 
     if (env_conf := os.environ.get("STRIDE_CONF")) is not None:
         confidence = float(env_conf)
@@ -100,9 +103,12 @@ def load_config(path: Path | None = None) -> AppConfig:
         model_path = Path(env_model)
     if (env_max := os.environ.get("STRIDE_MAX_IMAGE_BYTES")) is not None:
         max_image_bytes = int(env_max)
+    if (env_cov := os.environ.get("STRIDE_MIN_COVERAGE")) is not None:
+        min_coverage = float(env_cov)
 
     return AppConfig(
         confidence=confidence,
         max_image_bytes=max_image_bytes,
         model_path=model_path,
+        min_coverage=min_coverage,
     )

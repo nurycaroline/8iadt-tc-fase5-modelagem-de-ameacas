@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 5,
+  "next_id": 11,
   "lessons": [
     {
       "id": "L-001",
@@ -76,6 +76,114 @@
       ],
       "created": "2026-07-28T20:59:28Z",
       "last_seen": "2026-07-28T20:59:28Z"
+    },
+    {
+      "id": "L-005",
+      "key": "surviving_mutant::coverage accumulator tests must include an unmapped group before a mapped group in detection order so a mutated accumulator that always reports full coverage is detected",
+      "text": "Coverage accumulator tests must include an unmapped group before a mapped group in detection order so a mutated accumulator that always reports full coverage is detected.",
+      "signal": "surviving_mutant",
+      "scope": "stride/engine",
+      "status": "candidate",
+      "features": [
+        "stride-report-quality"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "src/stride_mvp/stride/engine.py:96 — mutant mapped_instances = total_instances survived test_coverage_mixed_mapped_and_unknown (stride/engine)"
+      ],
+      "created": "2026-08-05T19:41:40Z",
+      "last_seen": "2026-08-05T19:41:40Z"
+    },
+    {
+      "id": "L-006",
+      "key": "spec_precision_gap::when the spec says a grouping preserves the highest confidence assert the max confidence value is reported per group not just that detections are listed",
+      "text": "When the spec says a grouping preserves the highest confidence, assert the max confidence value is reported per group, not just that detections are listed.",
+      "signal": "spec_precision_gap",
+      "scope": "stride/engine",
+      "status": "candidate",
+      "features": [
+        "stride-report-quality"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "ENG-02 — tests/unit/test_engine.py:84-94 (stride/engine)"
+      ],
+      "created": "2026-08-05T19:41:45Z",
+      "last_seen": "2026-08-05T19:41:45Z"
+    },
+    {
+      "id": "L-007",
+      "key": "spec_precision_gap::when the spec says empty report sections are omitted assert each role section is omitted when empty not just the inventory section",
+      "text": "When the spec says empty report sections are omitted, assert each role section is omitted when empty, not just the inventory section.",
+      "signal": "spec_precision_gap",
+      "scope": "stride/report",
+      "status": "candidate",
+      "features": [
+        "stride-report-quality"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "REP-01 — tests/unit/test_report.py:148-158 (stride/report)"
+      ],
+      "created": "2026-08-05T19:41:45Z",
+      "last_seen": "2026-08-05T19:41:45Z"
+    },
+    {
+      "id": "L-008",
+      "key": "spec_precision_gap::when the spec requires 100 of the detector training vocabulary to resolve assert against the canonical classes txt names not just the seed vocabulary",
+      "text": "When the spec requires 100% of the detector training vocabulary to resolve, assert against the canonical classes.txt/names, not just the seed vocabulary.",
+      "signal": "spec_precision_gap",
+      "scope": "stride/class_map",
+      "status": "candidate",
+      "features": [
+        "stride-report-quality"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "MAP-02 — tests/unit/test_class_map.py:104-108 (stride/class_map)"
+      ],
+      "created": "2026-08-05T19:41:45Z",
+      "last_seen": "2026-08-05T19:41:45Z"
+    },
+    {
+      "id": "L-009",
+      "key": "spec_precision_gap::when the spec requires an actionable error message with no stacktrace assert stderr contains a human readable message and no traceback not just exit code 0",
+      "text": "When the spec requires an actionable error message with no stacktrace, assert stderr contains a human-readable message and no traceback, not just exit code != 0.",
+      "signal": "spec_precision_gap",
+      "scope": "stride/cli",
+      "status": "candidate",
+      "features": [
+        "stride-report-quality"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "EC1 — tests/integration/test_cli.py:77-84 (stride/cli)"
+      ],
+      "created": "2026-08-05T19:41:45Z",
+      "last_seen": "2026-08-05T19:41:45Z"
+    },
+    {
+      "id": "L-010",
+      "key": "spec_precision_gap::when the spec defines report structure for an edge case e g all unknown yields only summary inventory assert the section structure not just the coverage value",
+      "text": "When the spec defines report structure for an edge case (e.g. all-unknown yields only summary + inventory), assert the section structure, not just the coverage value.",
+      "signal": "spec_precision_gap",
+      "scope": "stride/report",
+      "status": "candidate",
+      "features": [
+        "stride-report-quality"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "EC2 — tests/unit/test_engine.py:138-143 (stride/report)"
+      ],
+      "created": "2026-08-05T19:41:45Z",
+      "last_seen": "2026-08-05T19:41:45Z"
     }
   ]
 }

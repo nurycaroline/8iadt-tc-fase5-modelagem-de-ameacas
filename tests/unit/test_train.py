@@ -79,7 +79,10 @@ def test_train_passes_mac_mps_overrides(
         cache="ram",
         fraction=0.1,
     )
-    assert result == best
+    promoted = project / "best.pt"
+    assert result == promoted
+    assert promoted.is_file()
+    assert promoted.read_bytes() == best.read_bytes()
     kwargs = fake_model.train.call_args.kwargs
     assert kwargs["device"] == "mps"
     assert kwargs["batch"] == 32

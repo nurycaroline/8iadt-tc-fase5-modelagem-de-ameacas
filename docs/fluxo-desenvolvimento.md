@@ -138,7 +138,28 @@ stride-mvp analyze data/eval/arch2/arch2.png --out reports
 
 ## 6. Knowledge Base
 
-Edite `data/kb/threats.yaml` para adicionar ameaças por família × categoria STRIDE. O motor usa fallback quando não há entrada específica.
+Edite `data/kb/threats.yaml` para adicionar ameaças por família × categoria STRIDE. A KB v2 declara o **papel** de cada família (`roles`): `workload` (default), `control` (security/observability/edge), `zone` (network zones), `external` (client). Componentes de controle geram **verificações de eficácia/configuração**, não ameaças genéricas de exposição.
+
+### 6.1 Cobertura do vocabulário (check-map)
+
+Após o treino, valide que toda classe do detector resolve para uma família STRIDE (evita relatórios degradando em fallback `unknown`):
+
+```bash
+# A partir do classes.txt gerado na conversão VOC→YOLO
+stride-mvp check-map --classes data/processed/classes.txt
+# Ou lendo 'names' diretamente dos pesos
+stride-mvp check-map --weights models/weights/best.pt
+```
+
+Saída: lista classes sem mapeamento + exit ≠ 0 quando houver gap; exit 0 e "cobertura 100%" quando tudo resolver. Para fechar gaps, edite `data/class_map.yaml` e re rode o `check-map`.
+
+### 6.2 Cobertura do relatório (coverage)
+
+O relatório expõe `coverage` = detecções mapeadas / total. Quando `coverage < STRIDE_MIN_COVERAGE` (default 0.8), o CLI `analyze` emite um **warning** em stderr (sem mudar o exit code). Componentes não classificados aparecem na seção **"Inventário não classificado"** (categoria `Não classificado`), nunca como "Information Disclosure" inventado.
+
+```bash
+export STRIDE_MIN_COVERAGE=0.9   # mais rigoroso (opcional)
+```
 
 ## 7. UI Gradio (P2)
 

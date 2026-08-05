@@ -87,6 +87,14 @@ def test_load_config_env_overrides(monkeypatch: pytest.MonkeyPatch, tmp_path: Pa
     assert cfg.model_path == Path("/weights/best.pt")
 
 
+def test_load_config_min_coverage_env_override(monkeypatch: pytest.MonkeyPatch) -> None:
+    from stride_mvp.config import DEFAULT_MIN_COVERAGE
+
+    assert load_config().min_coverage == pytest.approx(DEFAULT_MIN_COVERAGE)
+    monkeypatch.setenv("STRIDE_MIN_COVERAGE", "0.95")
+    assert load_config().min_coverage == pytest.approx(0.95)
+
+
 def test_resolve_model_path_uses_configured_when_present(tmp_path: Path) -> None:
     from stride_mvp.config import resolve_model_path
 
