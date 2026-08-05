@@ -31,6 +31,11 @@ class ThreatKB:
     entries: list[KBEntry]
     fallback: FallbackEntry
     version: int = 1
+    roles: dict[str, str] = None  # type: ignore[assignment]
+
+    def __post_init__(self) -> None:
+        if self.roles is None:
+            self.roles = {}
 
     @classmethod
     def load(cls, path: Path | None = None) -> ThreatKB:
@@ -42,6 +47,11 @@ class ThreatKB:
             vulnerability=str(fb.get("vulnerability", "Não catalogada")),
             countermeasure=str(fb.get("countermeasure", "Revisar controles")),
         )
+        roles_raw = raw.get("roles") or {}
+        roles: dict[str, str] = {}
+        if isinstance(roles_raw, dict):
+            for family, role in roles_raw.items():
+                roles[str(family).strip().lower()] = str(role).strip().lower()
         entries: list[KBEntry] = []
         for item in raw.get("entries") or []:
             entries.append(
@@ -57,6 +67,7 @@ class ThreatKB:
             entries=entries,
             fallback=fallback,
             version=int(raw.get("version", 1)),
+            roles=roles,
         )
 
     def lookup(self, family: str, category: str) -> list[KBEntry]:
@@ -68,6 +79,14 @@ class ThreatKB:
             for e in self.entries
             if e.family.lower() == fam and e.stride.lower() == cat
         ]
+
+    def role(self, family: str) -> str:
+        """Return the role of a family (default ``workload``)."""
+        return self.roles.get(family.strip().lower(), "workload")
+
+    def families(self) -> set[str]:
+        """Return all families that have at least one KB entry."""
+        return {e.family.lower() for e in self.entries}
 
     def fallback_entry(self, family: str) -> FallbackEntry:
         """Return the generic fallback (family documented for callers)."""

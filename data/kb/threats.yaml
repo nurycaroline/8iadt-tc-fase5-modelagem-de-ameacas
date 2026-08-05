@@ -1,10 +1,19 @@
 # Threat knowledge base (KB-01..04) — family × STRIDE → vulnerability + countermeasure
-version: 1
+version: 2
+
+# Role per family: control (security/observability/edge), zone (network zones),
+# external (client). Unlisted families default to ``workload``.
+roles:
+  security: control
+  observability: control
+  edge: control
+  zone: zone
+  client: external
 
 fallback:
-  threat: "Ameaça genérica para componente sem mapeamento específico"
-  vulnerability: "Superfície de ataque não catalogada na KB"
-  countermeasure: "Revisar autenticação, autorização, logging e exposição de rede"
+  threat: "Componente não classificado — inventariar antes de assumir risco"
+  vulnerability: "Família/componente ausente do class_map ou da KB"
+  countermeasure: "Inventariar o componente, identificar o serviço real e mapeá-lo a uma família STRIDE"
 
 entries:
   - family: database

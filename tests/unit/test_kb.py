@@ -39,3 +39,36 @@ def test_fallback_for_missing_family(tmp_path: Path) -> None:
     assert fb.threat == "Genérica"
     assert fb.vulnerability == "Desconhecida"
     assert fb.countermeasure == "Revisar"
+
+
+def test_roles_loaded_from_v2_yaml() -> None:
+    kb = ThreatKB.load()
+    assert kb.version >= 2
+    assert kb.role("edge") == "control"
+    assert kb.role("observability") == "control"
+    assert kb.role("security") == "control"
+    assert kb.role("zone") == "zone"
+    assert kb.role("client") == "external"
+    assert kb.role("database") == "workload"
+    assert kb.role("compute") == "workload"
+
+
+def test_roles_default_workload_for_v1_yaml(tmp_path: Path) -> None:
+    path = tmp_path / "kb.yaml"
+    path.write_text(
+        "version: 1\n"
+        "fallback:\n"
+        "  threat: Genérica\n"
+        "  vulnerability: Desconhecida\n"
+        "  countermeasure: Revisar\n"
+        "entries:\n"
+        "  - family: database\n"
+        "    stride: Spoofing\n"
+        "    threat: t\n"
+        "    vulnerability: v\n"
+        "    countermeasure: c\n",
+        encoding="utf-8",
+    )
+    kb = ThreatKB.load(path)
+    assert kb.role("edge") == "workload"
+    assert kb.role("database") == "workload"
