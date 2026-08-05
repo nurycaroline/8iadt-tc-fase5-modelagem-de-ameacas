@@ -46,3 +46,31 @@ def test_load_class_map_from_custom_path(tmp_path: Path) -> None:
     mapper = load_class_map(path)
     assert mapper.to_family("mydb") == "database"
     assert mapper.to_family("other") == "unknown"
+
+
+def test_vendor_prefix_stripped_on_lookup() -> None:
+    mapper = load_class_map()
+    assert mapper.to_family("aws-waf") == mapper.to_family("waf")
+    assert mapper.to_family("Amazon RDS") == "database"
+    assert mapper.to_family("azure_sql_database") == mapper.to_family("sql_database")
+
+
+def test_explicit_full_name_takes_precedence_over_base(tmp_path: Path) -> None:
+    path = tmp_path / "map.yaml"
+    path.write_text(
+        "default_family: unknown\n"
+        "families:\n"
+        "  security: [aws_config]\n"
+        "  observability: [config]\n",
+        encoding="utf-8",
+    )
+    mapper = load_class_map(path)
+    assert mapper.to_family("config") == "observability"
+    assert mapper.to_family("aws_config") == "security"
+    assert mapper.to_family("aws_config") != mapper.to_family("config")
+
+
+def test_empty_class_falls_back() -> None:
+    mapper = load_class_map()
+    assert mapper.to_family("") == "unknown"
+    assert mapper.to_family("   ") == "unknown"
