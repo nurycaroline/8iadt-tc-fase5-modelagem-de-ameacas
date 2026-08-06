@@ -20,6 +20,7 @@ htmlcov/
 
 # Dataset / credentials (never commit)
 data/raw/
+data/processed/
 **/kaggle.json
 .kaggle/
 kaggle.json
