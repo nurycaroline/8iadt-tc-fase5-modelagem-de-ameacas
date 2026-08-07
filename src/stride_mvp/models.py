@@ -28,6 +28,8 @@ class ThreatFinding:
     mapped: bool
     role: str = "workload"
     instance_count: int = 1
+    max_confidence: float | None = None
+    low_confidence: bool = False
 
 
 @dataclass

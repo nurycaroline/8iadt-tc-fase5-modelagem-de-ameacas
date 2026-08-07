@@ -95,6 +95,70 @@ def test_load_config_min_coverage_env_override(monkeypatch: pytest.MonkeyPatch) 
     assert load_config().min_coverage == pytest.approx(0.95)
 
 
+def test_load_config_dedupe_and_low_conf_defaults() -> None:
+    from stride_mvp.config import DEFAULT_DEDUPE_IOU, DEFAULT_LOW_CONF
+
+    cfg = load_config()
+    assert cfg.dedupe_iou == pytest.approx(DEFAULT_DEDUPE_IOU)
+    assert cfg.low_conf == pytest.approx(DEFAULT_LOW_CONF)
+
+
+def test_load_config_dedupe_and_low_conf_env(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("STRIDE_DEDUPE_IOU", "0.7")
+    monkeypatch.setenv("STRIDE_LOW_CONF", "0.3")
+    cfg = load_config()
+    assert cfg.dedupe_iou == pytest.approx(0.7)
+    assert cfg.low_conf == pytest.approx(0.3)
+
+
+def test_load_config_rejects_out_of_range_dedupe_iou(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("STRIDE_DEDUPE_IOU", "1.5")
+    with pytest.raises(ValueError, match=r"\[0, 1\]"):
+        load_config()
+
+
+def test_load_config_rejects_non_numeric_low_conf(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("STRIDE_LOW_CONF", "abc")
+    with pytest.raises(ValueError, match="número"):
+        load_config()
+
+
+def test_threat_finding_confidence_fields_default() -> None:
+    finding = ThreatFinding(
+        component_class="rds",
+        family="database",
+        stride_category="Spoofing",
+        threat_description="t",
+        vulnerability_example="v",
+        countermeasure="c",
+        mapped=True,
+    )
+    assert finding.max_confidence is None
+    assert finding.low_confidence is False
+
+
+def test_threat_finding_accepts_confidence_fields() -> None:
+    finding = ThreatFinding(
+        component_class="api",
+        family="api",
+        stride_category="Spoofing",
+        threat_description="t",
+        vulnerability_example="v",
+        countermeasure="c",
+        mapped=True,
+        max_confidence=0.32,
+        low_confidence=True,
+    )
+    assert finding.max_confidence == pytest.approx(0.32)
+    assert finding.low_confidence is True
+
+
 def test_resolve_model_path_uses_configured_when_present(tmp_path: Path) -> None:
     from stride_mvp.config import resolve_model_path
 
