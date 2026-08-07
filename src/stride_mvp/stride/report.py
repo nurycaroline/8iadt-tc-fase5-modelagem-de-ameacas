@@ -16,6 +16,11 @@ ROLE_TITLES = {
 # Roles that share the "Ameaças por componente" section (rendered together).
 THREAT_SECTION_ROLES = ("workload", "external")
 
+_LOW_CONF_NOTE = (
+    "Detecções com baixa confiança (⚠) podem ser falsos positivos do detector "
+    "— especialmente em diagramas fora da distribuição de treino."
+)
+
 
 class ReportRenderer:
     """Serialize and persist threat reports."""
@@ -33,10 +38,15 @@ class ReportRenderer:
             lines.append(f"**Cobertura de mapeamento:** {report.coverage:.0%}")
         lines.append("")
 
-        if report.notes:
+        notes = list(report.notes)
+        if any(f.low_confidence for f in report.findings):
+            if _LOW_CONF_NOTE not in notes:
+                notes.append(_LOW_CONF_NOTE)
+
+        if notes:
             lines.append("## Observações")
             lines.append("")
-            for note in report.notes:
+            for note in notes:
                 lines.append(f"- {note}")
             lines.append("")
 
@@ -51,8 +61,11 @@ class ReportRenderer:
         lines.append("")
 
         # Group findings by role, preserving role order; unknown → inventory section.
+        # Scope markers appear only in the summary (not in detail sections).
         by_role: dict[str, list[ThreatFinding]] = {}
         for f in report.findings:
+            if f.role == "scope":
+                continue
             if not f.mapped:
                 by_role.setdefault("__inventory__", []).append(f)
             else:
@@ -98,8 +111,8 @@ class ReportRenderer:
         lines = [
             "## Sumário",
             "",
-            "| # | Componente | Família | Papel | Instâncias | Categorias STRIDE |",
-            "|---|------------|---------|-------|-----------|------------------|",
+            "| # | Componente | Família | Papel | Instâncias | Confiança | Categorias STRIDE |",
+            "|---|------------|---------|-------|-----------|-----------|------------------|",
         ]
         # Aggregate one row per component (categories collapsed) — not one per finding.
         per_component: dict[str, ThreatFinding] = {}
@@ -114,9 +127,14 @@ class ReportRenderer:
         for i, cls in enumerate(order, start=1):
             f = per_component[cls]
             cats = ", ".join(cats_by_component[cls])
+            name = f"{f.component_class} ⚠" if f.low_confidence else f.component_class
+            if f.max_confidence is None:
+                conf = "—"
+            else:
+                conf = f"{f.max_confidence:.2f}"
             lines.append(
-                f"| {i} | {f.component_class} | {f.family} | {f.role} "
-                f"| {f.instance_count} | {cats} |"
+                f"| {i} | {name} | {f.family} | {f.role} "
+                f"| {f.instance_count} | {conf} | {cats} |"
             )
         return lines
 
@@ -157,6 +175,8 @@ class ReportRenderer:
                     "family": f.family,
                     "role": f.role,
                     "instance_count": f.instance_count,
+                    "max_confidence": f.max_confidence,
+                    "low_confidence": f.low_confidence,
                     "stride_category": f.stride_category,
                     "threat_description": f.threat_description,
                     "vulnerability_example": f.vulnerability_example,
