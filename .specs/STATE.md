@@ -69,10 +69,10 @@
 ## Handoff
 
 - **Feature**: STRIDE Report Fidelity / `.specs/features/stride-report-fidelity/`
-- **Phase / Task**: Execute T1–T9 concluído — Verifier pendente
-- **Completed**: T1 class_map realloc; T2 KB famílias + scope; T3 config limiares; T4 dedupe espacial; T5 engine scope+confiança; T6 pipeline wire; T7 report confiança; T8 e2e REG-01/02; T9 AD-008. Gate full: 154 passed.
-- **In-progress**: Verifier automático (feature-level validation)
-- **Next step**: Verifier sub-agent → validation.md; follow-up opcional `detector-azure-robustness`
+- **Phase / Task**: Execute + Verifier concluídos — feature done
+- **Completed**: T1–T9 + validation PASS (18/18 ACs, 3/3 mutants killed, 154 tests). Artefato: `.specs/features/stride-report-fidelity/validation.md`
+- **In-progress**: —
+- **Next step**: Merge PR #13; follow-up opcional `detector-azure-robustness` (anotar diagramas Azure + fine-tune)
 - **Blockers**: none
 - **Branch**: `cursor/stride-report-fidelity-spec-7757`
 
