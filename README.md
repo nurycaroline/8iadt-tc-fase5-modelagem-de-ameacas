@@ -3,7 +3,8 @@
 MVP de viabilidade: detecção supervisionada de componentes em diagramas de arquitetura + relatório STRIDE (vulnerabilidades e contramedidas).
 
 Documentação completa do fluxo: [`docs/fluxo-desenvolvimento.md`](docs/fluxo-desenvolvimento.md)  
-Arquiteturas de avaliação: [`docs/eval-architectures.md`](docs/eval-architectures.md)
+Arquiteturas de avaliação: [`docs/eval-architectures.md`](docs/eval-architectures.md)  
+Aula/artigo — lições do projeto: [`docs/aula-licoes-do-projeto.md`](docs/aula-licoes-do-projeto.md)
 
 ## Setup rápido
 
