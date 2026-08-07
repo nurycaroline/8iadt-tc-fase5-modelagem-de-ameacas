@@ -32,6 +32,7 @@ class StrideEngine:
         detections: list[Detection],
         *,
         source_image: str = "",
+        low_conf: float = 0.5,
     ) -> ThreatReport:
         notes: list[str] = []
         findings: list[ThreatFinding] = []
@@ -67,15 +68,50 @@ class StrideEngine:
             family = rep.family or self.mapper.default_family
             count = len(group_dets)
             total_instances += count
+            max_conf = max(d.confidence for d in group_dets)
+            is_low = bool(low_conf > 0.0 and max_conf < low_conf)
 
             if family == self.mapper.default_family:
                 self._add_inventory_finding(
-                    findings, notes, rep.class_name, family, count
+                    findings,
+                    notes,
+                    rep.class_name,
+                    family,
+                    count,
+                    max_confidence=max_conf,
+                    low_confidence=is_low,
                 )
                 continue
 
-            mapped_any = False
             role = self.kb.role(family)
+            if role == "scope":
+                findings.append(
+                    ThreatFinding(
+                        component_class=rep.class_name,
+                        family=family,
+                        stride_category="Escopo",
+                        threat_description=(
+                            "Componente de escopo/agrupamento — sem superfície "
+                            "de ameaça própria"
+                        ),
+                        vulnerability_example=(
+                            "Não aplicável — fronteira lógica de gerenciamento"
+                        ),
+                        countermeasure=(
+                            "Manter inventário do escopo; aplicar controles nos "
+                            "workloads contidos"
+                        ),
+                        mapped=True,
+                        role="scope",
+                        instance_count=count,
+                        max_confidence=max_conf,
+                        low_confidence=is_low,
+                    )
+                )
+                mapped_instances += count
+                continue
+
+            mapped_any = False
             for category in STRIDE_CATEGORIES:
                 for hit in self.kb.lookup(family, category):
                     mapped_any = True
@@ -90,6 +126,8 @@ class StrideEngine:
                             mapped=True,
                             role=role,
                             instance_count=count,
+                            max_confidence=max_conf,
+                            low_confidence=is_low,
                         )
                     )
 
@@ -97,7 +135,13 @@ class StrideEngine:
                 mapped_instances += count
             else:
                 self._add_inventory_finding(
-                    findings, notes, rep.class_name, family, count
+                    findings,
+                    notes,
+                    rep.class_name,
+                    family,
+                    count,
+                    max_confidence=max_conf,
+                    low_confidence=is_low,
                 )
 
         coverage = mapped_instances / total_instances if total_instances else None
@@ -117,6 +161,9 @@ class StrideEngine:
         class_name: str,
         family: str,
         count: int,
+        *,
+        max_confidence: float | None = None,
+        low_confidence: bool = False,
     ) -> None:
         fb = self.kb.fallback_entry(family)
         findings.append(
@@ -130,6 +177,8 @@ class StrideEngine:
                 mapped=False,
                 role="workload",
                 instance_count=count,
+                max_confidence=max_confidence,
+                low_confidence=low_confidence,
             )
         )
         notes.append(
