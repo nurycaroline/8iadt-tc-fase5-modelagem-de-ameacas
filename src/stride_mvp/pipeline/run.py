@@ -7,6 +7,7 @@ from typing import Protocol
 
 from stride_mvp.config import AppConfig, load_config
 from stride_mvp.data.class_map import ClassFamilyMapper, load_class_map
+from stride_mvp.detection.dedupe import dedupe_detections
 from stride_mvp.models import Detection, ThreatReport
 from stride_mvp.pipeline.validate import validate_image
 from stride_mvp.stride.engine import StrideEngine
@@ -44,7 +45,19 @@ def run_pipeline(
     renderer = renderer or ReportRenderer()
 
     detections = detector.predict(Path(image))
+    detections, removed = dedupe_detections(
+        detections, iou_threshold=config.dedupe_iou
+    )
     engine = StrideEngine(kb, mapper)
-    report = engine.analyze(detections, source_image=str(image))
+    report = engine.analyze(
+        detections,
+        source_image=str(image),
+        low_conf=config.low_conf,
+    )
+    if removed > 0:
+        report.notes.append(
+            f"Dedupe espacial removeu {removed} detecção(ões) sobreposta(s) "
+            f"da mesma classe (IoU≥{config.dedupe_iou})."
+        )
     renderer.write(report, Path(out_dir), stem=Path(image).stem)
     return report

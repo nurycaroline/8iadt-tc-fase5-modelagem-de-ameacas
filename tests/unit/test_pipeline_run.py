@@ -83,3 +83,41 @@ def test_missing_weights_raises_clear_error(
             AppConfig(model_path=missing, max_image_bytes=1_000_000),
             detector=None,
         )
+
+
+def test_pipeline_dedupes_overlapping_same_class(tmp_path: Path) -> None:
+    image = tmp_path / "arch.png"
+    _png(image)
+    dets = [
+        Detection("microsoft_entra", 0.4, (0.0, 0.0, 10.0, 10.0)),
+        Detection("microsoft_entra", 0.9, (1.0, 1.0, 11.0, 11.0)),
+        Detection("api", 0.85, (50.0, 50.0, 60.0, 60.0)),
+    ]
+    report = run_pipeline(
+        image,
+        tmp_path / "out",
+        AppConfig(max_image_bytes=1_000_000, dedupe_iou=0.5),
+        detector=FakeDetector(dets),
+    )
+    assert len(report.detections) == 2
+    entra = [f for f in report.findings if f.component_class == "microsoft_entra"]
+    assert entra
+    assert all(f.instance_count == 1 for f in entra)
+    assert any("Dedupe espacial" in n for n in report.notes)
+
+
+def test_pipeline_dedupe_disabled_when_iou_zero(tmp_path: Path) -> None:
+    image = tmp_path / "arch.png"
+    _png(image)
+    dets = [
+        Detection("microsoft_entra", 0.4, (0.0, 0.0, 10.0, 10.0)),
+        Detection("microsoft_entra", 0.9, (0.0, 0.0, 10.0, 10.0)),
+    ]
+    report = run_pipeline(
+        image,
+        tmp_path / "out",
+        AppConfig(max_image_bytes=1_000_000, dedupe_iou=0.0),
+        detector=FakeDetector(dets),
+    )
+    assert len(report.detections) == 2
+    assert not any("Dedupe espacial" in n for n in report.notes)
