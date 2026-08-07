@@ -79,3 +79,13 @@ def test_dedupe_normalizes_vendor_prefix_as_same_class() -> None:
     kept, removed = dedupe_detections([a, b], iou_threshold=0.5)
     assert removed == 1
     assert kept[0].class_name == "aws_waf"
+
+
+def test_dedupe_merges_close_centers_with_low_iou() -> None:
+    # Two slightly shifted reads of the same icon — IoU low, centers close.
+    a = Detection("azure_services", 0.9, (0.0, 0.0, 10.0, 10.0))
+    b = Detection("azure_services", 0.6, (6.0, 0.0, 16.0, 10.0))
+    assert iou(a.bbox_xyxy, b.bbox_xyxy) < 0.5
+    kept, removed = dedupe_detections([a, b], iou_threshold=0.3)
+    assert removed == 1
+    assert kept == [a]

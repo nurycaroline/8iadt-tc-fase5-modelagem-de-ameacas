@@ -137,7 +137,9 @@ def test_fidelity_reallocations_match_semantic_families() -> None:
         "logic_apps": "integration",
         "azure_logic_apps": "integration",
         "sass_services": "dependency",
-        "azure_services": "dependency",
+        "azure_services": "azure_platform",
+        "rest_api": "backend",
+        "soap": "backend",
     }
     got = {label: mapper.to_family(label) for label in expected}
     assert got == expected
