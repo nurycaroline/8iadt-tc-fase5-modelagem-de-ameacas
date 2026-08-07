@@ -150,3 +150,126 @@ def test_aws_review_scenario_dedupes_repeated_instances(tmp_path: Path) -> None:
     # 6 detecções EC2/Solr → 1 grupo cada (dedupe), não 6 blocos duplicados
     assert len({f.stride_category for f in ec2}) == len(ec2)
     assert (out / "arch2.md").is_file()
+
+
+def _blob_for(report, class_name: str) -> str:
+    parts = [
+        f"{f.threat_description} {f.vulnerability_example} {f.countermeasure}"
+        for f in report.findings
+        if f.component_class == class_name
+    ]
+    return " ".join(parts).lower()
+
+
+def test_fidelity_aws_arch1_semantics_forbid_wrong_vocab(tmp_path: Path) -> None:
+    """REG-01 — Gemini review of arch1: EFS/Backup/SES/ASG/region semantics."""
+    image = EVAL / "arch1" / "arch1.png"
+    out = tmp_path / "reports"
+    components = {
+        "sei/sip",
+        "rds",
+        "alb",
+        "efs",
+        "backup",
+        "aws_simple_email_service",
+        "aws_autoscaling",
+        "aws_region",
+        "public_subnet",
+        "vpc",
+    }
+    report = run_pipeline(
+        image,
+        out,
+        AppConfig(max_image_bytes=2_000_000),
+        detector=ScriptedDetector(components),
+    )
+    md = (out / "arch1.md").read_text(encoding="utf-8")
+
+    efs = _blob_for(report, "efs")
+    assert efs
+    for forbidden in ("bucket", "block public access", "mfa delete"):
+        assert forbidden not in efs
+    assert "mount" in efs or "posix" in efs
+
+    backup = _blob_for(report, "backup")
+    assert backup
+    assert "vault" in backup
+    backup_findings = [f for f in report.findings if f.component_class == "backup"]
+    assert all(f.role == "control" for f in backup_findings)
+
+    ses = _blob_for(report, "aws_simple_email_service")
+    assert ses
+    for required in ("spf", "dkim", "dmarc"):
+        assert required in ses
+    for forbidden in ("fila", "dlq"):
+        assert forbidden not in ses
+
+    scaling = _blob_for(report, "aws_autoscaling")
+    assert scaling
+    for forbidden in ("escape de container", "imdsv2"):
+        assert forbidden not in scaling
+    scaling_findings = [
+        f for f in report.findings if f.component_class == "aws_autoscaling"
+    ]
+    assert all(f.role == "control" for f in scaling_findings)
+
+    region = [f for f in report.findings if f.component_class == "aws_region"]
+    assert len(region) == 1
+    assert region[0].role == "scope"
+    assert region[0].stride_category == "Escopo"
+    # Scope must not appear as a detailed STRIDE section heading
+    assert "### 1. aws_region" not in md
+
+
+def test_fidelity_azure_arch2_semantics_and_spatial_dedupe(tmp_path: Path) -> None:
+    """REG-02 — Gemini review of arch2: Azure semantics + overlapping duplicates."""
+    image = EVAL / "arch2" / "arch2.png"
+    out = tmp_path / "reports"
+
+    dets = [
+        Detection("microsoft_entra", 0.4, (0.0, 0.0, 10.0, 10.0)),
+        Detection("microsoft_entra", 0.88, (1.0, 1.0, 11.0, 11.0)),
+        Detection("resource_group", 0.9, (20.0, 20.0, 30.0, 30.0)),
+        Detection("api", 0.85, (40.0, 40.0, 50.0, 50.0)),
+        Detection("logic_apps", 0.8, (60.0, 60.0, 70.0, 70.0)),
+        Detection("sass_services", 0.75, (80.0, 80.0, 90.0, 90.0)),
+        Detection("azure_services", 0.7, (100.0, 100.0, 110.0, 110.0)),
+    ]
+
+    class FixedDetector:
+        def predict(self, image_path: Path) -> list[Detection]:
+            _ = image_path
+            return list(dets)
+
+    report = run_pipeline(
+        image,
+        out,
+        AppConfig(max_image_bytes=2_000_000, dedupe_iou=0.5, low_conf=0.5),
+        detector=FixedDetector(),
+    )
+    md = (out / "arch2.md").read_text(encoding="utf-8")
+
+    # Overlapping entra collapsed to 1 instance
+    entra_dets = [d for d in report.detections if d.class_name == "microsoft_entra"]
+    assert len(entra_dets) == 1
+    entra_findings = [
+        f for f in report.findings if f.component_class == "microsoft_entra"
+    ]
+    assert entra_findings
+    assert all(f.instance_count == 1 for f in entra_findings)
+
+    # Resource group is scope — no STRIDE categories
+    rg = [f for f in report.findings if f.component_class == "resource_group"]
+    assert len(rg) == 1
+    assert rg[0].role == "scope"
+    assert rg[0].stride_category == "Escopo"
+    assert "### 1. resource_group" not in md
+
+    for name in ("logic_apps", "sass_services", "azure_services"):
+        blob = _blob_for(report, name)
+        assert blob, f"{name} missing findings"
+        for forbidden in ("container", "seccomp", "imdsv2", "hpa"):
+            assert forbidden not in blob, f"{name} still uses {forbidden}"
+
+    logic = _blob_for(report, "logic_apps")
+    assert "managed identity" in logic or "rbac" in logic
