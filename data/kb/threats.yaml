@@ -38,7 +38,7 @@ entries:
   - family: database
     stride: Information Disclosure
     threat: "Exposição de dados em repouso ou em trânsito"
-    vulnerability: "Bucket/DB sem criptografia ou ACL pública"
+    vulnerability: "Instância/cluster de DB sem criptografia ou exposta via Security Groups/Subnets"
     countermeasure: "Criptografia at-rest, least privilege, private endpoints"
   - family: database
     stride: Denial of Service
@@ -188,6 +188,38 @@ entries:
     threat: "Escalonamento via autorização fraca na orquestração"
     vulnerability: "Conectores com escopos excessivos / RBAC frouxo"
     countermeasure: "RBAC least-privilege nas Logic Apps e escopos mínimos nos conectores"
+
+  - family: azure_platform
+    stride: Spoofing
+    threat: "Chamadas à API Azure com identidade forjada ou credencial estática"
+    vulnerability: "Service principal com segredo de longa duração em vez de Managed Identity"
+    countermeasure: "Autenticar com Managed Identity; evitar secrets embutidos nas Logic Apps"
+  - family: azure_platform
+    stride: Elevation of Privilege
+    threat: "Escalonamento via RBAC Azure excessivo"
+    vulnerability: "Role assignments amplas (Owner/Contributor) no Resource Group alvo"
+    countermeasure: "RBAC least-privilege nas identities que chamam o Azure Resource Manager"
+  - family: azure_platform
+    stride: Information Disclosure
+    threat: "Exposição de dados via APIs Azure mal escopadas"
+    vulnerability: "Permissões de leitura amplas em subscriptions/resources"
+    countermeasure: "Escopos mínimos por recurso e Private Endpoints onde aplicável"
+
+  - family: backend
+    stride: Spoofing
+    threat: "Backend REST/SOAP aceita chamadas sem autenticação mútua"
+    vulnerability: "Ausência de mTLS entre o API Gateway/Logic Apps e o backend"
+    countermeasure: "Exigir mTLS (certificado cliente) na frente do backend REST/SOAP"
+  - family: backend
+    stride: Information Disclosure
+    threat: "Tráfego REST/SOAP em claro ou com TLS fraco"
+    vulnerability: "Endpoint HTTP público ou TLS desatualizado no backend legado"
+    countermeasure: "TLS 1.2+ obrigatório, sem exposição pública direta — só via Gateway/VNet"
+  - family: backend
+    stride: Tampering
+    threat: "Payload SOAP/REST adulterado em trânsito ou na borda"
+    vulnerability: "Sem validação de schema/assinatura nas mensagens do backend"
+    countermeasure: "Validação de schema XML/JSON e restrição de origem ao Gateway"
 
   - family: dependency
     stride: Spoofing

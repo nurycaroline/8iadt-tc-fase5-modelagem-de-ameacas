@@ -64,15 +64,15 @@
 - **Trade-off**: KB maior; retreino Azure fica fora de escopo (feature futura `detector-azure-robustness`); dedupe espacial pode subcontar instâncias muito próximas (mitigado por limiar configurável).
 - **Scope**: Feature `stride-report-fidelity`.
 - **Date**: 2026-08-07
-- **Status**: active
+- **Status**: active (refined 2026-08-07: `azure_platform` separado de `dependency`; família `backend` com mTLS; database ID sem "Bucket"; dedupe default IoU 0.3 + proximidade de centro)
 
 ## Handoff
 
 - **Feature**: STRIDE Report Fidelity / `.specs/features/stride-report-fidelity/`
-- **Phase / Task**: Execute + Verifier concluídos — feature done
-- **Completed**: T1–T9 + validation PASS (18/18 ACs, 3/3 mutants killed, 154 tests). Artefato: `.specs/features/stride-report-fidelity/validation.md`
+- **Phase / Task**: Execute + Verifier + refinamentos pós-reanálise concluídos
+- **Completed**: T1–T9 + validation PASS; refinamentos: azure_platform vs SaaS, backend mTLS, database sem Bucket, dedupe mais agressivo (IoU 0.3 + centros). Gate: 160 passed.
 - **In-progress**: —
-- **Next step**: Merge PR #13; follow-up opcional `detector-azure-robustness` (anotar diagramas Azure + fine-tune)
+- **Next step**: Reanalisar arch1/arch2 com os pesos atuais; merge PR #13; follow-up opcional `detector-azure-robustness`
 - **Blockers**: none
 - **Branch**: `cursor/stride-report-fidelity-spec-7757`
 

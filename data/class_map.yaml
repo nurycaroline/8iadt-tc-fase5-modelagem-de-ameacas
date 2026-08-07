@@ -77,7 +77,6 @@ families:
   api:
     - api
     - api_gateway
-    - rest_api
     - graphql
     - apigateway
     - load_balancer
@@ -94,6 +93,13 @@ families:
     - azure_load_balancers
     - gcp_cloud_load_balancing
     - developer_portal
+  backend:
+    - rest_api
+    - soap
+    - rest_soap
+    - web_services
+    - soap_service
+    - rest_service
   storage:
     - storage
     - s3
@@ -129,6 +135,7 @@ families:
     - azure_logic_apps
   dependency:
     - sass_services
+  azure_platform:
     - azure_services
   management:
     - resource_group
