@@ -58,13 +58,21 @@
 - **Date**: 2026-08-05
 - **Status**: active
 
+### AD-008
+- **Decision**: Famílias semânticas finas (`filesystem`, `backup`, `email`, `scaling`, `integration`, `dependency`, `management`) + papel `scope` (zero findings STRIDE; só sumário; conta na coverage). Dedupe espacial intra-classe por IoU/contenção transitiva (`STRIDE_DEDUPE_IOU`, default 0.5; 0 desliga). Transparência de confiança no relatório (`STRIDE_LOW_CONF`, default 0.50; 0 desliga).
+- **Reason**: Review Gemini de arch1/arch2: textos S3 em EFS/Backup, SQS em SES, containers em Logic Apps/Resource Group/Auto Scaling; contagens infladas por caixas sobrepostas do detector (poucos exemplos Azure no Kaggle).
+- **Trade-off**: KB maior; retreino Azure fica fora de escopo (feature futura `detector-azure-robustness`); dedupe espacial pode subcontar instâncias muito próximas (mitigado por limiar configurável).
+- **Scope**: Feature `stride-report-fidelity`.
+- **Date**: 2026-08-07
+- **Status**: active
+
 ## Handoff
 
 - **Feature**: STRIDE Report Fidelity / `.specs/features/stride-report-fidelity/`
-- **Phase / Task**: Specify concluído — aguardando confirmação do usuário antes de Design/Tasks
-- **Completed**: Diagnóstico do review externo (Gemini) dos relatórios reais arch1 (AWS) e arch2 (Azure); causas-raiz rastreadas a `class_map.yaml`, `kb/threats.yaml`, `engine.py` e ausência de dedupe espacial no pipeline de detecção; spec com 18 requisitos (SEM/AZR/DED/CONF/REG) e defaults logados em Assumptions
-- **In-progress**: —
-- **Next step**: Usuário confirma/ajusta a spec (em especial famílias novas e defaults `STRIDE_DEDUPE_IOU`/`STRIDE_LOW_CONF`) → Design → Tasks → Execute. Follow-up recomendado fora desta feature: `detector-azure-robustness` (anotar diagramas Azure + fine-tune) para a causa-raiz das detecções duplicadas
+- **Phase / Task**: Execute T1–T9 concluído — Verifier pendente
+- **Completed**: T1 class_map realloc; T2 KB famílias + scope; T3 config limiares; T4 dedupe espacial; T5 engine scope+confiança; T6 pipeline wire; T7 report confiança; T8 e2e REG-01/02; T9 AD-008. Gate full: 154 passed.
+- **In-progress**: Verifier automático (feature-level validation)
+- **Next step**: Verifier sub-agent → validation.md; follow-up opcional `detector-azure-robustness`
 - **Blockers**: none
 - **Branch**: `cursor/stride-report-fidelity-spec-7757`
 
