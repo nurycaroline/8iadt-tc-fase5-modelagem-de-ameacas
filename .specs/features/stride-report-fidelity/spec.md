@@ -159,26 +159,26 @@ Review externo (Gemini) dos relatórios reais `reports/arch1.md` (AWS) e `report
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| SEM-01 | P1: Semântica AWS | Design | Pending |
-| SEM-02 | P1: Semântica AWS | Design | Pending |
-| SEM-03 | P1: Semântica AWS | Design | Pending |
-| SEM-04 | P1: Semântica AWS | Design | Pending |
-| SEM-05 | P1: Semântica AWS | Design | Pending |
-| SEM-06 | P1: Semântica AWS | Design | Pending |
-| AZR-01 | P1: Semântica Azure | Design | Pending |
-| AZR-02 | P1: Semântica Azure | Design | Pending |
-| AZR-03 | P1: Semântica Azure | Design | Pending |
-| DED-01 | P1: Dedupe espacial | Design | Pending |
-| DED-02 | P1: Dedupe espacial | Design | Pending |
-| DED-03 | P1: Dedupe espacial | Design | Pending |
-| DED-04 | P1: Dedupe espacial | Design | Pending |
-| CONF-01 | P2: Confiança | Design | Pending |
-| CONF-02 | P2: Confiança | Design | Pending |
-| CONF-03 | P2: Confiança | Design | Pending |
-| REG-01 | P2: Regressão | Design | Pending |
-| REG-02 | P2: Regressão | Design | Pending |
+| SEM-01 | P1: Semântica AWS | Validate | ✅ Verified |
+| SEM-02 | P1: Semântica AWS | Validate | ✅ Verified |
+| SEM-03 | P1: Semântica AWS | Validate | ✅ Verified |
+| SEM-04 | P1: Semântica AWS | Validate | ✅ Verified |
+| SEM-05 | P1: Semântica AWS | Validate | ✅ Verified |
+| SEM-06 | P1: Semântica AWS | Validate | ✅ Verified |
+| AZR-01 | P1: Semântica Azure | Validate | ✅ Verified |
+| AZR-02 | P1: Semântica Azure | Validate | ✅ Verified |
+| AZR-03 | P1: Semântica Azure | Validate | ✅ Verified |
+| DED-01 | P1: Dedupe espacial | Validate | ✅ Verified |
+| DED-02 | P1: Dedupe espacial | Validate | ✅ Verified |
+| DED-03 | P1: Dedupe espacial | Validate | ✅ Verified |
+| DED-04 | P1: Dedupe espacial | Validate | ✅ Verified |
+| CONF-01 | P2: Confiança | Validate | ✅ Verified |
+| CONF-02 | P2: Confiança | Validate | ✅ Verified |
+| CONF-03 | P2: Confiança | Validate | ✅ Verified |
+| REG-01 | P2: Regressão | Validate | ✅ Verified |
+| REG-02 | P2: Regressão | Validate | ✅ Verified |
 
-**Coverage:** 18 total, 0 mapeados em tasks (aguardando confirmação da spec → Design → Tasks) ⚠️
+**Coverage:** 18 total, 18 verified — see `.specs/features/stride-report-fidelity/validation.md` ✅
 
 ---
 
