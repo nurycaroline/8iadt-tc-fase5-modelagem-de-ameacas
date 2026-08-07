@@ -60,11 +60,15 @@
 
 ## Handoff
 
-- **Feature**: STRIDE Report Quality / `.specs/features/stride-report-quality/`
-- **Phase / Task**: Execute T1–T12 concluído (12 commits) — Verifier pendente
-- **Completed**: T1 aliases/vendor strip; T2 class_map v2 (edge/observability/zone + vocabulário AWS); T3 CLI check-map; T4 KB v2 roles; T5 entradas edge/observability/zone + consistência map↔KB; T6 fallback de inventário; T7 dedupe + role; T8 coverage + warning; T9 Markdown por role; T10 JSON v2; T11 e2e cenário AWS; T12 docs + AD-007. Gate full: 109 passed.
-- **In-progress**: Verifier automático (feature-level validation)
-- **Next step**: Verifier sub-agent (spec-anchored + discrimination sensor) → validation.md; após treino real, rodar `stride-mvp check-map` contra `classes.txt`/pesos para fechar MAP-02 canônico
-- **Blockers**: none (CI usa ScriptedDetector; validação canônica do vocabulário exige artefatos do treino real)
-- **Branch**: `cursor/stride-report-quality-spec-062c`
+- **Feature**: STRIDE Report Fidelity / `.specs/features/stride-report-fidelity/`
+- **Phase / Task**: Specify concluído — aguardando confirmação do usuário antes de Design/Tasks
+- **Completed**: Diagnóstico do review externo (Gemini) dos relatórios reais arch1 (AWS) e arch2 (Azure); causas-raiz rastreadas a `class_map.yaml`, `kb/threats.yaml`, `engine.py` e ausência de dedupe espacial no pipeline de detecção; spec com 18 requisitos (SEM/AZR/DED/CONF/REG) e defaults logados em Assumptions
+- **In-progress**: —
+- **Next step**: Usuário confirma/ajusta a spec (em especial famílias novas e defaults `STRIDE_DEDUPE_IOU`/`STRIDE_LOW_CONF`) → Design → Tasks → Execute. Follow-up recomendado fora desta feature: `detector-azure-robustness` (anotar diagramas Azure + fine-tune) para a causa-raiz das detecções duplicadas
+- **Blockers**: none
+- **Branch**: `cursor/stride-report-fidelity-spec-7757`
+
+### Handoff anterior (stride-report-quality)
+
+- Execute T1–T12 concluído (12 commits), gate full 109 passed; Verifier automático pendente; após treino real, rodar `stride-mvp check-map` contra `classes.txt`/pesos para fechar MAP-02 canônico. Branch: `cursor/stride-report-quality-spec-062c` (merged).
 
