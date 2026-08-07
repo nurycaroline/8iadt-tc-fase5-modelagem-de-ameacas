@@ -84,11 +84,11 @@ AWS_REVIEW_CLASSES = {
     "alb": "api",
     "ec2": "compute",
     "solr": "compute",
-    "auto_scaling": "compute",
+    "auto_scaling": "scaling",
     "rds": "database",
     "elasticache": "database",
-    "efs": "storage",
-    "backup": "storage",
+    "efs": "filesystem",
+    "backup": "backup",
     "kms": "security",
     "cloudtrail": "observability",
     "cloudwatch": "observability",
@@ -114,6 +114,33 @@ def test_reclassifications_match_v2() -> None:
     assert mapper.to_family("public_subnet") == "zone"
     assert mapper.to_family("cloudtrail") == "observability"
     assert mapper.to_family("waf") == "edge"
+
+
+def test_fidelity_reallocations_match_semantic_families() -> None:
+    """SEM/AZR map reallocations from Gemini review (stride-report-fidelity)."""
+    mapper = load_class_map()
+    expected = {
+        "efs": "filesystem",
+        "aws_elactic_file_system(nfs)_multi-az": "filesystem",
+        "backup": "backup",
+        "aws_backup": "backup",
+        "ses": "email",
+        "aws_simple_email_service": "email",
+        "auto_scaling": "scaling",
+        "auto_scaling_group": "scaling",
+        "aws_autoscaling": "scaling",
+        "aws_amazon_ec2_auto_scaling": "scaling",
+        "aws_cloud": "management",
+        "aws_region": "management",
+        "resource_group": "management",
+        "azure_resource_groups": "management",
+        "logic_apps": "integration",
+        "azure_logic_apps": "integration",
+        "sass_services": "dependency",
+        "azure_services": "dependency",
+    }
+    got = {label: mapper.to_family(label) for label in expected}
+    assert got == expected
 
 
 def test_kaggle_vocabulary_full_coverage() -> None:
