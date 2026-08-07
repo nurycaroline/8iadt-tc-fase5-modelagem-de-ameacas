@@ -1,0 +1,5 @@
+{
+  "weights": "models/weights/best.pt",
+  "data": "data/processed/data.yaml",
+  "map": 0.8299527302087423
+}

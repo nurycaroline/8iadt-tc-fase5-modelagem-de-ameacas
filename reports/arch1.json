@@ -1,0 +1,1117 @@
+{
+  "source_image": "reports/arch1.png",
+  "notes": [],
+  "coverage": 1.0,
+  "detections": [
+    {
+      "class_name": "aws_backup",
+      "confidence": 0.9953692555427551,
+      "bbox_xyxy": [
+        631.8055419921875,
+        315.54791259765625,
+        683.4814453125,
+        368.4170227050781
+      ],
+      "family": "backup"
+    },
+    {
+      "class_name": "aws_elactic_file_system(nfs)_multi-az",
+      "confidence": 0.9930892586708069,
+      "bbox_xyxy": [
+        88.44775390625,
+        485.7518005371094,
+        139.94064331054688,
+        539.5007934570312
+      ],
+      "family": "filesystem"
+    },
+    {
+      "class_name": "aws_elasticache",
+      "confidence": 0.992263674736023,
+      "bbox_xyxy": [
+        350.98992919921875,
+        488.3615417480469,
+        403.6251220703125,
+        539.7069091796875
+      ],
+      "family": "database"
+    },
+    {
+      "class_name": "aws_cloud_trail",
+      "confidence": 0.9918702840805054,
+      "bbox_xyxy": [
+        632.0017700195312,
+        126.68278503417969,
+        683.6717529296875,
+        180.45106506347656
+      ],
+      "family": "observability"
+    },
+    {
+      "class_name": "aws_public_subnet",
+      "confidence": 0.989138662815094,
+      "bbox_xyxy": [
+        244.77041625976562,
+        13.283434867858887,
+        299.8256530761719,
+        67.78897857666016
+      ],
+      "family": "zone"
+    },
+    {
+      "class_name": "aws_application_load_balancer",
+      "confidence": 0.9883881211280823,
+      "bbox_xyxy": [
+        501.3330078125,
+        221.4783172607422,
+        540.4812622070312,
+        257.2881164550781
+      ],
+      "family": "api"
+    },
+    {
+      "class_name": "aws_application_load_balancer",
+      "confidence": 0.9883345365524292,
+      "bbox_xyxy": [
+        313.6167907714844,
+        221.80223083496094,
+        352.4813537597656,
+        257.1429443359375
+      ],
+      "family": "api"
+    },
+    {
+      "class_name": "aws_cloudfront",
+      "confidence": 0.9864299297332764,
+      "bbox_xyxy": [
+        324.2819519042969,
+        14.408209800720215,
+        377.2916259765625,
+        67.00480651855469
+      ],
+      "family": "edge"
+    },
+    {
+      "class_name": "aws_rds",
+      "confidence": 0.9833598136901855,
+      "bbox_xyxy": [
+        158.60166931152344,
+        486.1904296875,
+        210.6231231689453,
+        536.5848999023438
+      ],
+      "family": "database"
+    },
+    {
+      "class_name": "aws_application_load_balancer",
+      "confidence": 0.9808626174926758,
+      "bbox_xyxy": [
+        129.35968017578125,
+        223.3590087890625,
+        168.1807861328125,
+        259.4009704589844
+      ],
+      "family": "api"
+    },
+    {
+      "class_name": "aws_public_subnet",
+      "confidence": 0.979203462600708,
+      "bbox_xyxy": [
+        447.59033203125,
+        194.15452575683594,
+        470.49615478515625,
+        219.2338409423828
+      ],
+      "family": "zone"
+    },
+    {
+      "class_name": "sei/sip",
+      "confidence": 0.977531909942627,
+      "bbox_xyxy": [
+        120.09171295166016,
+        355.1592712402344,
+        174.69241333007812,
+        410.8792419433594
+      ],
+      "family": "compute"
+    },
+    {
+      "class_name": "aws_cloudwatch",
+      "confidence": 0.9774905443191528,
+      "bbox_xyxy": [
+        631.534912109375,
+        400.0567932128906,
+        683.0784301757812,
+        452.73529052734375
+      ],
+      "family": "observability"
+    },
+    {
+      "class_name": "aws_simple_email_service",
+      "confidence": 0.9758835434913635,
+      "bbox_xyxy": [
+        631.4625244140625,
+        494.57464599609375,
+        685.2335815429688,
+        549.115234375
+      ],
+      "family": "email"
+    },
+    {
+      "class_name": "aws_rds",
+      "confidence": 0.9733927249908447,
+      "bbox_xyxy": [
+        264.7119445800781,
+        486.49212646484375,
+        316.13031005859375,
+        536.854248046875
+      ],
+      "family": "database"
+    },
+    {
+      "class_name": "aws_virtual_private_cloud",
+      "confidence": 0.9715813398361206,
+      "bbox_xyxy": [
+        61.27131271362305,
+        145.77003479003906,
+        86.6312484741211,
+        171.55914306640625
+      ],
+      "family": "zone"
+    },
+    {
+      "class_name": "sei/sip",
+      "confidence": 0.9706528186798096,
+      "bbox_xyxy": [
+        309.22271728515625,
+        356.806396484375,
+        365.2861022949219,
+        412.35052490234375
+      ],
+      "family": "compute"
+    },
+    {
+      "class_name": "sei/sip",
+      "confidence": 0.9701600074768066,
+      "bbox_xyxy": [
+        493.7317199707031,
+        357.15570068359375,
+        548.9364013671875,
+        412.3632507324219
+      ],
+      "family": "compute"
+    },
+    {
+      "class_name": "user",
+      "confidence": 0.9673811793327332,
+      "bbox_xyxy": [
+        74.63121795654297,
+        19.732725143432617,
+        119.14140319824219,
+        59.17631530761719
+      ],
+      "family": "client"
+    },
+    {
+      "class_name": "aws_private_subnet",
+      "confidence": 0.9547728896141052,
+      "bbox_xyxy": [
+        255.6336669921875,
+        284.9609069824219,
+        279.75567626953125,
+        310.2954406738281
+      ],
+      "family": "zone"
+    },
+    {
+      "class_name": "aws_waf",
+      "confidence": 0.9538049697875977,
+      "bbox_xyxy": [
+        419.43878173828125,
+        13.957429885864258,
+        476.2328186035156,
+        69.20530700683594
+      ],
+      "family": "edge"
+    },
+    {
+      "class_name": "aws_public_subnet",
+      "confidence": 0.947318971157074,
+      "bbox_xyxy": [
+        255.60614013671875,
+        193.95138549804688,
+        279.44482421875,
+        218.9436798095703
+      ],
+      "family": "zone"
+    },
+    {
+      "class_name": "aws_autoscaling",
+      "confidence": 0.947060227394104,
+      "bbox_xyxy": [
+        506.140380859375,
+        442.5461730957031,
+        529.9575805664062,
+        466.640869140625
+      ],
+      "family": "scaling"
+    },
+    {
+      "class_name": "aws_autoscaling",
+      "confidence": 0.9457066655158997,
+      "bbox_xyxy": [
+        325.7263488769531,
+        311.0380554199219,
+        349.4776916503906,
+        335.7345886230469
+      ],
+      "family": "scaling"
+    },
+    {
+      "class_name": "aws_cloud",
+      "confidence": 0.944981575012207,
+      "bbox_xyxy": [
+        34.301361083984375,
+        84.32174682617188,
+        60.41810607910156,
+        107.18064880371094
+      ],
+      "family": "management"
+    },
+    {
+      "class_name": "solr",
+      "confidence": 0.9394721388816833,
+      "bbox_xyxy": [
+        494.21759033203125,
+        487.686279296875,
+        545.431396484375,
+        539.2520751953125
+      ],
+      "family": "compute"
+    },
+    {
+      "class_name": "aws_public_subnet",
+      "confidence": 0.9338474869728088,
+      "bbox_xyxy": [
+        78.27375030517578,
+        196.77862548828125,
+        103.85935974121094,
+        223.86599731445312
+      ],
+      "family": "zone"
+    },
+    {
+      "class_name": "aws_key_management_service",
+      "confidence": 0.9320542812347412,
+      "bbox_xyxy": [
+        630.7086181640625,
+        213.1885528564453,
+        684.330322265625,
+        267.13275146484375
+      ],
+      "family": "security"
+    },
+    {
+      "class_name": "aws_private_subnet",
+      "confidence": 0.920208215713501,
+      "bbox_xyxy": [
+        79.33721923828125,
+        285.25006103515625,
+        103.16820526123047,
+        309.0586853027344
+      ],
+      "family": "zone"
+    },
+    {
+      "class_name": "aws_private_subnet",
+      "confidence": 0.9076198935508728,
+      "bbox_xyxy": [
+        447.4754943847656,
+        285.027587890625,
+        471.38287353515625,
+        311.1869201660156
+      ],
+      "family": "zone"
+    },
+    {
+      "class_name": "aws_region",
+      "confidence": 0.8881935477256775,
+      "bbox_xyxy": [
+        42.70981216430664,
+        109.48973846435547,
+        69.25894927978516,
+        135.3675079345703
+      ],
+      "family": "management"
+    }
+  ],
+  "findings": [
+    {
+      "component_class": "aws_backup",
+      "family": "backup",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9953692555427551,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Acesso indevido ao vault de backup",
+      "vulnerability_example": "Políticas de acesso ao Backup Vault excessivamente amplas",
+      "countermeasure": "Restringir IAM ao vault, Vault Access Policies e auditoria de quem restaura",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_backup",
+      "family": "backup",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9953692555427551,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Exclusão ou alteração de backups protegidos",
+      "vulnerability_example": "Ausência de Vault Lock / imutabilidade; cross-account backup não controlado",
+      "countermeasure": "Habilitar Vault Lock (compliance mode), bloquear cross-account não autorizado e alertar exclusões",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_elactic_file_system(nfs)_multi-az",
+      "family": "filesystem",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9930892586708069,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Montagem não autorizada do sistema de arquivos",
+      "vulnerability_example": "EFS Mount Targets expostos a subnets/SGs indevidos",
+      "countermeasure": "Restringir mount targets a subnets privadas e Security Groups least-privilege",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_elactic_file_system(nfs)_multi-az",
+      "family": "filesystem",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9930892586708069,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Alteração indevida de arquivos via permissões POSIX fracas",
+      "vulnerability_example": "POSIX permissions/ownership permissivos no share NFS",
+      "countermeasure": "Revisar UID/GID e permissões POSIX; habilitar access points com políticas",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_elactic_file_system(nfs)_multi-az",
+      "family": "filesystem",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9930892586708069,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Exposição de dados em trânsito ou em repouso no filesystem",
+      "vulnerability_example": "Ausência de criptografia em trânsito (TLS) ou em repouso",
+      "countermeasure": "Criptografia at-rest com KMS e montagem com TLS obrigatório",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_elasticache",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.992263674736023,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Autenticação fraca ao banco de dados",
+      "vulnerability_example": "Credenciais padrão ou compartilhadas",
+      "countermeasure": "IAM/roles, rotação de segredos, MFA onde aplicável",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_elasticache",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.992263674736023,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Alteração não autorizada de dados",
+      "vulnerability_example": "Ausência de controles de integridade / auditoria",
+      "countermeasure": "Controles de escrita, checksums, audit logs imutáveis",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_elasticache",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.992263674736023,
+      "low_confidence": false,
+      "stride_category": "Repudiation",
+      "threat_description": "Ações sem rastreabilidade",
+      "vulnerability_example": "Logs de acesso ausentes ou incompletos",
+      "countermeasure": "Auditoria completa de queries e acessos privilegiados",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_elasticache",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.992263674736023,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Exposição de dados em repouso ou em trânsito",
+      "vulnerability_example": "Instância/cluster de DB sem criptografia ou exposta via Security Groups/Subnets",
+      "countermeasure": "Criptografia at-rest, least privilege, private endpoints",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_elasticache",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.992263674736023,
+      "low_confidence": false,
+      "stride_category": "Denial of Service",
+      "threat_description": "Indisponibilidade do banco",
+      "vulnerability_example": "Sem limites de conexão / sem réplicas",
+      "countermeasure": "Rate limiting, autoscaling de leituras, backups testados",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_elasticache",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.992263674736023,
+      "low_confidence": false,
+      "stride_category": "Elevation of Privilege",
+      "threat_description": "Escalação de privilégios no SGBD",
+      "vulnerability_example": "Usuário da aplicação com permissões excessivas",
+      "countermeasure": "Princípio do menor privilégio e roles separadas",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_cloud_trail",
+      "family": "observability",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9918702840805054,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Logs/métricas adulteráveis",
+      "vulnerability_example": "Log group sem proteção contra exclusão/alteração; sem alertas de mute",
+      "countermeasure": "Lock de exclusão de log groups, alarmes do CloudWatch para 'mute' e alterações de retenção, exportação imutável",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_cloud_trail",
+      "family": "observability",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9918702840805054,
+      "low_confidence": false,
+      "stride_category": "Repudiation",
+      "threat_description": "Trilha de auditoria desativada ou com retenção insuficiente",
+      "vulnerability_example": "CloudTrail em região única, sem eventos de dados, ou retenção curta; logs sem proteção",
+      "countermeasure": "CloudTrail multi-região com eventos de dados, log file integrity validation, retenção ≥ 1 ano e alertas de desativação",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_public_subnet",
+      "family": "zone",
+      "role": "zone",
+      "instance_count": 4,
+      "max_confidence": 0.989138662815094,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Configuração de zona expõe workloads indevidamente",
+      "vulnerability_example": "Security Groups/NACLs permissivos; rotas públicas para recursos privados; ausência de isolamento",
+      "countermeasure": "Revisar SG/NACLs (least privilege), rotas, e garantir que workloads não-edge fiquem em subnets privadas",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_application_load_balancer",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 3,
+      "max_confidence": 0.9883881211280823,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Cliente forjado na API",
+      "vulnerability_example": "Ausência de autenticação forte",
+      "countermeasure": "OAuth2/OIDC, mTLS, API keys rotacionadas",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_application_load_balancer",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 3,
+      "max_confidence": 0.9883881211280823,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Manipulação de payloads",
+      "vulnerability_example": "Validação de entrada insuficiente",
+      "countermeasure": "Schema validation, WAF, assinatura de requests",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_application_load_balancer",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 3,
+      "max_confidence": 0.9883881211280823,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Vazamento via respostas de erro",
+      "vulnerability_example": "Stack traces e dados sensíveis em respostas",
+      "countermeasure": "Erros genéricos, mascaramento de PII",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_application_load_balancer",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 3,
+      "max_confidence": 0.9883881211280823,
+      "low_confidence": false,
+      "stride_category": "Denial of Service",
+      "threat_description": "Flood na API",
+      "vulnerability_example": "Sem rate limiting",
+      "countermeasure": "Throttling, quotas por cliente, CDN",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_application_load_balancer",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 3,
+      "max_confidence": 0.9883881211280823,
+      "low_confidence": false,
+      "stride_category": "Elevation of Privilege",
+      "threat_description": "Bypass de autorização",
+      "vulnerability_example": "IDOR / falhas de checagem de escopo",
+      "countermeasure": "Autorização por recurso, testes de IDOR",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_cloudfront",
+      "family": "edge",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9864299297332764,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Bypass de origem — requisições chegam ao ALB sem passar pelo CloudFront",
+      "vulnerability_example": "ALB/origem aceita tráfego de qualquer origem; ausência de cabeçalho customizado ou restrição por VPC/SG",
+      "countermeasure": "Restringir a origem: SG do ALB liberando só os prefixos do CloudFront, cabeçalho customizado de origem ou Origin Access Control",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_cloudfront",
+      "family": "edge",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9864299297332764,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Manipulação de regras do WAF/Shield",
+      "vulnerability_example": "Regras WAF versionadas sem aprovação; permissões amplas de edição",
+      "countermeasure": "WAF em IaC/terraform, revisão obrigatória, change management e alertas de alteração",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_cloudfront",
+      "family": "edge",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9864299297332764,
+      "low_confidence": false,
+      "stride_category": "Denial of Service",
+      "threat_description": "Ataques volumétricos/l7 não mitigados na borda",
+      "vulnerability_example": "WAF/Shield desabilitados ou com regras em modo de contagem; rate limit ausente",
+      "countermeasure": "Habilitar AWS Shield Advanced/WAF em modo de bloqueio, rate limiting por IP/URI e monitoramento de eficácia",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_rds",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9833598136901855,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Autenticação fraca ao banco de dados",
+      "vulnerability_example": "Credenciais padrão ou compartilhadas",
+      "countermeasure": "IAM/roles, rotação de segredos, MFA onde aplicável",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_rds",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9833598136901855,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Alteração não autorizada de dados",
+      "vulnerability_example": "Ausência de controles de integridade / auditoria",
+      "countermeasure": "Controles de escrita, checksums, audit logs imutáveis",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_rds",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9833598136901855,
+      "low_confidence": false,
+      "stride_category": "Repudiation",
+      "threat_description": "Ações sem rastreabilidade",
+      "vulnerability_example": "Logs de acesso ausentes ou incompletos",
+      "countermeasure": "Auditoria completa de queries e acessos privilegiados",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_rds",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9833598136901855,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Exposição de dados em repouso ou em trânsito",
+      "vulnerability_example": "Instância/cluster de DB sem criptografia ou exposta via Security Groups/Subnets",
+      "countermeasure": "Criptografia at-rest, least privilege, private endpoints",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_rds",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9833598136901855,
+      "low_confidence": false,
+      "stride_category": "Denial of Service",
+      "threat_description": "Indisponibilidade do banco",
+      "vulnerability_example": "Sem limites de conexão / sem réplicas",
+      "countermeasure": "Rate limiting, autoscaling de leituras, backups testados",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_rds",
+      "family": "database",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9833598136901855,
+      "low_confidence": false,
+      "stride_category": "Elevation of Privilege",
+      "threat_description": "Escalação de privilégios no SGBD",
+      "vulnerability_example": "Usuário da aplicação com permissões excessivas",
+      "countermeasure": "Princípio do menor privilégio e roles separadas",
+      "mapped": true
+    },
+    {
+      "component_class": "sei/sip",
+      "family": "compute",
+      "role": "workload",
+      "instance_count": 3,
+      "max_confidence": 0.977531909942627,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Impersonação de instância ou função",
+      "vulnerability_example": "Metadados de instância expostos / identidade fraca",
+      "countermeasure": "IMDSv2, identities de workload, segmentação",
+      "mapped": true
+    },
+    {
+      "component_class": "sei/sip",
+      "family": "compute",
+      "role": "workload",
+      "instance_count": 3,
+      "max_confidence": 0.977531909942627,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Código ou imagem adulterados",
+      "vulnerability_example": "Imagens sem assinatura / supply chain frágil",
+      "countermeasure": "Assinatura de imagens, SBOM, registries privados",
+      "mapped": true
+    },
+    {
+      "component_class": "sei/sip",
+      "family": "compute",
+      "role": "workload",
+      "instance_count": 3,
+      "max_confidence": 0.977531909942627,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Vazamento de segredos em runtime",
+      "vulnerability_example": "Variáveis de ambiente com secrets em claro",
+      "countermeasure": "Secrets manager, volumes criptografados",
+      "mapped": true
+    },
+    {
+      "component_class": "sei/sip",
+      "family": "compute",
+      "role": "workload",
+      "instance_count": 3,
+      "max_confidence": 0.977531909942627,
+      "low_confidence": false,
+      "stride_category": "Denial of Service",
+      "threat_description": "Esgotamento de CPU/memória",
+      "vulnerability_example": "Sem quotas ou autoscaling",
+      "countermeasure": "Quotas, HPA, circuit breakers",
+      "mapped": true
+    },
+    {
+      "component_class": "sei/sip",
+      "family": "compute",
+      "role": "workload",
+      "instance_count": 3,
+      "max_confidence": 0.977531909942627,
+      "low_confidence": false,
+      "stride_category": "Elevation of Privilege",
+      "threat_description": "Escape de container / host",
+      "vulnerability_example": "Containers privilegiados",
+      "countermeasure": "Pod security, non-root, seccomp",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_cloudwatch",
+      "family": "observability",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9774905443191528,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Logs/métricas adulteráveis",
+      "vulnerability_example": "Log group sem proteção contra exclusão/alteração; sem alertas de mute",
+      "countermeasure": "Lock de exclusão de log groups, alarmes do CloudWatch para 'mute' e alterações de retenção, exportação imutável",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_cloudwatch",
+      "family": "observability",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9774905443191528,
+      "low_confidence": false,
+      "stride_category": "Repudiation",
+      "threat_description": "Trilha de auditoria desativada ou com retenção insuficiente",
+      "vulnerability_example": "CloudTrail em região única, sem eventos de dados, ou retenção curta; logs sem proteção",
+      "countermeasure": "CloudTrail multi-região com eventos de dados, log file integrity validation, retenção ≥ 1 ano e alertas de desativação",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_simple_email_service",
+      "family": "email",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9758835434913635,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Envio de e-mails em nome do domínio sem autenticação",
+      "vulnerability_example": "Domínio sem validação adequada de remetente",
+      "countermeasure": "Configurar SPF, DKIM e DMARC estritos no domínio verificado do SES",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_simple_email_service",
+      "family": "email",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9758835434913635,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Conteúdo de e-mail adulterado ou templates comprometidos",
+      "vulnerability_example": "Templates/identidades SES editáveis sem revisão",
+      "countermeasure": "Controlar identidades verificadas via IAM least-privilege e revisar templates",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_simple_email_service",
+      "family": "email",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9758835434913635,
+      "low_confidence": false,
+      "stride_category": "Denial of Service",
+      "threat_description": "Abuso de cotas de envio / reputação",
+      "vulnerability_example": "Sem limites de taxa ou monitoramento de bounce/complaint",
+      "countermeasure": "Configurar limites de envio, alarms de reputação e sandbox/produção controlados",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_virtual_private_cloud",
+      "family": "zone",
+      "role": "zone",
+      "instance_count": 1,
+      "max_confidence": 0.9715813398361206,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Configuração de zona expõe workloads indevidamente",
+      "vulnerability_example": "Security Groups/NACLs permissivos; rotas públicas para recursos privados; ausência de isolamento",
+      "countermeasure": "Revisar SG/NACLs (least privilege), rotas, e garantir que workloads não-edge fiquem em subnets privadas",
+      "mapped": true
+    },
+    {
+      "component_class": "user",
+      "family": "client",
+      "role": "external",
+      "instance_count": 1,
+      "max_confidence": 0.9673811793327332,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Usuário forjado no cliente",
+      "vulnerability_example": "Sessões previsíveis / sem MFA",
+      "countermeasure": "MFA, cookies seguros, binding de sessão",
+      "mapped": true
+    },
+    {
+      "component_class": "user",
+      "family": "client",
+      "role": "external",
+      "instance_count": 1,
+      "max_confidence": 0.9673811793327332,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Manipulação do cliente",
+      "vulnerability_example": "Lógica sensível só no front-end",
+      "countermeasure": "Validação server-side, attested clients",
+      "mapped": true
+    },
+    {
+      "component_class": "user",
+      "family": "client",
+      "role": "external",
+      "instance_count": 1,
+      "max_confidence": 0.9673811793327332,
+      "low_confidence": false,
+      "stride_category": "Repudiation",
+      "threat_description": "Ações do usuário sem prova",
+      "vulnerability_example": "Sem trilha de auditoria no cliente→servidor",
+      "countermeasure": "Logs de autenticação e ações críticas",
+      "mapped": true
+    },
+    {
+      "component_class": "user",
+      "family": "client",
+      "role": "external",
+      "instance_count": 1,
+      "max_confidence": 0.9673811793327332,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Dados sensíveis no dispositivo",
+      "vulnerability_example": "Cache/localStorage com PII",
+      "countermeasure": "Minimizar dados locais, criptografia de storage",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_private_subnet",
+      "family": "zone",
+      "role": "zone",
+      "instance_count": 3,
+      "max_confidence": 0.9547728896141052,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Configuração de zona expõe workloads indevidamente",
+      "vulnerability_example": "Security Groups/NACLs permissivos; rotas públicas para recursos privados; ausência de isolamento",
+      "countermeasure": "Revisar SG/NACLs (least privilege), rotas, e garantir que workloads não-edge fiquem em subnets privadas",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_waf",
+      "family": "edge",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9538049697875977,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Bypass de origem — requisições chegam ao ALB sem passar pelo CloudFront",
+      "vulnerability_example": "ALB/origem aceita tráfego de qualquer origem; ausência de cabeçalho customizado ou restrição por VPC/SG",
+      "countermeasure": "Restringir a origem: SG do ALB liberando só os prefixos do CloudFront, cabeçalho customizado de origem ou Origin Access Control",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_waf",
+      "family": "edge",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9538049697875977,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Manipulação de regras do WAF/Shield",
+      "vulnerability_example": "Regras WAF versionadas sem aprovação; permissões amplas de edição",
+      "countermeasure": "WAF em IaC/terraform, revisão obrigatória, change management e alertas de alteração",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_waf",
+      "family": "edge",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9538049697875977,
+      "low_confidence": false,
+      "stride_category": "Denial of Service",
+      "threat_description": "Ataques volumétricos/l7 não mitigados na borda",
+      "vulnerability_example": "WAF/Shield desabilitados ou com regras em modo de contagem; rate limit ausente",
+      "countermeasure": "Habilitar AWS Shield Advanced/WAF em modo de bloqueio, rate limiting por IP/URI e monitoramento de eficácia",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_autoscaling",
+      "family": "scaling",
+      "role": "control",
+      "instance_count": 2,
+      "max_confidence": 0.947060227394104,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Manipulação de políticas de Auto Scaling",
+      "vulnerability_example": "Permissões amplas para alterar desired/min/max capacity",
+      "countermeasure": "Restringir IAM de UpdateAutoScalingGroup, mudanças via IaC com revisão",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_autoscaling",
+      "family": "scaling",
+      "role": "control",
+      "instance_count": 2,
+      "max_confidence": 0.947060227394104,
+      "low_confidence": false,
+      "stride_category": "Denial of Service",
+      "threat_description": "DoS financeiro ou exaustão por escalonamento abusivo",
+      "vulnerability_example": "Limites de capacidade ausentes ou max capacity excessivo",
+      "countermeasure": "Definir max capacity, budgets/alerts de custo e revisar políticas de scaling",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_cloud",
+      "family": "management",
+      "role": "scope",
+      "instance_count": 1,
+      "max_confidence": 0.944981575012207,
+      "low_confidence": false,
+      "stride_category": "Escopo",
+      "threat_description": "Componente de escopo/agrupamento — sem superfície de ameaça própria",
+      "vulnerability_example": "Não aplicável — fronteira lógica de gerenciamento",
+      "countermeasure": "Manter inventário do escopo; aplicar controles nos workloads contidos",
+      "mapped": true
+    },
+    {
+      "component_class": "solr",
+      "family": "compute",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9394721388816833,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Impersonação de instância ou função",
+      "vulnerability_example": "Metadados de instância expostos / identidade fraca",
+      "countermeasure": "IMDSv2, identities de workload, segmentação",
+      "mapped": true
+    },
+    {
+      "component_class": "solr",
+      "family": "compute",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9394721388816833,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Código ou imagem adulterados",
+      "vulnerability_example": "Imagens sem assinatura / supply chain frágil",
+      "countermeasure": "Assinatura de imagens, SBOM, registries privados",
+      "mapped": true
+    },
+    {
+      "component_class": "solr",
+      "family": "compute",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9394721388816833,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Vazamento de segredos em runtime",
+      "vulnerability_example": "Variáveis de ambiente com secrets em claro",
+      "countermeasure": "Secrets manager, volumes criptografados",
+      "mapped": true
+    },
+    {
+      "component_class": "solr",
+      "family": "compute",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9394721388816833,
+      "low_confidence": false,
+      "stride_category": "Denial of Service",
+      "threat_description": "Esgotamento de CPU/memória",
+      "vulnerability_example": "Sem quotas ou autoscaling",
+      "countermeasure": "Quotas, HPA, circuit breakers",
+      "mapped": true
+    },
+    {
+      "component_class": "solr",
+      "family": "compute",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9394721388816833,
+      "low_confidence": false,
+      "stride_category": "Elevation of Privilege",
+      "threat_description": "Escape de container / host",
+      "vulnerability_example": "Containers privilegiados",
+      "countermeasure": "Pod security, non-root, seccomp",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_key_management_service",
+      "family": "security",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9320542812347412,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Uso indevido de identidades",
+      "vulnerability_example": "Chaves de longa duração",
+      "countermeasure": "Credenciais de curta duração, rotação",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_key_management_service",
+      "family": "security",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9320542812347412,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Segredos expostos",
+      "vulnerability_example": "Secrets em repositório ou logs",
+      "countermeasure": "Vault/KMS, scanning de secrets",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_key_management_service",
+      "family": "security",
+      "role": "control",
+      "instance_count": 1,
+      "max_confidence": 0.9320542812347412,
+      "low_confidence": false,
+      "stride_category": "Elevation of Privilege",
+      "threat_description": "Políticas IAM excessivas",
+      "vulnerability_example": "Wildcards em actions/resources",
+      "countermeasure": "Least privilege, access analyzer",
+      "mapped": true
+    },
+    {
+      "component_class": "aws_region",
+      "family": "management",
+      "role": "scope",
+      "instance_count": 1,
+      "max_confidence": 0.8881935477256775,
+      "low_confidence": false,
+      "stride_category": "Escopo",
+      "threat_description": "Componente de escopo/agrupamento — sem superfície de ameaça própria",
+      "vulnerability_example": "Não aplicável — fronteira lógica de gerenciamento",
+      "countermeasure": "Manter inventário do escopo; aplicar controles nos workloads contidos",
+      "mapped": true
+    }
+  ]
+}

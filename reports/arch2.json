@@ -1,0 +1,492 @@
+{
+  "source_image": "reports/arch2.png",
+  "notes": [],
+  "coverage": 1.0,
+  "detections": [
+    {
+      "class_name": "sass_services",
+      "confidence": 0.9950768351554871,
+      "bbox_xyxy": [
+        700.4171142578125,
+        281.6584167480469,
+        765.80322265625,
+        328.65570068359375
+      ],
+      "family": "dependency"
+    },
+    {
+      "class_name": "api",
+      "confidence": 0.9948517680168152,
+      "bbox_xyxy": [
+        711.3779907226562,
+        388.4720458984375,
+        758.9773559570312,
+        444.7279357910156
+      ],
+      "family": "api"
+    },
+    {
+      "class_name": "api",
+      "confidence": 0.9938825368881226,
+      "bbox_xyxy": [
+        711.67041015625,
+        472.13427734375,
+        758.6213989257812,
+        531.2698364257812
+      ],
+      "family": "api"
+    },
+    {
+      "class_name": "azure_services",
+      "confidence": 0.9923203587532043,
+      "bbox_xyxy": [
+        694.3467407226562,
+        184.82427978515625,
+        774.5331420898438,
+        242.51722717285156
+      ],
+      "family": "azure_platform"
+    },
+    {
+      "class_name": "user",
+      "confidence": 0.9918698072433472,
+      "bbox_xyxy": [
+        98.10909271240234,
+        373.74346923828125,
+        157.17933654785156,
+        438.76641845703125
+      ],
+      "family": "client"
+    },
+    {
+      "class_name": "developer_portal",
+      "confidence": 0.987456738948822,
+      "bbox_xyxy": [
+        298.5055847167969,
+        379.2534484863281,
+        359.4549865722656,
+        428.1576843261719
+      ],
+      "family": "api"
+    },
+    {
+      "class_name": "resource_group",
+      "confidence": 0.9870486855506897,
+      "bbox_xyxy": [
+        103.14228057861328,
+        241.09210205078125,
+        153.87228393554688,
+        291.8006286621094
+      ],
+      "family": "management"
+    },
+    {
+      "class_name": "microsoft_entra",
+      "confidence": 0.9773802161216736,
+      "bbox_xyxy": [
+        92.74279022216797,
+        86.082763671875,
+        153.38296508789062,
+        138.6189727783203
+      ],
+      "family": "security"
+    },
+    {
+      "class_name": "resource_group",
+      "confidence": 0.9733700156211853,
+      "bbox_xyxy": [
+        236.3774871826172,
+        486.2628479003906,
+        266.8826599121094,
+        516.0830688476562
+      ],
+      "family": "management"
+    },
+    {
+      "class_name": "microsoft_entra",
+      "confidence": 0.9721451997756958,
+      "bbox_xyxy": [
+        301.4506530761719,
+        240.521728515625,
+        359.3559875488281,
+        292.08807373046875
+      ],
+      "family": "security"
+    },
+    {
+      "class_name": "logic_apps",
+      "confidence": 0.9696877598762512,
+      "bbox_xyxy": [
+        483.2657775878906,
+        241.63241577148438,
+        527.3623657226562,
+        286.90106201171875
+      ],
+      "family": "integration"
+    },
+    {
+      "class_name": "azure_services",
+      "confidence": 0.6408339738845825,
+      "bbox_xyxy": [
+        83.69967651367188,
+        599.3357543945312,
+        141.8177490234375,
+        646.8087158203125
+      ],
+      "family": "azure_platform"
+    }
+  ],
+  "findings": [
+    {
+      "component_class": "sass_services",
+      "family": "dependency",
+      "role": "external",
+      "instance_count": 1,
+      "max_confidence": 0.9950768351554871,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Impersonação via tokens de integração de terceiros",
+      "vulnerability_example": "Vazamento de tokens OAuth/API keys de SaaS",
+      "countermeasure": "Credenciais de curta duração, rotação e vault para secrets de integração",
+      "mapped": true
+    },
+    {
+      "component_class": "sass_services",
+      "family": "dependency",
+      "role": "external",
+      "instance_count": 1,
+      "max_confidence": 0.9950768351554871,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Conector SaaS inseguro adulterando dados de integração",
+      "vulnerability_example": "Dependência de terceiro sem controles de integridade/contrato",
+      "countermeasure": "Contratos de integração, validação de resposta e monitoramento de anomalias",
+      "mapped": true
+    },
+    {
+      "component_class": "sass_services",
+      "family": "dependency",
+      "role": "external",
+      "instance_count": 1,
+      "max_confidence": 0.9950768351554871,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Exposição de dados a conectores SaaS com consentimento excessivo",
+      "vulnerability_example": "Escopos de consentimento amplos em conectores externos",
+      "countermeasure": "Revisar escopos OAuth, princípio do menor privilégio e conectores aprovados",
+      "mapped": true
+    },
+    {
+      "component_class": "api",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9948517680168152,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Cliente forjado na API",
+      "vulnerability_example": "Ausência de autenticação forte",
+      "countermeasure": "OAuth2/OIDC, mTLS, API keys rotacionadas",
+      "mapped": true
+    },
+    {
+      "component_class": "api",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9948517680168152,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Manipulação de payloads",
+      "vulnerability_example": "Validação de entrada insuficiente",
+      "countermeasure": "Schema validation, WAF, assinatura de requests",
+      "mapped": true
+    },
+    {
+      "component_class": "api",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9948517680168152,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Vazamento via respostas de erro",
+      "vulnerability_example": "Stack traces e dados sensíveis em respostas",
+      "countermeasure": "Erros genéricos, mascaramento de PII",
+      "mapped": true
+    },
+    {
+      "component_class": "api",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9948517680168152,
+      "low_confidence": false,
+      "stride_category": "Denial of Service",
+      "threat_description": "Flood na API",
+      "vulnerability_example": "Sem rate limiting",
+      "countermeasure": "Throttling, quotas por cliente, CDN",
+      "mapped": true
+    },
+    {
+      "component_class": "api",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9948517680168152,
+      "low_confidence": false,
+      "stride_category": "Elevation of Privilege",
+      "threat_description": "Bypass de autorização",
+      "vulnerability_example": "IDOR / falhas de checagem de escopo",
+      "countermeasure": "Autorização por recurso, testes de IDOR",
+      "mapped": true
+    },
+    {
+      "component_class": "azure_services",
+      "family": "azure_platform",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9923203587532043,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Chamadas à API Azure com identidade forjada ou credencial estática",
+      "vulnerability_example": "Service principal com segredo de longa duração em vez de Managed Identity",
+      "countermeasure": "Autenticar com Managed Identity; evitar secrets embutidos nas Logic Apps",
+      "mapped": true
+    },
+    {
+      "component_class": "azure_services",
+      "family": "azure_platform",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9923203587532043,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Exposição de dados via APIs Azure mal escopadas",
+      "vulnerability_example": "Permissões de leitura amplas em subscriptions/resources",
+      "countermeasure": "Escopos mínimos por recurso e Private Endpoints onde aplicável",
+      "mapped": true
+    },
+    {
+      "component_class": "azure_services",
+      "family": "azure_platform",
+      "role": "workload",
+      "instance_count": 2,
+      "max_confidence": 0.9923203587532043,
+      "low_confidence": false,
+      "stride_category": "Elevation of Privilege",
+      "threat_description": "Escalonamento via RBAC Azure excessivo",
+      "vulnerability_example": "Role assignments amplas (Owner/Contributor) no Resource Group alvo",
+      "countermeasure": "RBAC least-privilege nas identities que chamam o Azure Resource Manager",
+      "mapped": true
+    },
+    {
+      "component_class": "user",
+      "family": "client",
+      "role": "external",
+      "instance_count": 1,
+      "max_confidence": 0.9918698072433472,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Usuário forjado no cliente",
+      "vulnerability_example": "Sessões previsíveis / sem MFA",
+      "countermeasure": "MFA, cookies seguros, binding de sessão",
+      "mapped": true
+    },
+    {
+      "component_class": "user",
+      "family": "client",
+      "role": "external",
+      "instance_count": 1,
+      "max_confidence": 0.9918698072433472,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Manipulação do cliente",
+      "vulnerability_example": "Lógica sensível só no front-end",
+      "countermeasure": "Validação server-side, attested clients",
+      "mapped": true
+    },
+    {
+      "component_class": "user",
+      "family": "client",
+      "role": "external",
+      "instance_count": 1,
+      "max_confidence": 0.9918698072433472,
+      "low_confidence": false,
+      "stride_category": "Repudiation",
+      "threat_description": "Ações do usuário sem prova",
+      "vulnerability_example": "Sem trilha de auditoria no cliente→servidor",
+      "countermeasure": "Logs de autenticação e ações críticas",
+      "mapped": true
+    },
+    {
+      "component_class": "user",
+      "family": "client",
+      "role": "external",
+      "instance_count": 1,
+      "max_confidence": 0.9918698072433472,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Dados sensíveis no dispositivo",
+      "vulnerability_example": "Cache/localStorage com PII",
+      "countermeasure": "Minimizar dados locais, criptografia de storage",
+      "mapped": true
+    },
+    {
+      "component_class": "developer_portal",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.987456738948822,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Cliente forjado na API",
+      "vulnerability_example": "Ausência de autenticação forte",
+      "countermeasure": "OAuth2/OIDC, mTLS, API keys rotacionadas",
+      "mapped": true
+    },
+    {
+      "component_class": "developer_portal",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.987456738948822,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Manipulação de payloads",
+      "vulnerability_example": "Validação de entrada insuficiente",
+      "countermeasure": "Schema validation, WAF, assinatura de requests",
+      "mapped": true
+    },
+    {
+      "component_class": "developer_portal",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.987456738948822,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Vazamento via respostas de erro",
+      "vulnerability_example": "Stack traces e dados sensíveis em respostas",
+      "countermeasure": "Erros genéricos, mascaramento de PII",
+      "mapped": true
+    },
+    {
+      "component_class": "developer_portal",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.987456738948822,
+      "low_confidence": false,
+      "stride_category": "Denial of Service",
+      "threat_description": "Flood na API",
+      "vulnerability_example": "Sem rate limiting",
+      "countermeasure": "Throttling, quotas por cliente, CDN",
+      "mapped": true
+    },
+    {
+      "component_class": "developer_portal",
+      "family": "api",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.987456738948822,
+      "low_confidence": false,
+      "stride_category": "Elevation of Privilege",
+      "threat_description": "Bypass de autorização",
+      "vulnerability_example": "IDOR / falhas de checagem de escopo",
+      "countermeasure": "Autorização por recurso, testes de IDOR",
+      "mapped": true
+    },
+    {
+      "component_class": "resource_group",
+      "family": "management",
+      "role": "scope",
+      "instance_count": 2,
+      "max_confidence": 0.9870486855506897,
+      "low_confidence": false,
+      "stride_category": "Escopo",
+      "threat_description": "Componente de escopo/agrupamento — sem superfície de ameaça própria",
+      "vulnerability_example": "Não aplicável — fronteira lógica de gerenciamento",
+      "countermeasure": "Manter inventário do escopo; aplicar controles nos workloads contidos",
+      "mapped": true
+    },
+    {
+      "component_class": "microsoft_entra",
+      "family": "security",
+      "role": "control",
+      "instance_count": 2,
+      "max_confidence": 0.9773802161216736,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Uso indevido de identidades",
+      "vulnerability_example": "Chaves de longa duração",
+      "countermeasure": "Credenciais de curta duração, rotação",
+      "mapped": true
+    },
+    {
+      "component_class": "microsoft_entra",
+      "family": "security",
+      "role": "control",
+      "instance_count": 2,
+      "max_confidence": 0.9773802161216736,
+      "low_confidence": false,
+      "stride_category": "Information Disclosure",
+      "threat_description": "Segredos expostos",
+      "vulnerability_example": "Secrets em repositório ou logs",
+      "countermeasure": "Vault/KMS, scanning de secrets",
+      "mapped": true
+    },
+    {
+      "component_class": "microsoft_entra",
+      "family": "security",
+      "role": "control",
+      "instance_count": 2,
+      "max_confidence": 0.9773802161216736,
+      "low_confidence": false,
+      "stride_category": "Elevation of Privilege",
+      "threat_description": "Políticas IAM excessivas",
+      "vulnerability_example": "Wildcards em actions/resources",
+      "countermeasure": "Least privilege, access analyzer",
+      "mapped": true
+    },
+    {
+      "component_class": "logic_apps",
+      "family": "integration",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9696877598762512,
+      "low_confidence": false,
+      "stride_category": "Spoofing",
+      "threat_description": "Uso indevido de conectores / identidades de integração",
+      "vulnerability_example": "Tokens de conectores de longa duração ou credenciais compartilhadas",
+      "countermeasure": "Managed Identity para autenticar backends; rotacionar secrets de conectores",
+      "mapped": true
+    },
+    {
+      "component_class": "logic_apps",
+      "family": "integration",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9696877598762512,
+      "low_confidence": false,
+      "stride_category": "Tampering",
+      "threat_description": "Injeção de payload malicioso repassado sem sanitização",
+      "vulnerability_example": "Ausência de validação de schema na entrada da Logic App",
+      "countermeasure": "Validação de schema na entrada e rejeição de payloads fora do contrato",
+      "mapped": true
+    },
+    {
+      "component_class": "logic_apps",
+      "family": "integration",
+      "role": "workload",
+      "instance_count": 1,
+      "max_confidence": 0.9696877598762512,
+      "low_confidence": false,
+      "stride_category": "Elevation of Privilege",
+      "threat_description": "Escalonamento via autorização fraca na orquestração",
+      "vulnerability_example": "Conectores com escopos excessivos / RBAC frouxo",
+      "countermeasure": "RBAC least-privilege nas Logic Apps e escopos mínimos nos conectores",
+      "mapped": true
+    }
+  ]
+}

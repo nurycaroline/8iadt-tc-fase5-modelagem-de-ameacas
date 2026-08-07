@@ -25,18 +25,8 @@ data/processed/
 .kaggle/
 kaggle.json
 
-# Model weights
-models/weights/*.pt
-*.pt
-!models/weights/.gitkeep
-
 # OS / IDE
 .DS_Store
 .idea/
 .vscode/
 *.swp
-
-# Reports generated locally (keep directory if needed)
-reports/*.md
-reports/*.json
-!reports/.gitkeep
