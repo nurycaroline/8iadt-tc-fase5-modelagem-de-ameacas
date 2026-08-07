@@ -5,6 +5,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from stride_mvp.models import Detection, ThreatFinding, ThreatReport
 from stride_mvp.stride.report import ReportRenderer
 
@@ -273,3 +275,128 @@ def test_markdown_coverage_shown() -> None:
     md = ReportRenderer().to_markdown(_full_report())
     assert "Cobertura de mapeamento" in md
     assert "75%" in md
+
+
+def test_summary_includes_confidence_column_and_low_conf_marker() -> None:
+    report = ThreatReport(
+        source_image="x.png",
+        detections=[Detection("rds", 0.32, (0, 0, 1, 1), family="database")],
+        findings=[
+            ThreatFinding(
+                component_class="rds",
+                family="database",
+                stride_category="Spoofing",
+                threat_description="t",
+                vulnerability_example="v",
+                countermeasure="c",
+                mapped=True,
+                role="workload",
+                instance_count=1,
+                max_confidence=0.32,
+                low_confidence=True,
+            )
+        ],
+        notes=[],
+        coverage=1.0,
+    )
+    md = ReportRenderer().to_markdown(report)
+    assert "Confiança" in md
+    assert "0.32" in md
+    assert "rds ⚠" in md
+    assert "falsos positivos" in md.lower()
+
+
+def test_summary_no_marker_when_high_confidence() -> None:
+    report = ThreatReport(
+        source_image="x.png",
+        detections=[Detection("rds", 0.9, (0, 0, 1, 1), family="database")],
+        findings=[
+            ThreatFinding(
+                component_class="rds",
+                family="database",
+                stride_category="Spoofing",
+                threat_description="t",
+                vulnerability_example="v",
+                countermeasure="c",
+                mapped=True,
+                role="workload",
+                instance_count=1,
+                max_confidence=0.9,
+                low_confidence=False,
+            )
+        ],
+        notes=[],
+        coverage=1.0,
+    )
+    md = ReportRenderer().to_markdown(report)
+    assert "rds ⚠" not in md
+    assert "falsos positivos" not in md.lower()
+
+
+def test_json_includes_confidence_fields() -> None:
+    report = ThreatReport(
+        source_image="x.png",
+        detections=[],
+        findings=[
+            ThreatFinding(
+                component_class="api",
+                family="api",
+                stride_category="Spoofing",
+                threat_description="t",
+                vulnerability_example="v",
+                countermeasure="c",
+                mapped=True,
+                max_confidence=0.77,
+                low_confidence=False,
+            )
+        ],
+        notes=[],
+        coverage=1.0,
+    )
+    data = json.loads(ReportRenderer().to_json(report))
+    finding = data["findings"][0]
+    assert finding["max_confidence"] == pytest.approx(0.77)
+    assert finding["low_confidence"] is False
+
+
+def test_scope_findings_only_in_summary() -> None:
+    report = ThreatReport(
+        source_image="az.png",
+        detections=[
+            Detection("resource_group", 0.9, (0, 0, 1, 1), family="management"),
+            Detection("ec2", 0.8, (1, 1, 2, 2), family="compute"),
+        ],
+        findings=[
+            ThreatFinding(
+                component_class="resource_group",
+                family="management",
+                stride_category="Escopo",
+                threat_description="t",
+                vulnerability_example="v",
+                countermeasure="c",
+                mapped=True,
+                role="scope",
+                instance_count=1,
+                max_confidence=0.9,
+            ),
+            ThreatFinding(
+                component_class="ec2",
+                family="compute",
+                stride_category="Denial of Service",
+                threat_description="t",
+                vulnerability_example="v",
+                countermeasure="c",
+                mapped=True,
+                role="workload",
+                instance_count=1,
+                max_confidence=0.8,
+            ),
+        ],
+        notes=[],
+        coverage=1.0,
+    )
+    md = ReportRenderer().to_markdown(report)
+    assert "resource_group" in md.split("## Ameaças por componente")[0]
+    # Scope must not appear as a detailed finding heading
+    assert "### 1. resource_group" not in md
+    assert "### 1. ec2" in md or "ec2 — Denial of Service" in md

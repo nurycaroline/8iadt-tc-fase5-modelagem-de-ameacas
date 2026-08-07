@@ -41,8 +41,6 @@ families:
     - app_server
     - virtual_machine
     - container
-    - auto_scaling
-    - auto_scaling_group
     - solr
     - sei
     - sip
@@ -50,11 +48,8 @@ families:
     - application
     - server
     - aws_amazon_ec2
-    - aws_amazon_ec2_auto_scaling
     - aws_amazon_elastic_container_service
     - aws_amazon_elastic_kubernetes_service
-    - aws_autoscaling
-    - aws_cloud
     - aws_cloudformation
     - aws_cloudformation_template
     - aws_ec2_instance
@@ -69,21 +64,15 @@ families:
     - azure_devops
     - azure_function_apps
     - azure_kubernetes_services
-    - azure_logic_apps
     - azure_machine_learning
     - azure_machine_learning_studio_workspaces
     - azure_openai
-    - azure_resource_groups
-    - azure_services
     - azure_vm_scale_sets
     - gcp_cloud_functions
     - gcp_cloud_run
     - gcp_compute_engine
     - gcp_google_kubernetes_engine
     - gcp_vertex_ai
-    - logic_apps
-    - resource_group
-    - sass_services
     - "sei/sip"
   api:
     - api
@@ -109,12 +98,9 @@ families:
     - storage
     - s3
     - blob_storage
-    - efs
     - ebs
     - cloud_storage
     - file_storage
-    - backup
-    - aws_backup
     - object_storage
     - aws_amazon_elastic_block_store
     - aws_amazon_simple_storage_service
@@ -124,7 +110,31 @@ families:
     - aws_simple_storage_service_object
     - aws_simple_storage_service_s3_standard
     - azure_storage_accounts
+  filesystem:
+    - efs
     - "aws_elactic_file_system(nfs)_multi-az"
+  backup:
+    - backup
+    - aws_backup
+  scaling:
+    - auto_scaling
+    - auto_scaling_group
+    - aws_autoscaling
+    - aws_amazon_ec2_auto_scaling
+  email:
+    - ses
+    - aws_simple_email_service
+  integration:
+    - logic_apps
+    - azure_logic_apps
+  dependency:
+    - sass_services
+    - azure_services
+  management:
+    - resource_group
+    - azure_resource_groups
+    - aws_cloud
+    - aws_region
   network:
     - network
     - router
@@ -178,7 +188,6 @@ families:
     - nacl
     - network_acl
     - aws_amazon_virtual_private_cloud
-    - aws_region
     - aws_virtual_private_cloud
     - aws_vpc_virtual_private_cloud_vpc
     - azure_network_security_groups
@@ -214,7 +223,6 @@ families:
     - msk
     - aws_amazon_simple_notification_service
     - aws_amazon_simple_queue_service
-    - aws_simple_email_service
     - aws_simple_notification_service_topic
     - aws_simple_queue_service_queue
     - azure_event_hubs

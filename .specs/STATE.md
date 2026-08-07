@@ -58,13 +58,25 @@
 - **Date**: 2026-08-05
 - **Status**: active
 
+### AD-008
+- **Decision**: Famílias semânticas finas (`filesystem`, `backup`, `email`, `scaling`, `integration`, `dependency`, `management`) + papel `scope` (zero findings STRIDE; só sumário; conta na coverage). Dedupe espacial intra-classe por IoU/contenção transitiva (`STRIDE_DEDUPE_IOU`, default 0.5; 0 desliga). Transparência de confiança no relatório (`STRIDE_LOW_CONF`, default 0.50; 0 desliga).
+- **Reason**: Review Gemini de arch1/arch2: textos S3 em EFS/Backup, SQS em SES, containers em Logic Apps/Resource Group/Auto Scaling; contagens infladas por caixas sobrepostas do detector (poucos exemplos Azure no Kaggle).
+- **Trade-off**: KB maior; retreino Azure fica fora de escopo (feature futura `detector-azure-robustness`); dedupe espacial pode subcontar instâncias muito próximas (mitigado por limiar configurável).
+- **Scope**: Feature `stride-report-fidelity`.
+- **Date**: 2026-08-07
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: STRIDE Report Quality / `.specs/features/stride-report-quality/`
-- **Phase / Task**: Execute T1–T12 concluído (12 commits) — Verifier pendente
-- **Completed**: T1 aliases/vendor strip; T2 class_map v2 (edge/observability/zone + vocabulário AWS); T3 CLI check-map; T4 KB v2 roles; T5 entradas edge/observability/zone + consistência map↔KB; T6 fallback de inventário; T7 dedupe + role; T8 coverage + warning; T9 Markdown por role; T10 JSON v2; T11 e2e cenário AWS; T12 docs + AD-007. Gate full: 109 passed.
-- **In-progress**: Verifier automático (feature-level validation)
-- **Next step**: Verifier sub-agent (spec-anchored + discrimination sensor) → validation.md; após treino real, rodar `stride-mvp check-map` contra `classes.txt`/pesos para fechar MAP-02 canônico
-- **Blockers**: none (CI usa ScriptedDetector; validação canônica do vocabulário exige artefatos do treino real)
-- **Branch**: `cursor/stride-report-quality-spec-062c`
+- **Feature**: STRIDE Report Fidelity / `.specs/features/stride-report-fidelity/`
+- **Phase / Task**: Execute + Verifier concluídos — feature done
+- **Completed**: T1–T9 + validation PASS (18/18 ACs, 3/3 mutants killed, 154 tests). Artefato: `.specs/features/stride-report-fidelity/validation.md`
+- **In-progress**: —
+- **Next step**: Merge PR #13; follow-up opcional `detector-azure-robustness` (anotar diagramas Azure + fine-tune)
+- **Blockers**: none
+- **Branch**: `cursor/stride-report-fidelity-spec-7757`
+
+### Handoff anterior (stride-report-quality)
+
+- Execute T1–T12 concluído (12 commits), gate full 109 passed; Verifier automático pendente; após treino real, rodar `stride-mvp check-map` contra `classes.txt`/pesos para fechar MAP-02 canônico. Branch: `cursor/stride-report-quality-spec-062c` (merged).
 

@@ -13,10 +13,27 @@ DEFAULT_MAX_IMAGE_BYTES = 10 * 1024 * 1024
 DEFAULT_MODEL_PATH = Path("models/weights/best.pt")
 TRAIN_OUTPUT_MODEL_PATH = Path("models/weights/train/weights/best.pt")
 DEFAULT_MIN_COVERAGE = 0.8
+DEFAULT_DEDUPE_IOU = 0.5
+DEFAULT_LOW_CONF = 0.50
 
 
 class MissingWeightsError(FileNotFoundError):
     """Raised when YOLO weights cannot be resolved for inference."""
+
+
+def _parse_unit_interval(name: str, raw: str | float | int) -> float:
+    """Parse a float that must lie in ``[0, 1]``; raise actionable ValueError."""
+    try:
+        value = float(raw)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(
+            f"{name} deve ser um número entre 0 e 1 (recebido: {raw!r})."
+        ) from exc
+    if not 0.0 <= value <= 1.0:
+        raise ValueError(
+            f"{name} deve estar no intervalo [0, 1] (recebido: {value})."
+        )
+    return value
 
 
 @dataclass(frozen=True)
@@ -27,6 +44,8 @@ class AppConfig:
     max_image_bytes: int = DEFAULT_MAX_IMAGE_BYTES
     model_path: Path = DEFAULT_MODEL_PATH
     min_coverage: float = DEFAULT_MIN_COVERAGE
+    dedupe_iou: float = DEFAULT_DEDUPE_IOU
+    low_conf: float = DEFAULT_LOW_CONF
 
 
 def model_path_candidates(configured: Path) -> list[Path]:
@@ -84,6 +103,9 @@ def load_config(path: Path | None = None) -> AppConfig:
     - ``STRIDE_CONF`` — confidence threshold (float)
     - ``STRIDE_MODEL_PATH`` — path to YOLO weights
     - ``STRIDE_MAX_IMAGE_BYTES`` — max upload size in bytes
+    - ``STRIDE_MIN_COVERAGE`` — mapping coverage warning threshold
+    - ``STRIDE_DEDUPE_IOU`` — spatial dedupe IoU threshold (0 disables)
+    - ``STRIDE_LOW_CONF`` — low-confidence marker threshold (0 disables)
     """
     data: dict = {}
     if path is not None:
@@ -96,6 +118,12 @@ def load_config(path: Path | None = None) -> AppConfig:
     max_image_bytes = int(data.get("max_image_bytes", DEFAULT_MAX_IMAGE_BYTES))
     model_path = Path(data.get("model_path", DEFAULT_MODEL_PATH))
     min_coverage = float(data.get("min_coverage", DEFAULT_MIN_COVERAGE))
+    dedupe_iou = _parse_unit_interval(
+        "dedupe_iou", data.get("dedupe_iou", DEFAULT_DEDUPE_IOU)
+    )
+    low_conf = _parse_unit_interval(
+        "low_conf", data.get("low_conf", DEFAULT_LOW_CONF)
+    )
 
     if (env_conf := os.environ.get("STRIDE_CONF")) is not None:
         confidence = float(env_conf)
@@ -105,10 +133,16 @@ def load_config(path: Path | None = None) -> AppConfig:
         max_image_bytes = int(env_max)
     if (env_cov := os.environ.get("STRIDE_MIN_COVERAGE")) is not None:
         min_coverage = float(env_cov)
+    if (env_iou := os.environ.get("STRIDE_DEDUPE_IOU")) is not None:
+        dedupe_iou = _parse_unit_interval("STRIDE_DEDUPE_IOU", env_iou)
+    if (env_low := os.environ.get("STRIDE_LOW_CONF")) is not None:
+        low_conf = _parse_unit_interval("STRIDE_LOW_CONF", env_low)
 
     return AppConfig(
         confidence=confidence,
         max_image_bytes=max_image_bytes,
         model_path=model_path,
         min_coverage=min_coverage,
+        dedupe_iou=dedupe_iou,
+        low_conf=low_conf,
     )

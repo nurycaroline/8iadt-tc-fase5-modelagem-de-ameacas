@@ -212,3 +212,54 @@ def test_all_unmapped_report_has_only_summary_and_inventory() -> None:
     assert "## Ameaças por componente" not in md
     assert "Controles detectados" not in md
     assert "Zonas de rede" not in md
+
+
+def test_scope_components_emit_marker_not_stride() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [
+            Detection("resource_group", 0.9, (0, 0, 1, 1)),
+            Detection("aws_region", 0.85, (1, 1, 2, 2)),
+        ]
+    )
+    assert report.coverage == 1.0
+    for name in ("resource_group", "aws_region"):
+        group = [f for f in report.findings if f.component_class == name]
+        assert len(group) == 1
+        assert group[0].role == "scope"
+        assert group[0].mapped is True
+        assert group[0].stride_category == "Escopo"
+        assert group[0].stride_category not in STRIDE_CATEGORIES
+
+
+def test_scope_only_report_has_full_coverage() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze([Detection("aws_cloud", 0.7, (0, 0, 1, 1))])
+    assert report.coverage == 1.0
+    assert all(f.role == "scope" for f in report.findings)
+
+
+def test_findings_carry_max_confidence_and_low_flag() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [
+            Detection("rds", 0.32, (0, 0, 1, 1)),
+            Detection("ec2", 0.91, (1, 1, 2, 2)),
+        ],
+        low_conf=0.5,
+    )
+    rds = next(f for f in report.findings if f.component_class == "rds")
+    ec2 = next(f for f in report.findings if f.component_class == "ec2")
+    assert rds.max_confidence == 0.32
+    assert rds.low_confidence is True
+    assert ec2.max_confidence == 0.91
+    assert ec2.low_confidence is False
+
+
+def test_low_conf_zero_disables_marker() -> None:
+    engine = StrideEngine(ThreatKB.load(), load_class_map())
+    report = engine.analyze(
+        [Detection("rds", 0.1, (0, 0, 1, 1))],
+        low_conf=0.0,
+    )
+    assert all(f.low_confidence is False for f in report.findings)
