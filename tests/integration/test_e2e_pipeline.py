@@ -265,7 +265,7 @@ def test_fidelity_azure_arch2_semantics_and_spatial_dedupe(tmp_path: Path) -> No
     assert rg[0].stride_category == "Escopo"
     assert "### 1. resource_group" not in md
 
-    for name in ("logic_apps", "sass_services", "azure_services"):
+    for name in ("logic_apps", "sass_services"):
         blob = _blob_for(report, name)
         assert blob, f"{name} missing findings"
         for forbidden in ("container", "seccomp", "imdsv2", "hpa"):
@@ -273,3 +273,45 @@ def test_fidelity_azure_arch2_semantics_and_spatial_dedupe(tmp_path: Path) -> No
 
     logic = _blob_for(report, "logic_apps")
     assert "managed identity" in logic or "rbac" in logic
+
+    azure = _blob_for(report, "azure_services")
+    assert azure
+    assert "managed identity" in azure
+    for forbidden in ("conectores saas", "conector saas", "consentimento"):
+        assert forbidden not in azure
+    azure_findings = [
+        f for f in report.findings if f.component_class == "azure_services"
+    ]
+    assert all(f.family == "azure_platform" for f in azure_findings)
+
+
+def test_fidelity_backend_rest_soap_requires_mtls(tmp_path: Path) -> None:
+    """REST/SOAP backends must surface mTLS / secure transport findings."""
+    image = EVAL / "arch2" / "arch2.png"
+    out = tmp_path / "reports"
+    report = run_pipeline(
+        image,
+        out,
+        AppConfig(max_image_bytes=2_000_000),
+        detector=ScriptedDetector({"rest_api", "soap", "api"}),
+    )
+    for name in ("rest_api", "soap"):
+        blob = _blob_for(report, name)
+        assert blob, f"{name} missing"
+        assert "mtls" in blob
+        findings = [f for f in report.findings if f.component_class == name]
+        assert all(f.family == "backend" for f in findings)
+
+
+def test_fidelity_database_disclosure_forbids_bucket(tmp_path: Path) -> None:
+    image = EVAL / "arch1" / "arch1.png"
+    out = tmp_path / "reports"
+    report = run_pipeline(
+        image,
+        out,
+        AppConfig(max_image_bytes=2_000_000),
+        detector=ScriptedDetector({"rds", "elasticache"}),
+    )
+    for name in ("rds", "elasticache"):
+        blob = _blob_for(report, name)
+        assert "bucket" not in blob

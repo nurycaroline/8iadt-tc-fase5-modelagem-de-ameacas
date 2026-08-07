@@ -13,7 +13,7 @@ DEFAULT_MAX_IMAGE_BYTES = 10 * 1024 * 1024
 DEFAULT_MODEL_PATH = Path("models/weights/best.pt")
 TRAIN_OUTPUT_MODEL_PATH = Path("models/weights/train/weights/best.pt")
 DEFAULT_MIN_COVERAGE = 0.8
-DEFAULT_DEDUPE_IOU = 0.5
+DEFAULT_DEDUPE_IOU = 0.3
 DEFAULT_LOW_CONF = 0.50
 
 

@@ -205,6 +205,39 @@ def test_integration_and_dependency_forbid_container_vocab() -> None:
     assert "managed identity" in integration or "rbac" in integration
 
 
+def test_azure_platform_uses_managed_identity_not_saas_connectors() -> None:
+    kb = ThreatKB.load()
+    entries = [e for e in kb.entries if e.family.lower() == "azure_platform"]
+    assert entries
+    blob = " ".join(
+        f"{e.threat} {e.vulnerability} {e.countermeasure}" for e in entries
+    ).lower()
+    assert "managed identity" in blob
+    for forbidden in ("conectores saas", "conector saas", "consentimento"):
+        assert forbidden not in blob
+
+
+def test_backend_entries_require_mtls() -> None:
+    kb = ThreatKB.load()
+    entries = [e for e in kb.entries if e.family.lower() == "backend"]
+    assert entries
+    blob = " ".join(
+        f"{e.threat} {e.vulnerability} {e.countermeasure}" for e in entries
+    ).lower()
+    assert "mtls" in blob
+
+
+def test_database_information_disclosure_forbids_bucket() -> None:
+    kb = ThreatKB.load()
+    hits = kb.lookup("database", "Information Disclosure")
+    assert hits
+    blob = " ".join(
+        f"{e.threat} {e.vulnerability} {e.countermeasure}" for e in hits
+    ).lower()
+    assert "bucket" not in blob
+    assert "db" in blob or "cluster" in blob or "instância" in blob or "instancia" in blob
+
+
 def test_backup_role_is_control() -> None:
     kb = ThreatKB.load()
     assert kb.role("backup") == "control"
